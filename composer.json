@@ -1,0 +1,25 @@
+{
+    "name": "nystron-solar/electric-bill-extractor",
+    "description": "Extract the data from an Electric Bill",
+    "license": "GNU GPLv3",
+    "homepage": "https://github.com/NystronSolar/DashboardApi",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "NystronSolar\\ElectricBillExtractor\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "TheDevick",
+            "email": "erick@bilhalba.com.br",
+            "homepage": "https://TheDevick.vercel.app"
+        }
+    ],
+    "require": {
+        "smalot/pdfparser": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
