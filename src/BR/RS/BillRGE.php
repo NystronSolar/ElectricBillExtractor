@@ -22,6 +22,8 @@ class BillRGE extends BillRS
 
     protected ?DateTimeImmutable $nextReadingDate = null;
 
+    protected ?DateTimeImmutable $dueDate = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -172,6 +174,28 @@ class BillRGE extends BillRS
     public function setNextReadingDate(DateTimeImmutable $nextReadingDate): self
     {
         $this->nextReadingDate = $nextReadingDate;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill Due Date
+     * @return ?DateTimeImmutable
+     */
+    public function getDueDate(): ?DateTimeImmutable
+    {
+        return $this->dueDate;
+    }
+
+    /**
+     * Set the Bill Due Date
+     *
+     * @param DateTimeImmutable $dueDate
+     * @return self
+     */
+    public function setDueDate(DateTimeImmutable $dueDate): self
+    {
+        $this->dueDate = $dueDate;
 
         return $this;
     }

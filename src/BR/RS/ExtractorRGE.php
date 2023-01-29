@@ -27,6 +27,7 @@ class ExtractorRGE extends Extractor
             $this->extractPages($value, $key);
             $this->extractDeliveryDate($value, $key);
             $this->extractNextReadingDate($value, $key);
+            $this->extractDueDate($value, $key);
         }
 
         return $this->getBill();
@@ -165,6 +166,25 @@ class ExtractorRGE extends Extractor
             }
 
             return $nextReadingDate;
+        }
+
+        return false;
+    }
+
+    private function extractDueDate(string $value, int $key, bool $setDueDate = true): DateTimeInterface|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $dueDate = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[7]);
+
+            if ($setDueDate) {
+                $this->bill->setDueDate($dueDate);
+            }
+
+            return $dueDate;
         }
 
         return false;
