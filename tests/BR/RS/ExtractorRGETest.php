@@ -56,6 +56,14 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($billBatch, $pdfBatch);
     }
 
+    public function testExtractReadingGuide()
+    {
+        $billReadingGuide = $this->bill->getReadingGuide();
+        $pdfReadingGuide = $this->pdfData["ReadingGuide"];
+
+        $this->assertSame($billReadingGuide, $pdfReadingGuide);
+    }
+
     protected function assertBillJSON(array |string $json)
     {
         if (is_string($json)) {
