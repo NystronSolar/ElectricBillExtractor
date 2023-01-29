@@ -72,6 +72,14 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($billPowerMeterId, $pdfPowerMeterId);
     }
 
+    public function testExtractPages()
+    {
+        $billPages = $this->bill->getPages();
+        $pdfPages = $this->pdfData["Pages"];
+
+        $this->assertSame($billPages, $pdfPages);
+    }
+
     protected function assertBillJSON(array |string $json)
     {
         if (is_string($json)) {
