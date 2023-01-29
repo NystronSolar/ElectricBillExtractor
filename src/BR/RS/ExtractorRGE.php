@@ -22,6 +22,7 @@ class ExtractorRGE extends Extractor
             $this->extractBatch($value, $key);
             $this->extractReadingGuide($value, $key);
             $this->extractPowerMeterId($value, $key);
+            $this->extractPages($value, $key);
         }
 
         return $this->getBill();
@@ -100,6 +101,28 @@ class ExtractorRGE extends Extractor
             }
 
             return $powerMeterId;
+        }
+
+        return false;
+    }
+
+    private function extractPages(string $value, int $key, bool $setPages = true): array|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $pages = [
+                'Actual' => (int) $valuesArray[3],
+                'Total' => (int) $valuesArray[4]
+            ];
+
+            if ($setPages) {
+                $this->bill->setPages($pages);
+            }
+
+            return $pages;
         }
 
         return false;

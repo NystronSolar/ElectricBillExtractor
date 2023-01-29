@@ -14,6 +14,8 @@ class BillRGE extends BillRS
 
     protected ?int $powerMeterId = null;
 
+    protected ?array $pages = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -81,7 +83,7 @@ class BillRGE extends BillRS
     }
 
     /**
-     * Returns the Bill PowerMeterId
+     * Returns the Bill Power Meter Id
      * @return ?int
      */
     public function getPowerMeterId(): ?int
@@ -90,7 +92,7 @@ class BillRGE extends BillRS
     }
 
     /**
-     * Set the Bill PowerMeterId
+     * Set the Bill Power Meter Id
      *
      * @param int $_powerMeterId
      * @return self
@@ -98,6 +100,28 @@ class BillRGE extends BillRS
     public function setPowerMeterId(int $_powerMeterId): self
     {
         $this->powerMeterId = $_powerMeterId;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill Pages
+     * @return ?array
+     */
+    public function getPages(): ?array
+    {
+        return $this->pages;
+    }
+
+    /**
+     * Set the Bill Pages
+     *
+     * @param array $_pages
+     * @return self
+     */
+    public function setPages(array $_pages): self
+    {
+        $this->pages = $_pages;
 
         return $this;
     }
