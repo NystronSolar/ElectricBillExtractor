@@ -19,6 +19,7 @@ class ExtractorRGE extends Extractor
 
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
+            $this->extractBatch($value, $key);
         }
 
         return $this->getBill();
@@ -40,6 +41,25 @@ class ExtractorRGE extends Extractor
             }
 
             return $client;
+        }
+
+        return false;
+    }
+
+    private function extractBatch(string $value, int $key, bool $setBatch = true): int|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $batch = (int) $valuesArray[0];
+
+            if ($setBatch) {
+                $this->bill->setBatch($batch);
+            }
+
+            return $batch;
         }
 
         return false;
