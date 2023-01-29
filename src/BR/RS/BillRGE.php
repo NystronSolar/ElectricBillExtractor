@@ -24,6 +24,8 @@ class BillRGE extends BillRS
 
     protected ?DateTimeImmutable $dueDate = null;
 
+    protected ?string $classification = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -196,6 +198,28 @@ class BillRGE extends BillRS
     public function setDueDate(DateTimeImmutable $dueDate): self
     {
         $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill Classification
+     * @return ?string
+     */
+    public function getClassification(): ?string
+    {
+        return $this->classification;
+    }
+
+    /**
+     * Set the Bill Classification
+     *
+     * @param string $_classification
+     * @return self
+     */
+    public function setClassification(string $_classification): self
+    {
+        $this->classification = $_classification;
 
         return $this;
     }

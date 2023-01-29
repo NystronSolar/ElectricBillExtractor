@@ -21,13 +21,8 @@ class ExtractorRGE extends Extractor
 
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
-            $this->extractBatch($value, $key);
-            $this->extractReadingGuide($value, $key);
-            $this->extractPowerMeterId($value, $key);
-            $this->extractPages($value, $key);
-            $this->extractDeliveryDate($value, $key);
-            $this->extractNextReadingDate($value, $key);
-            $this->extractDueDate($value, $key);
+            $this->extractHeader($value, $key);
+            $this->extractClassification($value);
         }
 
         return $this->getBill();
@@ -54,137 +49,52 @@ class ExtractorRGE extends Extractor
         return false;
     }
 
-    private function extractBatch(string $value, int $key, bool $setBatch = true): int|false
+    private function extractHeader(string $value, int $key, bool $setHeader = true): array |false
     {
         if (str_starts_with($value, " Classificação:")) {
             $row = $key - 1;
 
             $valuesArray = explode(' ', $this->contentExploded[$row]);
 
-            $batch = (int) $valuesArray[0];
-
-            if ($setBatch) {
-                $this->bill->setBatch($batch);
-            }
-
-            return $batch;
-        }
-
-        return false;
-    }
-
-    private function extractReadingGuide(string $value, int $key, bool $setReadingGuide = true): string|false
-    {
-        if (str_starts_with($value, " Classificação:")) {
-            $row = $key - 1;
-
-            $valuesArray = explode(' ', $this->contentExploded[$row]);
-
-            $readingGuide = $valuesArray[1];
-
-            if ($setReadingGuide) {
-                $this->bill->setReadingGuide($readingGuide);
-            }
-
-            return $readingGuide;
-        }
-
-        return false;
-    }
-
-    private function extractPowerMeterId(string $value, int $key, bool $setPowerMeterId = true): string|false
-    {
-        if (str_starts_with($value, " Classificação:")) {
-            $row = $key - 1;
-
-            $valuesArray = explode(' ', $this->contentExploded[$row]);
-
-            $powerMeterId = (int) $valuesArray[2];
-
-            if ($setPowerMeterId) {
-                $this->bill->setPowerMeterId($powerMeterId);
-            }
-
-            return $powerMeterId;
-        }
-
-        return false;
-    }
-
-    private function extractPages(string $value, int $key, bool $setPages = true): array|false
-    {
-        if (str_starts_with($value, " Classificação:")) {
-            $row = $key - 1;
-
-            $valuesArray = explode(' ', $this->contentExploded[$row]);
-
-            $pages = [
-                'Actual' => (int) $valuesArray[3],
-                'Total' => (int) $valuesArray[4]
+            $header = [
+                "Batch" => (int) $valuesArray[0],
+                "ReadingGuide" => $valuesArray[1],
+                "PowerMeterId" => (int) $valuesArray[2],
+                "Pages" => [
+                    'Actual' => (int) $valuesArray[3],
+                    'Total' => (int) $valuesArray[4]
+                ],
+                "DeliveryDate" => DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[5]),
+                "NextReadingDate" => DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[6]),
+                "DueDate" => DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[7])
             ];
 
-            if ($setPages) {
-                $this->bill->setPages($pages);
+            if ($setHeader) {
+                $this->bill->setBatch($header["Batch"]);
+                $this->bill->setReadingGuide($header["ReadingGuide"]);
+                $this->bill->setPowerMeterId($header["PowerMeterId"]);
+                $this->bill->setPages($header["Pages"]);
+                $this->bill->setDeliveryDate($header["DeliveryDate"]);
+                $this->bill->setNextReadingDate($header["NextReadingDate"]);
+                $this->bill->setDueDate($header["DueDate"]);
             }
 
-            return $pages;
+            return $header;
         }
 
         return false;
     }
 
-    private function extractDeliveryDate(string $value, int $key, bool $setDeliveryDate = true): DateTimeInterface|false
+    private function extractClassification(string $value, bool $setClassification = true): string|false
     {
         if (str_starts_with($value, " Classificação:")) {
-            $row = $key - 1;
+            $classification = substr($value, 20, -22);
 
-            $valuesArray = explode(' ', $this->contentExploded[$row]);
-
-            $deliveryDate = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[5]);
-
-            if ($setDeliveryDate) {
-                $this->bill->setDeliveryDate($deliveryDate);
+            if ($setClassification) {
+                $this->bill->setClassification($classification);
             }
 
-            return $deliveryDate;
-        }
-
-        return false;
-    }
-
-    private function extractNextReadingDate(string $value, int $key, bool $setNextReadingDate = true): DateTimeInterface|false
-    {
-        if (str_starts_with($value, " Classificação:")) {
-            $row = $key - 1;
-
-            $valuesArray = explode(' ', $this->contentExploded[$row]);
-
-            $nextReadingDate = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[6]);
-
-            if ($setNextReadingDate) {
-                $this->bill->setNextReadingDate($nextReadingDate);
-            }
-
-            return $nextReadingDate;
-        }
-
-        return false;
-    }
-
-    private function extractDueDate(string $value, int $key, bool $setDueDate = true): DateTimeInterface|false
-    {
-        if (str_starts_with($value, " Classificação:")) {
-            $row = $key - 1;
-
-            $valuesArray = explode(' ', $this->contentExploded[$row]);
-
-            $dueDate = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[7]);
-
-            if ($setDueDate) {
-                $this->bill->setDueDate($dueDate);
-            }
-
-            return $dueDate;
+            return $classification;
         }
 
         return false;
