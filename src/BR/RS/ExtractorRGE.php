@@ -26,6 +26,7 @@ class ExtractorRGE extends Extractor
             $this->extractPowerMeterId($value, $key);
             $this->extractPages($value, $key);
             $this->extractDeliveryDate($value, $key);
+            $this->extractNextReadingDate($value, $key);
         }
 
         return $this->getBill();
@@ -145,6 +146,25 @@ class ExtractorRGE extends Extractor
             }
 
             return $deliveryDate;
+        }
+
+        return false;
+    }
+
+    private function extractNextReadingDate(string $value, int $key, bool $setNextReadingDate = true): DateTimeInterface|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $nextReadingDate = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[6]);
+
+            if ($setNextReadingDate) {
+                $this->bill->setNextReadingDate($nextReadingDate);
+            }
+
+            return $nextReadingDate;
         }
 
         return false;
