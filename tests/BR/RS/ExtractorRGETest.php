@@ -90,12 +90,20 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSameDate($jsonDeliveryDate, $billDeliveryDate);
     }
 
-    public function testNextReadingDate()
+    public function testExtractNextReadingDate()
     {
         $billNextReadingDate = $this->bill->getNextReadingDate();
         $jsonNextReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["NextReadingDate"]);
 
         $this->assertSameDate($jsonNextReadingDate, $billNextReadingDate);
+    }
+
+    public function testExtractDueDate()
+    {
+        $billDueDate = $this->bill->getDueDate();
+        $jsonDueDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["DueDate"]);
+
+        $this->assertSameDate($jsonDueDate, $billDueDate);
     }
 
     protected function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual)
