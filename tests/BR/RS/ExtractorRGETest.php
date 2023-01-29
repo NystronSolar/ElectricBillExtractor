@@ -3,13 +3,16 @@
 namespace App\Tests\BR\RS;
 
 use App\Tests\CustomTestCase;
+use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use NystronSolar\ElectricBillExtractor\BR\RS\BillRGE;
 use NystronSolar\ElectricBillExtractor\BR\RS\ExtractorRGE;
 
 class ExtractorRGETest extends CustomTestCase
 {
     private bool $runTests;
-    private array $pdfData;
+    private array $jsonData;
     private ExtractorRGE $extractor;
     private BillRGE $bill;
 
@@ -29,9 +32,9 @@ class ExtractorRGETest extends CustomTestCase
         }
 
         $this->runTests = true;
-        $this->pdfData = json_decode(file_get_contents($jsonFile), true);
+        $this->jsonData = json_decode(file_get_contents($jsonFile), true);
         $this->extractor = new ExtractorRGE();
-        $this->bill = $this->extractor->fromFile('tests/content/BR/RS/RGE.pdf');
+        $this->bill = $this->extractor->fromFile($pdfFile);
 
         $this->assertIsObject($this->bill);
     }
@@ -40,44 +43,60 @@ class ExtractorRGETest extends CustomTestCase
     public function testExtractClient()
     {
         $billClient = $this->bill->getClient();
-        $pdfClient = $this->pdfData["Client"];
+        $jsonClient = $this->jsonData["Client"];
 
-        $this->assertSame($billClient->getName(), $pdfClient["Name"]);
-        $this->assertSame($billClient->getAddress(), $pdfClient["Address"]);
-        $this->assertSame($billClient->getDistrict(), $pdfClient["District"]);
-        $this->assertSame($billClient->getCity(), $pdfClient["City"]);
+        $this->assertSame($jsonClient["Name"], $billClient->getName());
+        $this->assertSame($jsonClient["Address"], $billClient->getAddress());
+        $this->assertSame($jsonClient["District"], $billClient->getDistrict());
+        $this->assertSame($jsonClient["City"], $billClient->getCity());
     }
 
     public function testExtractBatch()
     {
         $billBatch = $this->bill->getBatch();
-        $pdfBatch = $this->pdfData["Batch"];
+        $jsonBatch = $this->jsonData["Batch"];
 
-        $this->assertSame($billBatch, $pdfBatch);
+        $this->assertSame($jsonBatch, $billBatch);
     }
 
     public function testExtractReadingGuide()
     {
         $billReadingGuide = $this->bill->getReadingGuide();
-        $pdfReadingGuide = $this->pdfData["ReadingGuide"];
+        $jsonReadingGuide = $this->jsonData["ReadingGuide"];
 
-        $this->assertSame($billReadingGuide, $pdfReadingGuide);
+        $this->assertSame($jsonReadingGuide, $billReadingGuide);
     }
 
     public function testExtractPowerMeterId()
     {
         $billPowerMeterId = $this->bill->getPowerMeterId();
-        $pdfPowerMeterId = $this->pdfData["PowerMeterId"];
+        $jsonPowerMeterId = $this->jsonData["PowerMeterId"];
 
-        $this->assertSame($billPowerMeterId, $pdfPowerMeterId);
+        $this->assertSame($jsonPowerMeterId, $billPowerMeterId);
     }
 
     public function testExtractPages()
     {
         $billPages = $this->bill->getPages();
-        $pdfPages = $this->pdfData["Pages"];
+        $jsonPages = $this->jsonData["Pages"];
 
-        $this->assertSame($billPages, $pdfPages);
+        $this->assertSame($jsonPages, $billPages);
+    }
+
+    public function testExtractDeliveryDate()
+    {
+        $billDeliveryDate = $this->bill->getDeliveryDate();
+        $jsonDeliveryDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["DeliveryDate"]);
+
+        $this->assertSameDate($jsonDeliveryDate, $billDeliveryDate);
+    }
+
+    protected function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual)
+    {
+        $expectedDate = date_format($expected, "m/d/Y");
+        $actualDate = date_format($actual, "m/d/Y");
+
+        $this->assertSame($expectedDate, $actualDate);
     }
 
     protected function assertBillJSON(array |string $json)
