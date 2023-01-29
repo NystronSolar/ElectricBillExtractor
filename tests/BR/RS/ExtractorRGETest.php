@@ -3,7 +3,6 @@
 namespace App\Tests\BR\RS;
 
 use App\Tests\CustomTestCase;
-use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use NystronSolar\ElectricBillExtractor\BR\RS\BillRGE;
@@ -89,6 +88,14 @@ class ExtractorRGETest extends CustomTestCase
         $jsonDeliveryDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["DeliveryDate"]);
 
         $this->assertSameDate($jsonDeliveryDate, $billDeliveryDate);
+    }
+
+    public function testNextReadingDate()
+    {
+        $billNextReadingDate = $this->bill->getNextReadingDate();
+        $jsonNextReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["NextReadingDate"]);
+
+        $this->assertSameDate($jsonNextReadingDate, $billNextReadingDate);
     }
 
     protected function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual)
