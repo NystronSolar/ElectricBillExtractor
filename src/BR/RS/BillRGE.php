@@ -12,6 +12,8 @@ class BillRGE extends BillRS
 
     protected ?string $readingGuide = null;
 
+    protected ?int $powerMeterId = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -74,6 +76,28 @@ class BillRGE extends BillRS
     public function setReadingGuide(string $_readingGuide): self
     {
         $this->readingGuide = $_readingGuide;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill PowerMeterId
+     * @return ?int
+     */
+    public function getPowerMeterId(): ?int
+    {
+        return $this->powerMeterId;
+    }
+
+    /**
+     * Set the Bill PowerMeterId
+     *
+     * @param int $_powerMeterId
+     * @return self
+     */
+    public function setPowerMeterId(int $_powerMeterId): self
+    {
+        $this->powerMeterId = $_powerMeterId;
 
         return $this;
     }

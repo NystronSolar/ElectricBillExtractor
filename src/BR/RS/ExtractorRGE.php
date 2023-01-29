@@ -21,6 +21,7 @@ class ExtractorRGE extends Extractor
             $this->extractClient($value, $key);
             $this->extractBatch($value, $key);
             $this->extractReadingGuide($value, $key);
+            $this->extractPowerMeterId($value, $key);
         }
 
         return $this->getBill();
@@ -80,6 +81,25 @@ class ExtractorRGE extends Extractor
             }
 
             return $readingGuide;
+        }
+
+        return false;
+    }
+
+    private function extractPowerMeterId(string $value, int $key, bool $setPowerMeterId = true): string|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $powerMeterId = (int) $valuesArray[2];
+
+            if ($setPowerMeterId) {
+                $this->bill->setPowerMeterId($powerMeterId);
+            }
+
+            return $powerMeterId;
         }
 
         return false;
