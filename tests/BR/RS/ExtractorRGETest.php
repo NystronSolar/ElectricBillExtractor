@@ -3,12 +3,20 @@
 namespace App\Tests\BR\RS;
 
 use App\Tests\CustomTestCase;
+use NystronSolar\ElectricBillExtractor\BR\RS\BillRGE;
 use NystronSolar\ElectricBillExtractor\BR\RS\ExtractorRGE;
 
 class ExtractorRGETest extends CustomTestCase
 {
-    public function testExtractClient()
+    private bool $runTests;
+    private array $pdfData;
+    private ExtractorRGE $extractor;
+    private BillRGE $bill;
+
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $pdfFile = 'tests/content/BR/RS/RGE.pdf';
         $jsonFile = 'tests/content/BR/RS/RGE.json';
 
@@ -16,23 +24,36 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertBillJSON($jsonFile);
 
         if (!$checks) {
+            $this->runTests = false;
             return;
         }
 
-        $data = json_decode(file_get_contents($jsonFile), true);
+        $this->runTests = true;
+        $this->pdfData = json_decode(file_get_contents($jsonFile), true);
+        $this->extractor = new ExtractorRGE();
+        $this->bill = $this->extractor->fromFile('tests/content/BR/RS/RGE.pdf');
 
-        $extractor = new ExtractorRGE();
-        $bill = $extractor->fromFile('tests/content/BR/RS/RGE.pdf');
+        $this->assertIsObject($this->bill);
+    }
 
-        $this->assertIsObject($bill);
 
-        $billClient = $bill->getClient();
-        $dataClient = $data["Client"];
+    public function testExtractClient()
+    {
+        $billClient = $this->bill->getClient();
+        $pdfClient = $this->pdfData["Client"];
 
-        $this->assertSame($billClient->getName(), $dataClient["Name"]);
-        $this->assertSame($billClient->getAddress(), $dataClient["Address"]);
-        $this->assertSame($billClient->getDistrict(), $dataClient["District"]);
-        $this->assertSame($billClient->getCity(), $dataClient["City"]);
+        $this->assertSame($billClient->getName(), $pdfClient["Name"]);
+        $this->assertSame($billClient->getAddress(), $pdfClient["Address"]);
+        $this->assertSame($billClient->getDistrict(), $pdfClient["District"]);
+        $this->assertSame($billClient->getCity(), $pdfClient["City"]);
+    }
+
+    public function testExtractBatch()
+    {
+        $billBatch = $this->bill->getBatch();
+        $pdfBatch = $this->pdfData["Batch"];
+
+        $this->assertSame($billBatch, $pdfBatch);
     }
 
     protected function assertBillJSON(array |string $json)
