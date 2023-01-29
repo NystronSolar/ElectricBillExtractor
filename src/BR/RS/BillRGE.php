@@ -1,6 +1,7 @@
 <?php
 
 namespace NystronSolar\ElectricBillExtractor\BR\RS;
+use DateTimeImmutable;
 
 class BillRGE extends BillRS
 {
@@ -15,6 +16,8 @@ class BillRGE extends BillRS
     protected ?int $powerMeterId = null;
 
     protected ?array $pages = null;
+
+    protected ?DateTimeImmutable $deliveryDate = null;
 
     /**
      * Returns the Bill Client
@@ -122,6 +125,28 @@ class BillRGE extends BillRS
     public function setPages(array $_pages): self
     {
         $this->pages = $_pages;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill Delivery Date
+     * @return ?DateTimeImmutable
+     */
+    public function getDeliveryDate(): ?DateTimeImmutable
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * Set the Bill Delivery Date
+     *
+     * @param DateTimeImmutable $_deliveryDate
+     * @return self
+     */
+    public function setDeliveryDate(DateTimeImmutable $_deliveryDate): self
+    {
+        $this->deliveryDate = $_deliveryDate;
 
         return $this;
     }

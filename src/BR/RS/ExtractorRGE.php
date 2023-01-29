@@ -2,6 +2,8 @@
 
 namespace NystronSolar\ElectricBillExtractor\BR\RS;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use NystronSolar\ElectricBillExtractor\Bill;
 use NystronSolar\ElectricBillExtractor\Extractor;
 
@@ -23,6 +25,7 @@ class ExtractorRGE extends Extractor
             $this->extractReadingGuide($value, $key);
             $this->extractPowerMeterId($value, $key);
             $this->extractPages($value, $key);
+            $this->extractDeliveryDate($value, $key);
         }
 
         return $this->getBill();
@@ -123,6 +126,25 @@ class ExtractorRGE extends Extractor
             }
 
             return $pages;
+        }
+
+        return false;
+    }
+
+    private function extractDeliveryDate(string $value, int $key, bool $setDeliveryDate = true): DateTimeInterface|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $deliveryDate = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[5]);
+
+            if ($setDeliveryDate) {
+                $this->bill->setDeliveryDate($deliveryDate);
+            }
+
+            return $deliveryDate;
         }
 
         return false;
