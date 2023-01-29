@@ -106,6 +106,14 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSameDate($jsonDueDate, $billDueDate);
     }
 
+    public function testExtractClassification()
+    {
+        $billClassification = $this->bill->getClassification();
+        $jsonClassification = $this->jsonData["Classification"];
+
+        $this->assertSame($jsonClassification, $billClassification);
+    }
+
     protected function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual)
     {
         $expectedDate = date_format($expected, "m/d/Y");
