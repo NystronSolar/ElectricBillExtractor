@@ -20,6 +20,7 @@ class ExtractorRGE extends Extractor
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
             $this->extractBatch($value, $key);
+            $this->extractReadingGuide($value, $key);
         }
 
         return $this->getBill();
@@ -60,6 +61,25 @@ class ExtractorRGE extends Extractor
             }
 
             return $batch;
+        }
+
+        return false;
+    }
+
+    private function extractReadingGuide(string $value, int $key, bool $setReadingGuide = true): string|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key - 1;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $readingGuide = $valuesArray[1];
+
+            if ($setReadingGuide) {
+                $this->bill->setReadingGuide($readingGuide);
+            }
+
+            return $readingGuide;
         }
 
         return false;

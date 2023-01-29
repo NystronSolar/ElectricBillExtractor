@@ -10,6 +10,8 @@ class BillRGE extends BillRS
 
     protected ?int $batch = null;
 
+    protected ?string $readingGuide = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -54,5 +56,25 @@ class BillRGE extends BillRS
         return $this;
     }
 
+    /**
+     * Returns the Bill Reading Guide
+     * @return ?string
+     */
+    public function getReadingGuide(): ?string
+    {
+        return $this->readingGuide;
+    }
 
+    /**
+     * Set the Bill Reading Guide
+     *
+     * @param string $_readingGuide
+     * @return self
+     */
+    public function setReadingGuide(string $_readingGuide): self
+    {
+        $this->readingGuide = $_readingGuide;
+
+        return $this;
+    }
 }
