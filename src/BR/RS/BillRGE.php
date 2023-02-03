@@ -26,6 +26,8 @@ class BillRGE extends BillRS
 
     protected ?string $classification = null;
 
+    protected ?string $supplyType = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -220,6 +222,28 @@ class BillRGE extends BillRS
     public function setClassification(string $_classification): self
     {
         $this->classification = $_classification;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill Supply Type
+     * @return ?string
+     */
+    public function getSupplyType(): ?string
+    {
+        return $this->supplyType;
+    }
+
+    /**
+     * Set the Bill Supply Type
+     *
+     * @param string $_supplyType
+     * @return self
+     */
+    public function setSupplyType(string $_supplyType): self
+    {
+        $this->supplyType = $_supplyType;
 
         return $this;
     }

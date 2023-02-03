@@ -23,6 +23,7 @@ class ExtractorRGE extends Extractor
             $this->extractClient($value, $key);
             $this->extractHeader($value, $key);
             $this->extractClassification($value);
+            $this->extractSupplyType($value, $key);
         }
 
         return $this->getBill();
@@ -95,6 +96,22 @@ class ExtractorRGE extends Extractor
             }
 
             return $classification;
+        }
+
+        return false;
+    }
+
+    private function extractSupplyType(string $value, int $key, bool $setSupplyType = true): string|false
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key + 1;
+            $supplyType = $this->contentExploded[$row];
+
+            if ($setSupplyType) {
+                $this->bill->setSupplyType($supplyType);
+            }
+
+            return $supplyType;
         }
 
         return false;
