@@ -123,7 +123,7 @@ class ExtractorRGE extends Extractor
         if (str_starts_with($value, "TENSÃO NOMINAL EM VOLTS")) {
             $voltage = (int) substr($value, 33, -32);
 
-            if($setVoltage) {
+            if ($setVoltage) {
                 $this->bill->setVoltage($voltage);
             }
 
