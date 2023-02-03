@@ -24,6 +24,7 @@ class ExtractorRGE extends Extractor
             $this->extractHeader($value, $key);
             $this->extractClassification($value);
             $this->extractSupplyType($value, $key);
+            $this->extractVoltage($value);
         }
 
         return $this->getBill();
@@ -112,6 +113,21 @@ class ExtractorRGE extends Extractor
             }
 
             return $supplyType;
+        }
+
+        return false;
+    }
+
+    private function extractVoltage(string $value, bool $setVoltage = true): int|false
+    {
+        if (str_starts_with($value, "TENSÃO NOMINAL EM VOLTS")) {
+            $voltage = (int) substr($value, 33, -32);
+
+            if($setVoltage) {
+                $this->bill->setVoltage($voltage);
+            }
+
+            return $voltage;
         }
 
         return false;

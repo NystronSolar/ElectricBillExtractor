@@ -28,6 +28,8 @@ class BillRGE extends BillRS
 
     protected ?string $supplyType = null;
 
+    protected ?int $voltage = null;
+
     /**
      * Returns the Bill Client
      * @return ?ClientRGE
@@ -244,6 +246,28 @@ class BillRGE extends BillRS
     public function setSupplyType(string $_supplyType): self
     {
         $this->supplyType = $_supplyType;
+
+        return $this;
+    }
+
+    /**
+     * Returns the Bill Voltage
+     * @return ?int
+     */
+    public function getVoltage(): ?int
+    {
+        return $this->voltage;
+    }
+
+    /**
+     * Set the Bill Voltage
+     *
+     * @param int $_voltage
+     * @return self
+     */
+    public function setVoltage(int $_voltage): self
+    {
+        $this->voltage = $_voltage;
 
         return $this;
     }
