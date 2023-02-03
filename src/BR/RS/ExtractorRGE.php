@@ -22,9 +22,7 @@ class ExtractorRGE extends Extractor
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
             $this->extractHeader($value, $key);
-            $this->extractClassification($value);
-            $this->extractSupplyType($value, $key);
-            $this->extractVoltage($value);
+            $this->extractBuilding($value, $key);
         }
 
         return $this->getBill();
@@ -87,47 +85,26 @@ class ExtractorRGE extends Extractor
         return false;
     }
 
-    private function extractClassification(string $value, bool $setClassification = true): string|false
+    private function extractBuilding(string $value, int $key, bool $setBuilding = true): BuildingRGE|false
     {
         if (str_starts_with($value, " Classificação:")) {
+            $supplyTypeRow = $key + 1;
+            $voltageRow = $key + 2;
+
             $classification = substr($value, 20, -22);
+            $supplyType = $this->contentExploded[$supplyTypeRow];
+            $voltage = (int) substr($this->contentExploded[$voltageRow], 33, -32);
 
-            if ($setClassification) {
-                $this->bill->setClassification($classification);
+            $building = new BuildingRGE($classification, $supplyType, $voltage);
+
+            if ($setBuilding) {
+                $client = $this->getBill()->getClient();
+                $client->setBuilding($building);
+
+                $this->bill->setClient($client);
             }
 
-            return $classification;
-        }
-
-        return false;
-    }
-
-    private function extractSupplyType(string $value, int $key, bool $setSupplyType = true): string|false
-    {
-        if (str_starts_with($value, " Classificação:")) {
-            $row = $key + 1;
-            $supplyType = $this->contentExploded[$row];
-
-            if ($setSupplyType) {
-                $this->bill->setSupplyType($supplyType);
-            }
-
-            return $supplyType;
-        }
-
-        return false;
-    }
-
-    private function extractVoltage(string $value, bool $setVoltage = true): int|false
-    {
-        if (str_starts_with($value, "TENSÃO NOMINAL EM VOLTS")) {
-            $voltage = (int) substr($value, 33, -32);
-
-            if ($setVoltage) {
-                $this->bill->setVoltage($voltage);
-            }
-
-            return $voltage;
+            return $building;
         }
 
         return false;

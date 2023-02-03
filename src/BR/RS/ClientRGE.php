@@ -12,6 +12,8 @@ class ClientRGE
 
     protected string $city;
 
+    protected BuildingRGE $building;
+
     public function __construct(string $_name, string $_address, string $_district, string $_city)
     {
         $this->name = $_name;
@@ -29,6 +31,7 @@ class ClientRGE
     {
         return $this->name;
     }
+
     /**
      * Returns the Client Address.
      *
@@ -38,6 +41,7 @@ class ClientRGE
     {
         return $this->address;
     }
+
     /**
      * Returns the Client District.
      *
@@ -47,6 +51,7 @@ class ClientRGE
     {
         return $this->district;
     }
+
     /**
      * Returns the Client City.
      *
@@ -57,5 +62,27 @@ class ClientRGE
         return $this->city;
     }
 
+    /**
+     * Returns the Client Building.
+     *
+     * @return BuildingRGE
+     */
+    public function getBuilding(): BuildingRGE
+    {
+        return $this->building;
+    }
 
+    /**
+     * Set the Client Building.
+     *
+     * @param BuildingRGE $_building
+     * @return self
+     */
+
+    public function setBuilding(BuildingRGE $_building): self
+    {
+        $this->building = $_building;
+
+        return $this;
+    }
 }
