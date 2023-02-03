@@ -4,38 +4,48 @@ namespace App\Tests\BR\RS;
 
 use App\Tests\CustomTestCase;
 use DateTimeImmutable;
-use DateTimeInterface;
 use NystronSolar\ElectricBillExtractor\BR\RS\BillRGE;
 use NystronSolar\ElectricBillExtractor\BR\RS\ExtractorRGE;
 
 class ExtractorRGETest extends CustomTestCase
 {
-    private bool $runTests;
     private array $jsonData;
     private ExtractorRGE $extractor;
     private BillRGE $bill;
+
+    protected static function getPaths(): array
+    {
+        return [
+            'json' => 'tests/content/BR/RS/RGE.json',
+            'pdf' => 'tests/content/BR/RS/RGE.pdf'
+        ];
+    }
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        $pdfFile = static::getPaths()['pdf'];
+        $jsonFile = static::getPaths()['json'];
+        $jsonContent = file_get_contents($jsonFile);
+
+        static::assertPDF($pdfFile);
+        static::assertJson($jsonContent);
+        static::assertBillJSON($jsonFile);
+    }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $pdfFile = 'tests/content/BR/RS/RGE.pdf';
-        $jsonFile = 'tests/content/BR/RS/RGE.json';
+        $pdfFile = static::getPaths()['pdf'];
+        $jsonFile = static::getPaths()['json'];
 
-        $checks = $this->checkPDF($pdfFile) && $this->checkJSON($jsonFile);
-        $this->assertBillJSON($jsonFile);
-
-        if (!$checks) {
-            $this->runTests = false;
-            return;
-        }
-
-        $this->runTests = true;
         $this->jsonData = json_decode(file_get_contents($jsonFile), true);
         $this->extractor = new ExtractorRGE();
         $this->bill = $this->extractor->fromFile($pdfFile);
 
-        $this->assertIsObject($this->bill);
+        $this->assertNotFalse($this->bill);
     }
 
 
@@ -130,29 +140,24 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonVoltage, $billVoltage);
     }
 
-    protected function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual)
-    {
-        $expectedDate = date_format($expected, "m/d/Y");
-        $actualDate = date_format($actual, "m/d/Y");
-
-        $this->assertSame($expectedDate, $actualDate);
-    }
-
-    protected function assertBillJSON(array |string $json)
+    public static function assertBillJSON(array |string $json): void
     {
         if (is_string($json)) {
             $json = json_decode(file_get_contents($json), true);
         }
 
-        $this->assertArrayHasKey('Client', $json, 'RGE Json File Don\'t Have Client Key.');
+        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage'];
+        static::assertIsArray($json);
+        static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
 
         $client = $json['Client'];
-        $this->assertIsArray($client, 'RGE Json File Client Key Isn\'t an Array.');
-        $this->assertArrayHasKey('Name', $client, 'RGE Json File Don\'t Have Client -> Name Key.');
-        $this->assertArrayHasKey('Address', $client, 'RGE Json File Don\'t Have Client -> Address Key.');
-        $this->assertArrayHasKey('District', $client, 'RGE Json File Don\'t Have Client -> District Key.');
-        $this->assertArrayHasKey('City', $client, 'RGE Json File Don\'t Have Client -> City Key.');
-        $this->assertArrayHasKey('Client', $json, 'RGE Json File Don\'t Have Client Key.');
+        $clientKeys = ['Name', 'Address', 'District', 'City',];
+        static::assertIsArray($client, 'RGE Json File Client Key Isn\'t an Array.');
+        static::assertArrayHasKeys($clientKeys, $client, 'RGE Json File Don\'t Have Client -> %s Key.');
 
+        $pages = $json['Pages'];
+        $pagesKey = ['Actual', 'Total'];
+        static::assertIsArray($pages);
+        static::assertArrayHasKeys($pagesKey, $pages, 'RGE Json File Don\'t Have Pages -> %s Key.');
     }
 }

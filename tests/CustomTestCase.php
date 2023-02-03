@@ -2,61 +2,71 @@
 
 namespace App\Tests;
 
+use ArrayAccess;
+use DateTimeInterface;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Smalot\PdfParser\Parser;
 
 abstract class CustomTestCase extends TestCase
 {
-    /**
-     * Check if a File Exists
-     * @param string $file The File Path
-     * @return bool
-     */
-    private function checkFile(string $file): bool
+    abstract protected static function getPaths(): array;
+
+    abstract public static function assertBillJSON(array |string $json): void;
+
+    public static function setUpBeforeClass(): void
     {
-        return file_exists($file);
+        parent::setUpBeforeClass();
+
+        static::assertBillJSON(static::getPaths()['json']);
     }
 
     /**
-     * Check if a PDF File is Valid
+     * Asserts that a PDF file can be loaded.
      * @param string $pdf The PDF Path
-     * @return bool
+     *
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    protected function checkPDF(string $pdf): bool
+    public static function assertPDF(string $pdf): void
     {
-        $exists = $this->checkFile($pdf);
-        if (!$exists) {
-            return false;
-        }
+        static::assertFileExists($pdf);
 
         $parser = new Parser();
-        try {
-            $parser->parseFile($pdf);
-        } catch (\Exception) {
-            return false;
-        }
-
-        return true;
+        $parser->parseFile($pdf);
     }
 
     /**
-     * Check if a JSON File is Valid
-     * @param string $json The JSON Path
-     * @return bool
+     * Asserts that an array has an specified array of keys.
+     *
+     * @param array|ArrayAccess $key
+     * @param array|ArrayAccess $array
+     * @param string            $message
+     *
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws Exception
      */
-    protected function checkJSON(string $json): bool
+    public static function assertArrayHasKeys(array |ArrayAccess $keys, array |ArrayAccess $array, string $message = ''): void
     {
-        $exists = $this->checkFile($json);
-        if (!$exists) {
-            return false;
+        foreach ($keys as $key) {
+            static::assertArrayHasKey($key, $array, sprintf($message, $key));
         }
+    }
 
-        $fileContent = file_get_contents($json);
-        $valid = !is_null(json_decode($fileContent));
-        if (!$valid) {
-            return false;
-        }
+    /**
+     * Asserts that two dates have the same day, month and year.
+     * 
+     * @param DateTimeInterface $expected
+     * @param DateTimeInterface $array
+     * @param string            $message
+     *
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws Exception
+     */
+    public static function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual, string $message = ''): void
+    {
+        $expectedDate = date_format($expected, "m/d/Y");
+        $actualDate = date_format($actual, "m/d/Y");
 
-        return true;
+        self::assertSame($expectedDate, $actualDate, $message);
     }
 }
