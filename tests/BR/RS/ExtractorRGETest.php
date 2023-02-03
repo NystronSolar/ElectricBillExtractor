@@ -122,6 +122,14 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonSupplyType, $billSupplyType);
     }
 
+    public function testExtractVoltage()
+    {
+        $billVoltage = $this->bill->getVoltage();
+        $jsonVoltage = $this->jsonData["Voltage"];
+
+        $this->assertSame($jsonVoltage, $billVoltage);
+    }
+
     protected function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual)
     {
         $expectedDate = date_format($expected, "m/d/Y");
@@ -145,5 +153,6 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertArrayHasKey('District', $client, 'RGE Json File Don\'t Have Client -> District Key.');
         $this->assertArrayHasKey('City', $client, 'RGE Json File Don\'t Have Client -> City Key.');
         $this->assertArrayHasKey('Client', $json, 'RGE Json File Don\'t Have Client Key.');
+
     }
 }
