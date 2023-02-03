@@ -118,7 +118,7 @@ class ExtractorRGETest extends CustomTestCase
 
     public function testExtractClassification()
     {
-        $billClassification = $this->bill->getClassification();
+        $billClassification = $this->bill->getClient()->getBuilding()->getClassification();
         $jsonClassification = $this->jsonData["Classification"];
 
         $this->assertSame($jsonClassification, $billClassification);
@@ -126,7 +126,7 @@ class ExtractorRGETest extends CustomTestCase
 
     public function testExtractSupplyType()
     {
-        $billSupplyType = $this->bill->getSupplyType();
+        $billSupplyType = $this->bill->getClient()->getBuilding()->getSupplyType();
         $jsonSupplyType = $this->jsonData["SupplyType"];
 
         $this->assertSame($jsonSupplyType, $billSupplyType);
@@ -134,7 +134,8 @@ class ExtractorRGETest extends CustomTestCase
 
     public function testExtractVoltage()
     {
-        $billVoltage = $this->bill->getVoltage();
+        $billVoltage = $this->bill->getClient()->getBuilding()->getVoltage();
+        $billVoltage = $this->bill->getClient()->getBuilding()->getVoltage();
         $jsonVoltage = $this->jsonData["Voltage"];
 
         $this->assertSame($jsonVoltage, $billVoltage);
