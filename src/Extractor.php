@@ -9,9 +9,9 @@ abstract class Extractor
 {
     protected Parser $parser;
 
-    protected ?Bill $bill;
-
     protected ?Document $document;
+
+    protected ?array $bill;
 
     protected array $contentExploded;
 
@@ -27,28 +27,6 @@ abstract class Extractor
     public function getParser(): Parser
     {
         return $this->parser;
-    }
-
-    /**
-     * Returns the Bill
-     * @return ?Bill
-     */
-    public function getBill(): ?Bill
-    {
-        return $this->bill;
-    }
-
-    /**
-     * Set the Bill
-     *
-     * @param Bill $_bill
-     * @return self
-     */
-    public function setBill(Bill $_bill): self
-    {
-        $this->bill = $_bill;
-
-        return $this;
     }
 
     /**
@@ -75,12 +53,34 @@ abstract class Extractor
     }
 
     /**
+     * Returns the Bill
+     * @return ?array
+     */
+    public function getBill(): ?array
+    {
+        return $this->bill;
+    }
+
+    /**
+     * Set the Bill
+     *
+     * @param array $_bill
+     * @return self
+     */
+    public function setBill(array $_bill): self
+    {
+        $this->bill = $_bill;
+
+        return $this;
+    }
+
+    /**
      * Extract the Bill from an File.
      * Return False in case of error.
      * @param string $filename
-     * @return Bill|false
+     * @return array|false
      */
-    public function fromFile(string $filename): Bill|false
+    public function fromFile(string $filename): array|false
     {
         $this->setDocument($this->parser->parseFile($filename));
 
@@ -93,9 +93,9 @@ abstract class Extractor
      * Extract the Bill from an Content (String).
      * Return False in case of error.
      * @param string $content
-     * @return Bill|false
+     * @return array|false
      */
-    public function fromContent(string $content): Bill|false
+    public function fromContent(string $content): array|false
     {
         $this->setDocument($this->parser->parseContent($content));
 
@@ -104,5 +104,5 @@ abstract class Extractor
         return $bill;
     }
 
-    abstract protected function extract(string $content): Bill|false;
+    abstract protected function extract(string $content): array|false;
 }

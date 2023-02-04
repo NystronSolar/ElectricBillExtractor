@@ -3,22 +3,12 @@
 namespace NystronSolar\ElectricBillExtractor\BR\RS;
 
 use DateTimeImmutable;
-use DateTimeInterface;
-use NystronSolar\ElectricBillExtractor\Bill;
 use NystronSolar\ElectricBillExtractor\Extractor;
 
-/**
- * @method \NystronSolar\ElectricBillExtractor\BR\RS\BillRGE getBill()
- * @method \NystronSolar\ElectricBillExtractor\BR\RS\BillRGE fromFile(string $filename): Bill|false
- * @method \NystronSolar\ElectricBillExtractor\BR\RS\BillRGE fromContent(string $content): Bill|false
- * @property \NystronSolar\ElectricBillExtractor\BR\RS\BillRGE $bill
- */
 class ExtractorRGE extends Extractor
 {
-    protected function extract(string $content): Bill|false
+    protected function extract(string $content): array
     {
-        $this->setBill(new BillRGE($this->getDocument()));
-
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
             $this->extractHeader($value, $key);
@@ -28,83 +18,68 @@ class ExtractorRGE extends Extractor
         return $this->getBill();
     }
 
-    private function extractClient(string $value, int $key, bool $setClient = true): ClientRGE|false
+    private function extractClient(string $value, int $key): bool
     {
         if (str_starts_with($value, "Inscrição Estadual")) {
             $row = $key + 1;
-            $name = $this->contentExploded[$row];
-            $address = $this->contentExploded[$row + 1];
-            $district = $this->contentExploded[$row + 2];
-            $city = $this->contentExploded[$row + 3];
 
-            $client = new ClientRGE($name, $address, $district, $city);
+            $client = [
+                "Name" => $this->contentExploded[$row],
+                "Address" => $this->contentExploded[$row + 1],
+                "District" => $this->contentExploded[$row + 2],
+                "City" => $this->contentExploded[$row + 3],
+            ];
 
-            if ($setClient) {
-                $this->bill->setClient($client);
-            }
+            $this->bill['Client'] = $client;
 
-            return $client;
+            return true;
         }
 
         return false;
     }
 
-    private function extractHeader(string $value, int $key, bool $setHeader = true): array |false
+    private function extractHeader(string $value, int $key): bool
     {
         if (str_starts_with($value, " Classificação:")) {
             $row = $key - 1;
 
             $valuesArray = explode(' ', $this->contentExploded[$row]);
 
-            $header = [
-                "Batch" => (int) $valuesArray[0],
-                "ReadingGuide" => $valuesArray[1],
-                "PowerMeterId" => (int) $valuesArray[2],
-                "Pages" => [
-                    'Actual' => (int) $valuesArray[3],
-                    'Total' => (int) $valuesArray[4]
-                ],
-                "DeliveryDate" => DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[5]),
-                "NextReadingDate" => DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[6]),
-                "DueDate" => DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[7])
+            $this->bill["Batch"] = (int) $valuesArray[0];
+            $this->bill["ReadingGuide"] = $valuesArray[1];
+            $this->bill["PowerMeterId"] = (int) $valuesArray[2];
+            $this->bill["Pages"] = [
+                'Actual' => (int) $valuesArray[3],
+                'Total' => (int) $valuesArray[4]
             ];
+            $this->bill["DeliveryDate"] = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[5]);
+            $this->bill["NextReadingDate"] = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[6]);
+            $this->bill["DueDate"] = DateTimeImmutable::createFromFormat("d/m/Y", $valuesArray[7]);
 
-            if ($setHeader) {
-                $this->bill->setBatch($header["Batch"]);
-                $this->bill->setReadingGuide($header["ReadingGuide"]);
-                $this->bill->setPowerMeterId($header["PowerMeterId"]);
-                $this->bill->setPages($header["Pages"]);
-                $this->bill->setDeliveryDate($header["DeliveryDate"]);
-                $this->bill->setNextReadingDate($header["NextReadingDate"]);
-                $this->bill->setDueDate($header["DueDate"]);
-            }
-
-            return $header;
+            return true;
         }
 
         return false;
     }
 
-    private function extractBuilding(string $value, int $key, bool $setBuilding = true): BuildingRGE|false
+    private function extractBuilding(string $value, int $key): bool
     {
         if (str_starts_with($value, " Classificação:")) {
             $supplyTypeRow = $key + 1;
             $voltageRow = $key + 2;
 
-            $classification = substr($value, 20, -22);
-            $supplyType = $this->contentExploded[$supplyTypeRow];
-            $voltage = (int) substr($this->contentExploded[$voltageRow], 33, -32);
+            $building = [
+                "Classification" => substr($value, 20, -22),
+                "SupplyType" => $this->contentExploded[$supplyTypeRow],
+                "Voltage" => [
+                    "Available" => (int) substr($this->contentExploded[$voltageRow], 33, -32),
+                    "MinimumLimit" => (int) substr($this->contentExploded[$voltageRow], 49, -16),
+                    "MaximumLimit" => (int) substr($this->contentExploded[$voltageRow], 68)
+                ]
+            ];
+            $this->bill["Client"]["Building"] = $building;
 
-            $building = new BuildingRGE($classification, $supplyType, $voltage);
-
-            if ($setBuilding) {
-                $client = $this->getBill()->getClient();
-                $client->setBuilding($building);
-
-                $this->bill->setClient($client);
-            }
-
-            return $building;
+            return true;
         }
 
         return false;
