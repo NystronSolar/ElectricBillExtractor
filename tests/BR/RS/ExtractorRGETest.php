@@ -156,13 +156,21 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonCost, $billCost);
     }
 
+    public function testInstallationCode()
+    {
+        $billInstallationCode = $this->bill["InstallationCode"];
+        $jsonInstallationCode = $this->jsonData["InstallationCode"];
+
+        $this->assertSame($jsonInstallationCode, $billInstallationCode);
+    }
+
     public static function assertBillJson(array |string $json): void
     {
         if (is_string($json)) {
             $json = json_decode(file_get_contents($json), true);
         }
 
-        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost'];
+        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode'];
         static::assertIsArray($json);
         static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
 
