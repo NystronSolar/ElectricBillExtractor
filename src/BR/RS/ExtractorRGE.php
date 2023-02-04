@@ -16,6 +16,7 @@ class ExtractorRGE extends Extractor
             $this->extractHeader($value, $key);
             $this->extractBuilding($value, $key);
             $this->extractBilling($value, $key);
+            $this->extractInstallationCode($value);
         }
 
         return $this->getBill();
@@ -96,6 +97,17 @@ class ExtractorRGE extends Extractor
 
             $this->bill["Date"] = DateHelper::fromMonthYearPortuguese(str_replace(',', '', substr($row, 0, -20)), true);
             $this->bill["Cost"] = Money::BRL((int) str_replace(',', '', substr($row, 23)));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractInstallationCode(string $value): bool
+    {
+        if (str_starts_with($value, "CPF:")) {
+            $this->bill["InstallationCode"] = substr($value, 19);
 
             return true;
         }
