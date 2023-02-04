@@ -4,7 +4,6 @@ namespace App\Tests\BR\RS;
 
 use App\Tests\CustomTestCase;
 use DateTimeImmutable;
-use NystronSolar\ElectricBillExtractor\BR\RS\BillRGE;
 use NystronSolar\ElectricBillExtractor\BR\RS\ExtractorRGE;
 
 class ExtractorRGETest extends CustomTestCase

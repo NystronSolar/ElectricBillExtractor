@@ -10,17 +10,6 @@ use Smalot\PdfParser\Parser;
 
 abstract class CustomTestCase extends TestCase
 {
-    abstract protected static function getPaths(): array;
-
-    abstract public static function assertBillJSON(array |string $json): void;
-
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        static::assertBillJSON(static::getPaths()['json']);
-    }
-
     /**
      * Asserts that a PDF file can be loaded.
      * @param string $pdf The PDF Path
@@ -67,6 +56,21 @@ abstract class CustomTestCase extends TestCase
         $expectedDate = date_format($expected, "m/d/Y");
         $actualDate = date_format($actual, "m/d/Y");
 
-        self::assertSame($expectedDate, $actualDate, $message);
+        static::assertSame($expectedDate, $actualDate, $message);
+    }
+
+    /**
+     * Asserts that a method exists in a class.
+     * 
+     * @param string $class
+     * @param string $method
+     * @param string $message
+     *
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws Exception
+     */
+    public static function assertMethodExists(string $class, string $method, string $message = ''): void
+    {
+        static::assertTrue(method_exists($class, $method), $message);
     }
 }
