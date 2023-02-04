@@ -3,7 +3,9 @@
 namespace NystronSolar\ElectricBillExtractor\BR\RS;
 
 use DateTimeImmutable;
+use Money\Money;
 use NystronSolar\ElectricBillExtractor\Extractor;
+use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 
 class ExtractorRGE extends Extractor
 {
@@ -13,6 +15,7 @@ class ExtractorRGE extends Extractor
             $this->extractClient($value, $key);
             $this->extractHeader($value, $key);
             $this->extractBuilding($value, $key);
+            $this->extractBilling($value, $key);
         }
 
         return $this->getBill();
@@ -78,6 +81,21 @@ class ExtractorRGE extends Extractor
                 ]
             ];
             $this->bill["Client"]["Building"] = $building;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractBilling(string $value, int $key): bool
+    {
+        if (str_starts_with($value, "Protocolo")) {
+            $rowKey = $key + 1;
+            $row = $this->contentExploded[$rowKey];
+
+            $this->bill["Date"] = DateHelper::fromMonthYearPortuguese(str_replace(',', '', substr($row, 0, -20)), true);
+            $this->bill["Cost"] = Money::BRL((int) str_replace(',', '', substr($row, 23)));
 
             return true;
         }
