@@ -164,6 +164,14 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonTotalDays, $billTotalDays);
     }
 
+    public function testInstallationCode()
+    {
+        $billInstallationCode = $this->bill["InstallationCode"];
+        $jsonInstallationCode = $this->jsonData["InstallationCode"];
+
+        $this->assertSame($jsonInstallationCode, $billInstallationCode);
+    }
+
     public function testExtractDate()
     {
         $billDate = $this->bill["Date"];
@@ -178,14 +186,6 @@ class ExtractorRGETest extends CustomTestCase
         $jsonCost = $this->jsonData["Cost"];
 
         $this->assertSame($jsonCost, $billCost);
-    }
-
-    public function testInstallationCode()
-    {
-        $billInstallationCode = $this->bill["InstallationCode"];
-        $jsonInstallationCode = $this->jsonData["InstallationCode"];
-
-        $this->assertSame($jsonInstallationCode, $billInstallationCode);
     }
 
     public static function assertBillJson(array |string $json): void

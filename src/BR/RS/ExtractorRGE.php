@@ -17,8 +17,8 @@ class ExtractorRGE extends Extractor
             $this->extractHeader($value, $key);
             $this->extractBuilding($value, $key);
             $this->extractReadingDates($value, $key);
-            $this->extractBilling($value, $key);
             $this->extractInstallationCode($value);
+            $this->extractBilling($value, $key);
         }
 
         return $this->getBill();
