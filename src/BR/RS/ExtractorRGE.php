@@ -2,6 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor\BR\RS;
 
+use Closure;
 use DateTime;
 use DateTimeImmutable;
 use Money\Money;
@@ -19,6 +20,7 @@ class ExtractorRGE extends Extractor
             $this->extractReadingDates($value, $key);
             $this->extractInstallationCode($value);
             $this->extractBilling($value, $key);
+            $this->extractNotices($value, $key);
         }
 
         return $this->getBill();
@@ -112,6 +114,17 @@ class ExtractorRGE extends Extractor
         return false;
     }
 
+    private function extractInstallationCode(string $value): bool
+    {
+        if (str_starts_with($value, "CPF:")) {
+            $this->bill["InstallationCode"] = substr($value, 19);
+
+            return true;
+        }
+
+        return false;
+    }
+
     private function extractBilling(string $value, int $key): bool
     {
         if (str_starts_with($value, "Protocolo")) {
@@ -127,14 +140,47 @@ class ExtractorRGE extends Extractor
         return false;
     }
 
-    private function extractInstallationCode(string $value): bool
+    private function extractNotices(string $value, int $key): bool
     {
-        if (str_starts_with($value, "CPF:")) {
-            $this->bill["InstallationCode"] = substr($value, 19);
+        if (str_starts_with($value, "Protocolo")) {
+            $startRowKey = $key + 2;
+            for ($endRowKey = $startRowKey; true; $endRowKey++) {
+                if ($this->contentExploded[$endRowKey] == " ") {
+                    $endRowKey--;
+                    break;
+                }
+            }
+
+            $noticesText = $this->removeKeysBiggerThan($this->removeKeysSmallerThan($this->contentExploded, $startRowKey), $endRowKey);
+
+            $this->bill["Notices"]["Text"] = $noticesText;
 
             return true;
         }
 
         return false;
+    }
+
+    private function removeKeysSmallerThan(array $array, int $x)
+    {
+        $filter = function (int $key) use ($x) {
+            return !($key < $x);
+        };
+
+        return $this->filterArrayByKey($array, $filter);
+    }
+
+    private function removeKeysBiggerThan(array $array, int $x)
+    {
+        $filter = function (int $key) use ($x) {
+            return !($key > $x);
+        };
+
+        return $this->filterArrayByKey($array, $filter);
+    }
+
+    private function filterArrayByKey(array $array, Closure $callback)
+    {
+        return array_filter($array, $callback, ARRAY_FILTER_USE_KEY);
     }
 }
