@@ -195,7 +195,7 @@ class ExtractorRGETest extends CustomTestCase
 
         $this->assertSame($jsonVoltage, $billVoltage);
     }
-    
+
     public function testExtractSolarGeneration()
     {
         $billSolarGeneration = $this->bill["SolarGeneration"];
@@ -203,13 +203,22 @@ class ExtractorRGETest extends CustomTestCase
 
         $this->assertSame($jsonSolarGeneration, $billSolarGeneration);
     }
+
+    public function testExtractEnergyData()
+    {
+        $billEnergyData = $this->bill["EnergyData"];
+        $jsonEnergyData = $this->jsonData["EnergyData"];
+
+        $this->assertSame($jsonEnergyData, $billEnergyData);
+    }
+
     public static function assertBillJson(array |string $json): void
     {
         if (is_string($json)) {
             $json = json_decode(file_get_contents($json), true);
         }
 
-        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays', 'Notices', 'SolarGeneration'];
+        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays', 'Notices', 'SolarGeneration', 'EnergyData'];
         static::assertIsArray($json);
         static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
 
@@ -237,5 +246,20 @@ class ExtractorRGETest extends CustomTestCase
         $solarGenerationKey = ['ParticipationGeneration', 'Balance', 'NextMonthExpiringBalance'];
         static::assertIsArray($solarGeneration);
         static::assertArrayHasKeys($solarGenerationKey, $solarGeneration, 'RGE Json File Don\'t Have SolarGeneration -> %s Key.');
+
+        $energyData = $json['EnergyData'];
+        $energyDataKey = ['EnergyConsumed', 'EnergyExcess'];
+        static::assertIsArray($energyData);
+        static::assertArrayHasKeys($energyDataKey, $energyData, 'RGE Json File Don\'t Have EnergyData -> %s Key.');
+
+        $energyConsumed = $json['EnergyData']['EnergyConsumed'];
+        $energyConsumedKey = ['Timetables', 'PreviousReading', 'ActualReading', 'MeterConstant', 'Consumed'];
+        static::assertIsArray($energyConsumed);
+        static::assertArrayHasKeys($energyConsumedKey, $energyConsumed, 'RGE Json File Don\'t Have EnergyData -> Energy Consumed -> %s Key.');
+
+        $energyExcess = $json['EnergyData']['EnergyExcess'];
+        $energyExcessKey = ['Timetables', 'PreviousReading', 'ActualReading', 'MeterConstant', 'Consumed'];
+        static::assertIsArray($energyExcess);
+        static::assertArrayHasKeys($energyExcessKey, $energyExcess, 'RGE Json File Don\'t Have EnergyData -> Energy Excess -> %s Key.');
     }
 }
