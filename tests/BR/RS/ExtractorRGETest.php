@@ -140,6 +140,30 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonVoltage, $billVoltage);
     }
 
+    public function testExtractActualReadingDate()
+    {
+        $billReadingDate = $this->bill["ActualReadingDate"];
+        $jsonReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["ActualReadingDate"]);
+
+        $this->assertSameDate($jsonReadingDate, $billReadingDate);
+    }
+
+    public function testExtractPreviousReadingDate()
+    {
+        $billReadingDate = $this->bill["PreviousReadingDate"];
+        $jsonReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["PreviousReadingDate"]);
+
+        $this->assertSameDate($jsonReadingDate, $billReadingDate);
+    }
+
+    public function testExtractTotalDays()
+    {
+        $billTotalDays = $this->bill["TotalDays"];
+        $jsonTotalDays = $this->jsonData["TotalDays"];
+
+        $this->assertSame($jsonTotalDays, $billTotalDays);
+    }
+
     public function testExtractDate()
     {
         $billDate = $this->bill["Date"];
@@ -170,7 +194,7 @@ class ExtractorRGETest extends CustomTestCase
             $json = json_decode(file_get_contents($json), true);
         }
 
-        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode'];
+        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays'];
         static::assertIsArray($json);
         static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
 
