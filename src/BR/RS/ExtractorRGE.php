@@ -2,6 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor\BR\RS;
 
+use DateTime;
 use DateTimeImmutable;
 use Money\Money;
 use NystronSolar\ElectricBillExtractor\Extractor;
@@ -15,7 +16,9 @@ class ExtractorRGE extends Extractor
             $this->extractClient($value, $key);
             $this->extractHeader($value, $key);
             $this->extractBuilding($value, $key);
+            $this->extractReadingDates($value, $key);
             $this->extractBilling($value, $key);
+            $this->extractInstallationCode($value);
         }
 
         return $this->getBill();
@@ -88,6 +91,27 @@ class ExtractorRGE extends Extractor
         return false;
     }
 
+    private function extractReadingDates(string $value, int $key): bool
+    {
+        if (str_starts_with($value, " Classificação:")) {
+            $row = $key + 3;
+
+            $valuesArray = explode(' ', $this->contentExploded[$row]);
+
+            $actualReadingDate = DateTime::createFromFormat('d/m/Y', $valuesArray[0]);
+            $previousReadingDate = DateTime::createFromFormat('d/m/Y', $valuesArray[1]);
+            $totalDays = (int) $valuesArray[2];
+
+            $this->bill["ActualReadingDate"] = $actualReadingDate;
+            $this->bill["PreviousReadingDate"] = $previousReadingDate;
+            $this->bill["TotalDays"] = $totalDays;
+
+            return true;
+        }
+
+        return false;
+    }
+
     private function extractBilling(string $value, int $key): bool
     {
         if (str_starts_with($value, "Protocolo")) {
@@ -96,6 +120,17 @@ class ExtractorRGE extends Extractor
 
             $this->bill["Date"] = DateHelper::fromMonthYearPortuguese(str_replace(',', '', substr($row, 0, -20)), true);
             $this->bill["Cost"] = Money::BRL((int) str_replace(',', '', substr($row, 23)));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractInstallationCode(string $value): bool
+    {
+        if (str_starts_with($value, "CPF:")) {
+            $this->bill["InstallationCode"] = substr($value, 19);
 
             return true;
         }
