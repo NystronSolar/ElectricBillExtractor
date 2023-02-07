@@ -188,13 +188,21 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonCost, $billCost);
     }
 
+    public function extractNoticeText()
+    {
+        $billVoltage = $this->bill["Notices"]["Text"];
+        $jsonVoltage = $this->jsonData["Notices"]["Text"];
+
+        $this->assertSame($jsonVoltage, $billVoltage);
+    }
+
     public static function assertBillJson(array |string $json): void
     {
         if (is_string($json)) {
             $json = json_decode(file_get_contents($json), true);
         }
 
-        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays'];
+        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays', 'Notices'];
         static::assertIsArray($json);
         static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
 
@@ -212,5 +220,10 @@ class ExtractorRGETest extends CustomTestCase
         $voltageKey = ['Available', 'MinimumLimit', 'MaximumLimit'];
         static::assertIsArray($voltage);
         static::assertArrayHasKeys($voltageKey, $voltage, 'RGE Json File Don\'t Have Voltage -> %s Key.');
+
+        $voltage = $json['Notices'];
+        $voltageKey = ['Text'];
+        static::assertIsArray($voltage);
+        static::assertArrayHasKeys($voltageKey, $voltage, 'RGE Json File Don\'t Have Notices -> %s Key.');
     }
 }
