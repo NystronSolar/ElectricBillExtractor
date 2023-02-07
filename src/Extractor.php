@@ -84,7 +84,7 @@ abstract class Extractor
     {
         $this->setDocument($this->parser->parseFile($filename));
 
-        $bill = $this->extract($this->document->getText());
+        $bill = $this->extract();
 
         return $bill;
     }
@@ -99,10 +99,10 @@ abstract class Extractor
     {
         $this->setDocument($this->parser->parseContent($content));
 
-        $bill = $this->extract($this->document->getText());
+        $bill = $this->extract();
 
         return $bill;
     }
 
-    abstract protected function extract(string $content): array|false;
+    abstract protected function extract(): array|false;
 }

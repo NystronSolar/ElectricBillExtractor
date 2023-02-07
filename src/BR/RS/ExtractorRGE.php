@@ -10,7 +10,7 @@ use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 
 class ExtractorRGE extends Extractor
 {
-    protected function extract(string $content): array
+    protected function extract(): array
     {
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
