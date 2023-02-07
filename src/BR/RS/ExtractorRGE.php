@@ -21,6 +21,7 @@ class ExtractorRGE extends Extractor
             $this->extractInstallationCode($value);
             $this->extractBilling($value, $key);
             $this->extractNotices($value, $key);
+            $this->extractSolarGeneration($value, $key);
         }
 
         return $this->getBill();
@@ -153,7 +154,34 @@ class ExtractorRGE extends Extractor
 
             $noticesText = $this->removeKeysBiggerThan($this->removeKeysSmallerThan($this->contentExploded, $startRowKey), $endRowKey);
 
-            $this->bill["Notices"]["Text"] = $noticesText;
+            $this->bill["Notices"]["Text"] = implode('\\n', $noticesText);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractSolarGeneration(string $value, int $key): bool
+    {
+        if (str_starts_with($value, "Participação na geração")) {
+            $balanceKey = $key + 1;
+            $nextMonthExpiringBalanceKey = $key + 2;
+            $participationGeneration = (float) substr($value, 28, -1);
+
+            $balance = substr($this->contentExploded[$balanceKey], 48, -5);
+            $balanceWithoutStyling = str_replace(".", "", $balance);
+            $balanceFormatted = str_replace(",", ".", $balanceWithoutStyling);
+            $balance = (float) $balanceFormatted;
+
+            $nextMonthExpiringBalance = substr($this->contentExploded[$nextMonthExpiringBalanceKey], 32, -4);
+            $nextMonthExpiringBalanceWithoutStyling = str_replace(".", "", $nextMonthExpiringBalance);
+            $nextMonthExpiringBalanceFormatted = str_replace(",", ".", $nextMonthExpiringBalanceWithoutStyling);
+            $nextMonthExpiringBalance = (float) $nextMonthExpiringBalanceFormatted;
+
+            $this->bill["SolarGeneration"]["ParticipationGeneration"] = $participationGeneration;
+            $this->bill["SolarGeneration"]["Balance"] = $balance;
+            $this->bill["SolarGeneration"]["NextMonthExpiringBalance"] = $nextMonthExpiringBalance;
 
             return true;
         }
