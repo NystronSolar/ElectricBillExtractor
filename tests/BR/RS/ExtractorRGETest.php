@@ -188,21 +188,28 @@ class ExtractorRGETest extends CustomTestCase
         $this->assertSame($jsonCost, $billCost);
     }
 
-    public function extractNoticeText()
+    public function testExtractNoticeText()
     {
         $billVoltage = $this->bill["Notices"]["Text"];
         $jsonVoltage = $this->jsonData["Notices"]["Text"];
 
         $this->assertSame($jsonVoltage, $billVoltage);
     }
+    
+    public function testExtractSolarGeneration()
+    {
+        $billSolarGeneration = $this->bill["SolarGeneration"];
+        $jsonSolarGeneration = $this->jsonData["SolarGeneration"];
 
+        $this->assertSame($jsonSolarGeneration, $billSolarGeneration);
+    }
     public static function assertBillJson(array |string $json): void
     {
         if (is_string($json)) {
             $json = json_decode(file_get_contents($json), true);
         }
 
-        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays', 'Notices'];
+        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays', 'Notices', 'SolarGeneration'];
         static::assertIsArray($json);
         static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
 
@@ -221,9 +228,14 @@ class ExtractorRGETest extends CustomTestCase
         static::assertIsArray($voltage);
         static::assertArrayHasKeys($voltageKey, $voltage, 'RGE Json File Don\'t Have Voltage -> %s Key.');
 
-        $voltage = $json['Notices'];
-        $voltageKey = ['Text'];
-        static::assertIsArray($voltage);
-        static::assertArrayHasKeys($voltageKey, $voltage, 'RGE Json File Don\'t Have Notices -> %s Key.');
+        $notices = $json['Notices'];
+        $noticesKey = ['Text'];
+        static::assertIsArray($notices);
+        static::assertArrayHasKeys($noticesKey, $notices, 'RGE Json File Don\'t Have Notices -> %s Key.');
+
+        $solarGeneration = $json['SolarGeneration'];
+        $solarGenerationKey = ['ParticipationGeneration', 'Balance', 'NextMonthExpiringBalance'];
+        static::assertIsArray($solarGeneration);
+        static::assertArrayHasKeys($solarGenerationKey, $solarGeneration, 'RGE Json File Don\'t Have SolarGeneration -> %s Key.');
     }
 }
