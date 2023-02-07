@@ -1,7 +1,7 @@
 {
     "name": "nystron-solar/electric-bill-extractor",
     "description": "Extract the data from an Electric Bill",
-    "license": "GNU GPLv3",
+    "license": "GPL-3.0-only",
     "homepage": "https://github.com/NystronSolar/DashboardApi",
     "prefer-stable": true,
     "autoload": {
