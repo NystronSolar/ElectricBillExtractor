@@ -22,6 +22,7 @@ class ExtractorRGE extends Extractor
             $this->extractBilling($value, $key);
             $this->extractNotices($value, $key);
             $this->extractSolarGeneration($value, $key);
+            $this->extractEnergyData($value, $key);
         }
 
         return $this->getBill();
@@ -170,14 +171,10 @@ class ExtractorRGE extends Extractor
             $participationGeneration = (float) substr($value, 28, -1);
 
             $balance = substr($this->contentExploded[$balanceKey], 48, -5);
-            $balanceWithoutStyling = str_replace(".", "", $balance);
-            $balanceFormatted = str_replace(",", ".", $balanceWithoutStyling);
-            $balance = (float) $balanceFormatted;
+            $balance = $this->translateFloatFromBR($balance);
 
             $nextMonthExpiringBalance = substr($this->contentExploded[$nextMonthExpiringBalanceKey], 32, -4);
-            $nextMonthExpiringBalanceWithoutStyling = str_replace(".", "", $nextMonthExpiringBalance);
-            $nextMonthExpiringBalanceFormatted = str_replace(",", ".", $nextMonthExpiringBalanceWithoutStyling);
-            $nextMonthExpiringBalance = (float) $nextMonthExpiringBalanceFormatted;
+            $nextMonthExpiringBalance = $this->translateFloatFromBR($nextMonthExpiringBalance);
 
             $this->bill["SolarGeneration"]["ParticipationGeneration"] = $participationGeneration;
             $this->bill["SolarGeneration"]["Balance"] = $balance;
@@ -187,6 +184,40 @@ class ExtractorRGE extends Extractor
         }
 
         return false;
+    }
+
+    private function extractEnergyData(string $value, int $key)
+    {
+        if (str_contains($value, "Energia Ativa-kWh")) {
+            $this->bill["EnergyData"] = [];
+            $this->bill["EnergyData"]["EnergyConsumed"] = [];
+            $this->bill["EnergyData"]["EnergyExcess"] = [];
+
+            $energyConsumedExploded = explode(" ", $value);
+            $this->bill["EnergyData"]["EnergyConsumed"]["Timetables"] = $energyConsumedExploded[3];
+            $this->bill["EnergyData"]["EnergyConsumed"]["PreviousReading"] = (int) $energyConsumedExploded[4];
+            $this->bill["EnergyData"]["EnergyConsumed"]["ActualReading"] = (int) $energyConsumedExploded[5];
+            $this->bill["EnergyData"]["EnergyConsumed"]["MeterConstant"] = $this->translateFloatFromBR($energyConsumedExploded[6]);
+            $this->bill["EnergyData"]["EnergyConsumed"]["Consumed"] = (int) $energyConsumedExploded[7];
+
+            $energyExcessExploded = explode(" ", $this->contentExploded[$key + 1]);
+            $this->bill["EnergyData"]["EnergyExcess"]["Timetables"] = $energyExcessExploded[3];
+            $this->bill["EnergyData"]["EnergyExcess"]["PreviousReading"] = (int) $energyExcessExploded[4];
+            $this->bill["EnergyData"]["EnergyExcess"]["ActualReading"] = (int) $energyExcessExploded[5];
+            $this->bill["EnergyData"]["EnergyExcess"]["MeterConstant"] = $this->translateFloatFromBR($energyExcessExploded[6]);
+            $this->bill["EnergyData"]["EnergyExcess"]["Consumed"] = (int) $energyExcessExploded[7];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function translateFloatFromBR(string $float)
+    {
+        $floatWithoutStyling = str_replace(".", "", $float);
+        $floatFormatted = str_replace(",", ".", $floatWithoutStyling);
+        return (float) $floatFormatted;
     }
 
     private function removeKeysSmallerThan(array $array, int $x)
