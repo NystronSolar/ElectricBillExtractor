@@ -134,6 +134,7 @@ class ExtractorRGE extends Extractor
             $row = $this->contentExploded[$rowKey];
 
             $this->bill["Date"] = DateHelper::fromMonthYearPortuguese(str_replace(',', '', substr($row, 0, 8)), true);
+            $this->bill["Date"] = DateHelper::fromMonthYearPortuguese(substr($row, 0, 8), true);
             $this->bill["Cost"] = Money::BRL((int) str_replace(',', '', str_replace('*', '0', substr($row, 23))));
 
             return true;

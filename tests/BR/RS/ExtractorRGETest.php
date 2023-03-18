@@ -39,7 +39,7 @@ class ExtractorRGETest extends CustomTestCase
         $billFile = $path;
         $bill = $extractor->fromFile($billFile);
 
-        if($moneyToFloat) {
+        if ($moneyToFloat) {
             $bill['Cost'] = (int) $bill['Cost']->getAmount();
         }
 
@@ -49,16 +49,25 @@ class ExtractorRGETest extends CustomTestCase
 
     public static function appProvider(): array
     {
-        return [
-            [
-                'expected' => static::readJson('tests/content/BR/RS/RGE.json'),
-                'actual' => static::readPDF('tests/content/BR/RS/RGE.pdf'),
-            ],
-            [
-                'expected' => static::readJson('tests/content/BR/RS/RGENoPrice.json'),
-                'actual' => static::readPDF('tests/content/BR/RS/RGENoPrice.pdf'),
-            ],
-        ];
+        $pdfAvailableFiles = glob('tests/content/BR/RS/RGE*.pdf');
+        $jsonAvailableFiles = glob('tests/content/BR/RS/RGE*.json');
+
+        if (count($pdfAvailableFiles) !== count($jsonAvailableFiles)) {
+            throw new \Exception("JSON or PDF Files are missing in \"tests/content/BR/RS/RGE*\"");
+        }
+
+        $data = [];
+
+        foreach ($pdfAvailableFiles as $key => $pdfPath) {
+            $jsonPath = $jsonAvailableFiles[$key];
+
+            $data[] = [
+                'expected' => static::readJson($jsonPath),
+                'actual' => static::readPDF($pdfPath),
+            ];
+        }
+
+        return $data;
     }
 
     /**
