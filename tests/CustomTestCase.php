@@ -51,12 +51,12 @@ abstract class CustomTestCase extends TestCase
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      * @throws Exception
      */
-    public static function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual, string $message = ''): void
+    public static function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual, string $message = null): void
     {
-        $expectedDate = date_format($expected, "m/d/Y");
-        $actualDate = date_format($actual, "m/d/Y");
+        $expectedFormat = $expected->format('m/d/Y');
+        $actualFormat = $actual->format('m/d/Y');
 
-        static::assertSame($expectedDate, $actualDate, $message);
+        static::assertSame($expectedFormat, $actualFormat, $message ?? sprintf('Fail asserting that %s and %s are the same date.', $expectedFormat, $actualFormat));
     }
 
     /**

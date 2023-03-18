@@ -3,263 +3,99 @@
 namespace App\Tests\BR\RS;
 
 use App\Tests\CustomTestCase;
-use DateTime;
-use DateTimeImmutable;
 use NystronSolar\ElectricBillExtractor\BR\RS\ExtractorRGE;
 
 class ExtractorRGETest extends CustomTestCase
 {
     private ExtractorRGE $extractor;
-    private array $jsonData;
-    private array $bill;
-
-    protected static function getPaths(): array
-    {
-        return [
-            'json' => 'tests/content/BR/RS/RGE.json',
-            'pdf' => 'tests/content/BR/RS/RGE.pdf'
-        ];
-    }
-
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        $pdfFile = static::getPaths()['pdf'];
-        $jsonFile = static::getPaths()['json'];
-        $jsonContent = file_get_contents($jsonFile);
-
-        static::assertPDF($pdfFile);
-        static::assertJson($jsonContent);
-        static::assertBillJson($jsonFile);
-    }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $pdfFile = static::getPaths()['pdf'];
-        $jsonFile = static::getPaths()['json'];
-
-        $this->jsonData = json_decode(file_get_contents($jsonFile), true);
-        $this->extractor = new ExtractorRGE();
-        $this->bill = $this->extractor->fromFile($pdfFile);
-
-        $this->assertNotEmpty($this->bill);
+        $this->extractor = $this->extractor ?? new ExtractorRGE();
     }
 
-
-    public function testExtractClient()
+    public static function readJson(string $path, bool $datesToObject = true): array|null
     {
-        $billClient = $this->bill["Client"];
-        $jsonClient = $this->jsonData["Client"];
+        $jsonFile = $path;
+        $jsonContent = file_get_contents($jsonFile);
+        $json = json_decode($jsonContent, true);
 
-        $this->assertSame($jsonClient["Name"], $billClient["Name"]);
-        $this->assertSame($jsonClient["Address"], $billClient["Address"]);
-        $this->assertSame($jsonClient["District"], $billClient["District"]);
-        $this->assertSame($jsonClient["City"], $billClient["City"]);
-    }
-
-    public function testExtractBatch()
-    {
-        $billBatch = $this->bill["Batch"];
-        $jsonBatch = $this->jsonData["Batch"];
-
-        $this->assertSame($jsonBatch, $billBatch);
-    }
-
-    public function testExtractReadingGuide()
-    {
-        $billReadingGuide = $this->bill["ReadingGuide"];
-        $jsonReadingGuide = $this->jsonData["ReadingGuide"];
-
-        $this->assertSame($jsonReadingGuide, $billReadingGuide);
-    }
-
-    public function testExtractPowerMeterId()
-    {
-        $billPowerMeterId = $this->bill["PowerMeterId"];
-        $jsonPowerMeterId = $this->jsonData["PowerMeterId"];
-
-        $this->assertSame($jsonPowerMeterId, $billPowerMeterId);
-    }
-
-    public function testExtractPages()
-    {
-        $billPages = $this->bill["Pages"];
-        $jsonPages = $this->jsonData["Pages"];
-
-        $this->assertSame($jsonPages, $billPages);
-    }
-
-    public function testExtractDeliveryDate()
-    {
-        $billDeliveryDate = $this->bill["DeliveryDate"];
-        $jsonDeliveryDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["DeliveryDate"]);
-
-        $this->assertSameDate($jsonDeliveryDate, $billDeliveryDate);
-    }
-
-    public function testExtractNextReadingDate()
-    {
-        $billNextReadingDate = $this->bill["NextReadingDate"];
-        $jsonNextReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["NextReadingDate"]);
-
-        $this->assertSameDate($jsonNextReadingDate, $billNextReadingDate);
-    }
-
-    public function testExtractDueDate()
-    {
-        $billDueDate = $this->bill["DueDate"];
-        $jsonDueDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["DueDate"]);
-
-        $this->assertSameDate($jsonDueDate, $billDueDate);
-    }
-
-    public function testExtractClassification()
-    {
-        $billClassification = $this->bill["Client"]["Building"]["Classification"];
-        $jsonClassification = $this->jsonData["Classification"];
-
-        $this->assertSame($jsonClassification, $billClassification);
-    }
-
-    public function testExtractSupplyType()
-    {
-        $billSupplyType = $this->bill["Client"]["Building"]["SupplyType"];
-        $jsonSupplyType = $this->jsonData["SupplyType"];
-
-        $this->assertSame($jsonSupplyType, $billSupplyType);
-    }
-
-    public function testExtractVoltage()
-    {
-        $billVoltage = $this->bill["Client"]["Building"]["Voltage"];
-        $jsonVoltage = $this->jsonData["Voltage"];
-
-        $this->assertSame($jsonVoltage, $billVoltage);
-    }
-
-    public function testExtractActualReadingDate()
-    {
-        $billReadingDate = $this->bill["ActualReadingDate"];
-        $jsonReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["ActualReadingDate"]);
-
-        $this->assertSameDate($jsonReadingDate, $billReadingDate);
-    }
-
-    public function testExtractPreviousReadingDate()
-    {
-        $billReadingDate = $this->bill["PreviousReadingDate"];
-        $jsonReadingDate = DateTimeImmutable::createFromFormat("m/d/Y", $this->jsonData["PreviousReadingDate"]);
-
-        $this->assertSameDate($jsonReadingDate, $billReadingDate);
-    }
-
-    public function testExtractTotalDays()
-    {
-        $billTotalDays = $this->bill["TotalDays"];
-        $jsonTotalDays = $this->jsonData["TotalDays"];
-
-        $this->assertSame($jsonTotalDays, $billTotalDays);
-    }
-
-    public function testInstallationCode()
-    {
-        $billInstallationCode = $this->bill["InstallationCode"];
-        $jsonInstallationCode = $this->jsonData["InstallationCode"];
-
-        $this->assertSame($jsonInstallationCode, $billInstallationCode);
-    }
-
-    public function testExtractDate()
-    {
-        $billDate = $this->bill["Date"];
-        $jsonDate = DateTime::createFromFormat('d/m/Y', $this->jsonData["Date"]);
-
-        $this->assertSameDate($jsonDate, $billDate);
-    }
-
-    public function testExtractCost()
-    {
-        $billCost = (int) $this->bill["Cost"]->getAmount();
-        $jsonCost = $this->jsonData["Cost"];
-
-        $this->assertSame($jsonCost, $billCost);
-    }
-
-    public function testExtractNoticeText()
-    {
-        $billVoltage = $this->bill["Notices"]["Text"];
-        $jsonVoltage = $this->jsonData["Notices"]["Text"];
-
-        $this->assertSame($jsonVoltage, $billVoltage);
-    }
-
-    public function testExtractSolarGeneration()
-    {
-        $billSolarGeneration = $this->bill["SolarGeneration"];
-        $jsonSolarGeneration = $this->jsonData["SolarGeneration"];
-
-        $this->assertSame($jsonSolarGeneration, $billSolarGeneration);
-    }
-
-    public function testExtractEnergyData()
-    {
-        $billEnergyData = $this->bill["EnergyData"];
-        $jsonEnergyData = $this->jsonData["EnergyData"];
-
-        $this->assertSame($jsonEnergyData, $billEnergyData);
-    }
-
-    public static function assertBillJson(array |string $json): void
-    {
-        if (is_string($json)) {
-            $json = json_decode(file_get_contents($json), true);
+        if ($datesToObject) {
+            foreach ($json as $key => $value) {
+                if (is_string($value) && preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $value)) {
+                    $json[$key] = \DateTime::createFromFormat('m/d/Y', $value);
+                }
+            }
         }
 
-        $billKeys = ['Client', 'Batch', 'ReadingGuide', 'PowerMeterId', 'Pages', 'DeliveryDate', 'NextReadingDate', 'DueDate', 'Classification', 'SupplyType', 'Voltage', 'Date', 'Cost', 'InstallationCode', 'ActualReadingDate', 'PreviousReadingDate', 'TotalDays', 'Notices', 'SolarGeneration', 'EnergyData'];
-        static::assertIsArray($json);
-        static::assertArrayHasKeys($billKeys, $json, 'RGE Json File Don\'t Have %s Key.');
+        return $json;
+    }
 
-        $client = $json['Client'];
-        $clientKeys = ['Name', 'Address', 'District', 'City',];
-        static::assertIsArray($client, 'RGE Json File Client Key Isn\'t an Array.');
-        static::assertArrayHasKeys($clientKeys, $client, 'RGE Json File Don\'t Have Client -> %s Key.');
+    public static function readPDF(string $path, bool $moneyToFloat = true): array
+    {
+        $extractor = new ExtractorRGE();
+        $billFile = $path;
+        $bill = $extractor->fromFile($billFile);
 
-        $pages = $json['Pages'];
-        $pagesKey = ['Actual', 'Total'];
-        static::assertIsArray($pages);
-        static::assertArrayHasKeys($pagesKey, $pages, 'RGE Json File Don\'t Have Pages -> %s Key.');
+        if($moneyToFloat) {
+            $bill['Cost'] = (int) $bill['Cost']->getAmount();
+        }
 
-        $voltage = $json['Voltage'];
-        $voltageKey = ['Available', 'MinimumLimit', 'MaximumLimit'];
-        static::assertIsArray($voltage);
-        static::assertArrayHasKeys($voltageKey, $voltage, 'RGE Json File Don\'t Have Voltage -> %s Key.');
+        return $bill;
+    }
 
-        $notices = $json['Notices'];
-        $noticesKey = ['Text'];
-        static::assertIsArray($notices);
-        static::assertArrayHasKeys($noticesKey, $notices, 'RGE Json File Don\'t Have Notices -> %s Key.');
 
-        $solarGeneration = $json['SolarGeneration'];
-        $solarGenerationKey = ['ParticipationGeneration', 'Balance', 'NextMonthExpiringBalance'];
-        static::assertIsArray($solarGeneration);
-        static::assertArrayHasKeys($solarGenerationKey, $solarGeneration, 'RGE Json File Don\'t Have SolarGeneration -> %s Key.');
+    public static function appProvider(): array
+    {
+        return [
+            [
+                'expected' => static::readJson('tests/content/BR/RS/RGE.json'),
+                'actual' => static::readPDF('tests/content/BR/RS/RGE.pdf'),
+            ],
+            [
+                'expected' => static::readJson('tests/content/BR/RS/RGENoPrice.json'),
+                'actual' => static::readPDF('tests/content/BR/RS/RGENoPrice.pdf'),
+            ],
+        ];
+    }
 
-        $energyData = $json['EnergyData'];
-        $energyDataKey = ['EnergyConsumed', 'EnergyExcess'];
-        static::assertIsArray($energyData);
-        static::assertArrayHasKeys($energyDataKey, $energyData, 'RGE Json File Don\'t Have EnergyData -> %s Key.');
+    /**
+     * @dataProvider appProvider
+     */
+    public function testExtractMainArrays(array $expected, array $actual)
+    {
+        $this->assertSame($expected['Client'], $actual['Client']);
+        $this->assertSame($expected['Pages'], $actual['Pages']);
+        $this->assertSame($expected['Notices'], $actual['Notices']);
+        $this->assertSame($expected['SolarGeneration'], $actual['SolarGeneration']);
+        $this->assertSame($expected['EnergyData'], $actual['EnergyData']);
+    }
 
-        $energyConsumed = $json['EnergyData']['EnergyConsumed'];
-        $energyConsumedKey = ['Timetables', 'PreviousReading', 'ActualReading', 'MeterConstant', 'Consumed'];
-        static::assertIsArray($energyConsumed);
-        static::assertArrayHasKeys($energyConsumedKey, $energyConsumed, 'RGE Json File Don\'t Have EnergyData -> Energy Consumed -> %s Key.');
+    /**
+     * @dataProvider appProvider
+     */
+    public function testExtractMainData(array $expected, array $actual): void
+    {
+        $this->assertSame($expected['Batch'], $actual['Batch']);
+        $this->assertSame($expected['ReadingGuide'], $actual['ReadingGuide']);
+        $this->assertSame($expected['PowerMeterId'], $actual['PowerMeterId']);
+        $this->assertSame($expected['InstallationCode'], $actual['InstallationCode']);
+        $this->assertSame($expected['Cost'], $actual['Cost']);
+    }
 
-        $energyExcess = $json['EnergyData']['EnergyExcess'];
-        $energyExcessKey = ['Timetables', 'PreviousReading', 'ActualReading', 'MeterConstant', 'Consumed'];
-        static::assertIsArray($energyExcess);
-        static::assertArrayHasKeys($energyExcessKey, $energyExcess, 'RGE Json File Don\'t Have EnergyData -> Energy Excess -> %s Key.');
+    /**
+     * @dataProvider appProvider
+     */
+    public function testExtractDates(array $expected, array $actual): void
+    {
+        $this->assertSameDate($expected['Date'], $actual['Date']);
+        $this->assertSameDate($expected['DeliveryDate'], $actual['DeliveryDate']);
+        $this->assertSameDate($expected['NextReadingDate'], $actual['NextReadingDate']);
+        $this->assertSameDate($expected['DueDate'], $actual['DueDate']);
+        $this->assertSameDate($expected['ActualReadingDate'], $actual['ActualReadingDate']);
+        $this->assertSameDate($expected['PreviousReadingDate'], $actual['PreviousReadingDate']);
+        $this->assertSame($expected['TotalDays'], $actual['TotalDays']);
     }
 }
