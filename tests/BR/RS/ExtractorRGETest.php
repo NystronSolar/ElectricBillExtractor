@@ -2,42 +2,22 @@
 
 namespace App\Tests\BR\RS;
 
-use App\Tests\CustomTestCase;
+use App\Tests\ExtractorTestCase;
 use NystronSolar\ElectricBillExtractor\BR\RS\ExtractorRGE;
+use NystronSolar\ElectricBillExtractor\Extractor;
 
-class ExtractorRGETest extends CustomTestCase
+class ExtractorRGETest extends ExtractorTestCase
 {
-    private ExtractorRGE $extractor;
-
-    protected function setUp(): void
+    protected function generateExtractor(): Extractor
     {
-        parent::setUp();
+        $this->extractor = new ExtractorRGE();
 
-        $this->extractor = $this->extractor ?? new ExtractorRGE();
+        return $this->extractor;
     }
 
-    public static function readJson(string $path, bool $datesToObject = true): array|null
+    public function readPDF(string $path, bool $moneyToFloat = true): array
     {
-        $jsonFile = $path;
-        $jsonContent = file_get_contents($jsonFile);
-        $json = json_decode($jsonContent, true);
-
-        if ($datesToObject) {
-            foreach ($json as $key => $value) {
-                if (is_string($value) && preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $value)) {
-                    $json[$key] = \DateTime::createFromFormat('m/d/Y', $value);
-                }
-            }
-        }
-
-        return $json;
-    }
-
-    public static function readPDF(string $path, bool $moneyToFloat = true): array
-    {
-        $extractor = new ExtractorRGE();
-        $billFile = $path;
-        $bill = $extractor->fromFile($billFile);
+        $bill = parent::readPDF($path);
 
         if ($moneyToFloat) {
             $bill['Cost'] = (int) $bill['Cost']->getAmount();
@@ -46,28 +26,9 @@ class ExtractorRGETest extends CustomTestCase
         return $bill;
     }
 
-
-    public static function appProvider(): array
+    public function appProvider(): array
     {
-        $pdfAvailableFiles = glob('tests/content/BR/RS/RGE*.pdf');
-        $jsonAvailableFiles = glob('tests/content/BR/RS/RGE*.json');
-
-        if (count($pdfAvailableFiles) !== count($jsonAvailableFiles)) {
-            throw new \Exception("JSON or PDF Files are missing in \"tests/content/BR/RS/RGE*\"");
-        }
-
-        $data = [];
-
-        foreach ($pdfAvailableFiles as $key => $pdfPath) {
-            $jsonPath = $jsonAvailableFiles[$key];
-
-            $data[] = [
-                'expected' => static::readJson($jsonPath),
-                'actual' => static::readPDF($pdfPath),
-            ];
-        }
-
-        return $data;
+        return $this->generateProvider('BR', 'RS', 'RGE');
     }
 
     /**
@@ -75,11 +36,11 @@ class ExtractorRGETest extends CustomTestCase
      */
     public function testExtractMainArrays(array $expected, array $actual)
     {
-        $this->assertSame($expected['Client'], $actual['Client']);
-        $this->assertSame($expected['Pages'], $actual['Pages']);
-        $this->assertSame($expected['Notices'], $actual['Notices']);
-        $this->assertSame($expected['SolarGeneration'], $actual['SolarGeneration']);
-        $this->assertSame($expected['EnergyData'], $actual['EnergyData']);
+        $this->assertArraysValuesSame('Client', $expected, $actual);
+        $this->assertArraysValuesSame('Pages', $expected, $actual);
+        $this->assertArraysValuesSame('Notices', $expected, $actual);
+        $this->assertArraysValuesSame('SolarGeneration', $expected, $actual);
+        $this->assertArraysValuesSame('EnergyData', $expected, $actual);
     }
 
     /**
@@ -87,11 +48,11 @@ class ExtractorRGETest extends CustomTestCase
      */
     public function testExtractMainData(array $expected, array $actual): void
     {
-        $this->assertSame($expected['Batch'], $actual['Batch']);
-        $this->assertSame($expected['ReadingGuide'], $actual['ReadingGuide']);
-        $this->assertSame($expected['PowerMeterId'], $actual['PowerMeterId']);
-        $this->assertSame($expected['InstallationCode'], $actual['InstallationCode']);
-        $this->assertSame($expected['Cost'], $actual['Cost']);
+        $this->assertArraysValuesSame('Batch', $expected, $actual);
+        $this->assertArraysValuesSame('ReadingGuide', $expected, $actual);
+        $this->assertArraysValuesSame('PowerMeterId', $expected, $actual);
+        $this->assertArraysValuesSame('InstallationCode', $expected, $actual);
+        $this->assertArraysValuesSame('Cost', $expected, $actual);
     }
 
     /**

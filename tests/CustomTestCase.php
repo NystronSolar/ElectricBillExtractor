@@ -2,9 +2,6 @@
 
 namespace App\Tests;
 
-use ArrayAccess;
-use DateTimeInterface;
-use Exception;
 use PHPUnit\Framework\TestCase;
 use Smalot\PdfParser\Parser;
 
@@ -27,14 +24,14 @@ abstract class CustomTestCase extends TestCase
     /**
      * Asserts that an array has an specified array of keys.
      *
-     * @param array|ArrayAccess $key
-     * @param array|ArrayAccess $array
-     * @param string            $message
+     * @param array|\ArrayAccess $key
+     * @param array|\ArrayAccess $array
+     * @param string             $message
      *
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws Exception
+     * @throws \Exception
      */
-    public static function assertArrayHasKeys(array |ArrayAccess $keys, array |ArrayAccess $array, string $message = ''): void
+    public static function assertArrayHasKeys(array|\ArrayAccess $keys, array|\ArrayAccess $array, string $message = ''): void
     {
         foreach ($keys as $key) {
             static::assertArrayHasKey($key, $array, sprintf($message, $key));
@@ -44,14 +41,14 @@ abstract class CustomTestCase extends TestCase
     /**
      * Asserts that two dates have the same day, month and year.
      * 
-     * @param DateTimeInterface $expected
-     * @param DateTimeInterface $array
-     * @param string            $message
+     * @param \DateTimeInterface $expected
+     * @param \DateTimeInterface $array
+     * @param string             $message
      *
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws Exception
+     * @throws \Exception
      */
-    public static function assertSameDate(DateTimeInterface $expected, DateTimeInterface $actual, string $message = null): void
+    public static function assertSameDate(\DateTimeInterface $expected, \DateTimeInterface $actual, string $message = null): void
     {
         $expectedFormat = $expected->format('m/d/Y');
         $actualFormat = $actual->format('m/d/Y');
@@ -67,10 +64,30 @@ abstract class CustomTestCase extends TestCase
      * @param string $message
      *
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws Exception
+     * @throws \Exception
      */
     public static function assertMethodExists(string $class, string $method, string $message = ''): void
     {
         static::assertTrue(method_exists($class, $method), $message);
+    }
+
+    public static function assertArraysValuesSame(string|int $key, \ArrayAccess|array $expected, \ArrayAccess|array $actual, string $message = "")
+    {
+        static::assertTrue(
+            array_key_exists($key, $expected) &&
+            array_key_exists($key, $actual) &&
+            $expected[$key] === $actual[$key],
+            "The arrays doesn't have the same value in the \"$key\" key"
+        );
+    }
+
+    public static function assertArraysValuesEquals(string|int $key, \ArrayAccess|array $expected, \ArrayAccess|array $actual, string $message = "")
+    {
+        static::assertTrue(
+            array_key_exists($key, $expected) &&
+            array_key_exists($key, $actual) &&
+            $expected[$key] == $actual[$key],
+            "The arrays doesn't have the same value in the \"$key\" key"
+        );
     }
 }

@@ -8,13 +8,12 @@ use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 
 class DateHelperTest extends CustomTestCase
 {
-    /** @test */
-    public function test_from_month_year_portuguese_function()
+    public static function testFromMonthYearPortuguese()
     {
-        $this->assertMonthYearLanguage("Portuguese");
+        static::assertMonthYearLanguage("Portuguese");
     }
 
-    private function assertMonthYearLanguage(string $language)
+    public static function assertMonthYearLanguage(string $language)
     {
         $language = ucfirst($language);
         $getMonthsMethod = "get" . $language . "Months";
