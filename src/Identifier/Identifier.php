@@ -3,6 +3,7 @@
 namespace NystronSolar\ElectricBillExtractor\Identifier;
 
 use NystronSolar\ElectricBillExtractor\Extractor;
+use Smalot\PdfParser\Parser;
 
 class Identifier
 {
@@ -14,9 +15,11 @@ class Identifier
 
         return ExtractorIdentifier::OldRGE;
     }
-    public static function identifyFromFile(string $path): ExtractorIdentifier
+    public static function identifyFromFile(string $path, Parser $parser = null): ExtractorIdentifier
     {
-        $content = file_get_contents($path);
+        $parser = $parser ?? new Parser();
+        $document = $parser->parseFile($path);
+        $content = $document->getText();
 
         return static::identifyFromContent($content);
     }
@@ -28,9 +31,9 @@ class Identifier
         return $extractorIdentifier->instantiate($arguments);
     }
 
-    public static function instantiateFromFile(string $path, array $arguments = []): Extractor
+    public static function instantiateFromFile(string $path, array $arguments = [], Parser $parser = null): Extractor
     {
-        $extractorIdentifier = static::identifyFromFile($path);
+        $extractorIdentifier = static::identifyFromFile($path, $parser);
 
         return $extractorIdentifier->instantiate($arguments);
     }
@@ -42,10 +45,14 @@ class Identifier
         return $extractor->fromContent($content);
     }
 
-    public static function extractFromFile(string $path, array $instantiateArguments = []): array|bool
+    public static function extractFromFile(string $path, array $instantiateArguments = [], Parser $parser = null): array|bool
     {
-        $extractor = static::instantiateFromFile($path, $instantiateArguments);
+        $parser = $parser ?? new Parser();
+        $document = $parser->parseFile($path);
+        $content = $document->getText();
 
-        return $extractor->fromFile($path);
+        $extractor = static::instantiateFromContent($content, $instantiateArguments);
+
+        return $extractor->fromDocument($document);
     }
 }

@@ -104,5 +104,20 @@ abstract class Extractor
         return $bill;
     }
 
+    /**
+     * Extract the Bill from an PDF Document.
+     * Return False in case of error.
+     * @param Document $document
+     * @return array|false
+     */
+    public function fromDocument(Document $document): array|false
+    {
+        $this->setDocument($document);
+
+        $bill = $this->extract();
+
+        return $bill;
+    }
+
     abstract protected function extract(): array|false;
 }
