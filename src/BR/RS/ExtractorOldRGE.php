@@ -8,7 +8,122 @@ use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 
 class ExtractorOldRGE extends Extractor
 {
-    protected function extract(): array
+    public function checkBillHasRequiredProperties(): bool
+    {
+        try {
+            $bill = $this->getBill();
+        } catch (\Error) {
+            return false;
+        }
+
+        $firstLayerKeys = [
+            'Client',
+            'Pages',
+            'SolarGeneration',
+            'EnergyData',
+            'Batch',
+            'ReadingGuide',
+            'PowerMeterId',
+            'PN',
+            'ActualReadingDate',
+            'DeliveryDate',
+            'NextReadingDate',
+            'PreviousReadingDate',
+            'InstallationCode',
+            'Date',
+            'DueDate',
+            'Cost',
+            'Notices',
+        ];
+
+        $clientKeys = [
+            'Building',
+            'Name',
+            'Address',
+            'District',
+            'City',
+        ];
+
+        $clientBuildingKeys = [
+            'Classification',
+            'SupplyType',
+            'Voltage',
+        ];
+
+        $energyDataKeys = [
+            'EnergyConsumed',
+            'EnergyExcess',
+        ];
+
+        $energyDataEnergyConsumedKeys = [
+            'PreviousReading',
+            'ActualReading',
+            'MeterConstant',
+            'Consumed',
+        ];
+
+        $energyDataEnergyExcessKeys = [
+            'PreviousReading',
+            'ActualReading',
+            'MeterConstant',
+            'Consumed',
+        ];
+
+        $pagesKeys = [
+            'Actual',
+            'Total',
+        ];
+
+        $solarGenerationKeys = [
+            'ParticipationGeneration',
+            'Balance',
+            'NextMonthExpiringBalance',
+        ];
+
+        if (!$this->array_keys_exists($energyDataEnergyConsumedKeys, $bill['EnergyData']['EnergyConsumed'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($firstLayerKeys, $bill)) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($clientKeys, $bill['Client'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($clientBuildingKeys, $bill['Client']['Building'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($clientBuildingKeys, $bill['Client']['Building'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($energyDataKeys, $bill['EnergyData'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($energyDataEnergyConsumedKeys, $bill['EnergyData']['EnergyConsumed'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($energyDataEnergyExcessKeys, $bill['EnergyData']['EnergyExcess'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($pagesKeys, $bill['Pages'])) {
+            return false;
+        }
+
+        if (!$this->array_keys_exists($solarGenerationKeys, $bill['SolarGeneration'])) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function extract(): array|false
     {
         foreach ($this->contentExploded as $key => $value) {
             $this->extractClient($value, $key);
@@ -20,6 +135,10 @@ class ExtractorOldRGE extends Extractor
             $this->extractNotices($value, $key);
             $this->extractSolarGeneration($value, $key);
             $this->extractEnergyData($value, $key);
+        }
+
+        if (!$this->checkBillHasRequiredProperties()) {
+            return false;
         }
 
         return $this->getBill();
@@ -228,5 +347,16 @@ class ExtractorOldRGE extends Extractor
     private function filterArrayByKey(array $array, \Closure $callback)
     {
         return array_filter($array, $callback, ARRAY_FILTER_USE_KEY);
+    }
+
+    private function array_keys_exists(array $keys, array $array): bool
+    {
+        foreach ($keys as $key) {
+            if (!array_key_exists($key, $array)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
