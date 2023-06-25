@@ -22,6 +22,10 @@ class ExtractorRGE extends Extractor
             $this->extractBilling($value, $key);
             $this->extractNotices($value, $key);
             $this->extractSolarGeneration($value, $key);
+            $this->extractTaxTUSD($value);
+            $this->extractTaxTE($value);
+            $this->extractTaxIP($value);
+            // $this->extractTaxDiscounts($value, $key);
             $this->extractEnergyData($value, $key);
         }
 
@@ -179,6 +183,50 @@ class ExtractorRGE extends Extractor
             $this->bill["SolarGeneration"]["ParticipationGeneration"] = $participationGeneration;
             $this->bill["SolarGeneration"]["Balance"] = $balance;
             $this->bill["SolarGeneration"]["NextMonthExpiringBalance"] = $nextMonthExpiringBalance;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractTaxTUSD(string $value)
+    {
+        if (str_starts_with($value, "Consumo Uso Sistema")) {
+            $lineRaw = preg_replace('/\s+/', ' ', substr($value, 43));
+            $lineExplode = explode(' ', $lineRaw);
+            $this->bill["Taxes"] = [];
+            $this->bill["Taxes"]["TUSD"] = [];
+            $this->bill["Taxes"]["TUSD"]["Consumed"] = $this->translateFloatFromBR($lineExplode[0]);
+            $this->bill["Taxes"]["TUSD"]["TotalPrice"] = Money::BRL((int) str_replace('.', '', $this->translateFloatFromBR($lineExplode[3])));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractTaxTE(string $value)
+    {
+        if (str_starts_with($value, "Consumo - TE")) {
+            $lineRaw = preg_replace('/\s+/', ' ', substr($value, 43));
+            $lineExplode = explode(' ', $lineRaw);
+            $this->bill["Taxes"]["TE"] = [];
+            $this->bill["Taxes"]["TE"]["TotalPrice"] = Money::BRL((int) str_replace('.', '', $this->translateFloatFromBR($lineExplode[3])));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function extractTaxIP(string $value)
+    {
+        if (str_starts_with($value, "Contribuição Custeio IP")) {
+            $lineRaw = preg_replace('/\s+/', ' ', substr($value, 43));
+            $lineExplode = explode(' ', $lineRaw);
+            $this->bill["Taxes"]["IP"] = [];
+            $this->bill["Taxes"]["IP"]["TotalPrice"] = Money::BRL((int) str_replace('.', '', $this->translateFloatFromBR($lineExplode[1])));
 
             return true;
         }

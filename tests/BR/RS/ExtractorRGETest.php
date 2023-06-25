@@ -20,7 +20,11 @@ class ExtractorRGETest extends ExtractorTestCase
         $bill = parent::readPDF($path);
 
         if ($moneyToFloat) {
+            // dump($bill['Taxes'], $bill['Taxes']['TUSD'], $bill['Taxes']['TUSD']['TotalPrice']);
             $bill['Cost'] = (int) $bill['Cost']->getAmount();
+            $bill['Taxes']['TUSD']['TotalPrice'] = (int) $bill['Taxes']['TUSD']['TotalPrice']->getAmount();
+            $bill['Taxes']['TE']['TotalPrice'] = (int) $bill['Taxes']['TE']['TotalPrice']->getAmount();
+            $bill['Taxes']['IP']['TotalPrice'] = (int) $bill['Taxes']['IP']['TotalPrice']->getAmount();
         }
 
         return $bill;
@@ -67,5 +71,13 @@ class ExtractorRGETest extends ExtractorTestCase
         $this->assertSameDate($expected['ActualReadingDate'], $actual['ActualReadingDate']);
         $this->assertSameDate($expected['PreviousReadingDate'], $actual['PreviousReadingDate']);
         $this->assertSame($expected['TotalDays'], $actual['TotalDays']);
+    }
+
+    /**
+     * @dataProvider appProvider
+     */
+    public function testExtractTaxes(array $expected, array $actual): void
+    {
+        $this->assertSame($expected['Taxes'], $actual['Taxes']);
     }
 }
