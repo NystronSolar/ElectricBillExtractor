@@ -21,6 +21,9 @@ class ExtractorOldRGETest extends ExtractorTestCase
 
         if ($moneyToFloat) {
             $bill['Cost'] = (int) $bill['Cost']->getAmount();
+            $bill['Taxes']['TUSD']['TotalPrice'] = (int) $bill['Taxes']['TUSD']['TotalPrice']->getAmount();
+            $bill['Taxes']['TE']['TotalPrice'] = (int) $bill['Taxes']['TE']['TotalPrice']->getAmount();
+            $bill['Taxes']['IP']['TotalPrice'] = (int) $bill['Taxes']['IP']['TotalPrice']->getAmount();
         }
 
         return $bill;
@@ -67,13 +70,13 @@ class ExtractorOldRGETest extends ExtractorTestCase
         $this->assertSameDate($expected['DueDate'], $actual['DueDate']);
         $this->assertSameDate($expected['ActualReadingDate'], $actual['ActualReadingDate']);
         $this->assertSameDate($expected['PreviousReadingDate'], $actual['PreviousReadingDate']);
+    }
 
-
-
-
-
-        // $this->assertSameDate($expected['DeliveryDate'], $actual['DeliveryDate']);
-        // $this->assertSameDate($expected['NextReadingDate'], $actual['NextReadingDate']);
-        // $this->assertSameDate($expected['ActualReadingDate'], $actual['ActualReadingDate']);
+    /**
+     * @dataProvider appProvider
+     */
+    public function testExtractTaxes(array $expected, array $actual): void
+    {
+        $this->assertSame($expected['Taxes'], $actual['Taxes']);
     }
 }

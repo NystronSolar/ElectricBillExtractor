@@ -20,7 +20,6 @@ class ExtractorRGETest extends ExtractorTestCase
         $bill = parent::readPDF($path);
 
         if ($moneyToFloat) {
-            // dump($bill['Taxes'], $bill['Taxes']['TUSD'], $bill['Taxes']['TUSD']['TotalPrice']);
             $bill['Cost'] = (int) $bill['Cost']->getAmount();
             $bill['Taxes']['TUSD']['TotalPrice'] = (int) $bill['Taxes']['TUSD']['TotalPrice']->getAmount();
             $bill['Taxes']['TE']['TotalPrice'] = (int) $bill['Taxes']['TE']['TotalPrice']->getAmount();
