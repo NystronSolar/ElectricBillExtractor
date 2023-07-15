@@ -33,6 +33,7 @@ class ExtractorOldRGE extends Extractor
             'Date',
             'DueDate',
             'Cost',
+            'RealCost',
             'Notices',
         ];
 
@@ -137,6 +138,7 @@ class ExtractorOldRGE extends Extractor
             $this->extractTaxTUSD($value);
             $this->extractTaxTE($value);
             $this->extractTaxIP($value);
+            $this->extractRealCost($value);
             // // $this->extractTaxDiscounts($value, $key);
             $this->extractEnergyData($value, $key);
         }
@@ -334,6 +336,16 @@ class ExtractorOldRGE extends Extractor
             $this->bill["Taxes"]["IP"]["TotalPrice"] = Money::BRL((int) str_replace('.', '', $this->translateFloatFromBR($lineExplode[1])));
 
             return true;
+        }
+
+        return false;
+    }
+
+    private function extractRealCost(string $value)
+    {
+        if (str_starts_with($value, "Total Consolidado")) {
+            $arr = explode(' ', trim(substr($value, 17)));
+            $this->bill['RealCost'] = Money::BRL((int) str_replace(',', '', $arr[array_key_first($arr)]));
         }
 
         return false;

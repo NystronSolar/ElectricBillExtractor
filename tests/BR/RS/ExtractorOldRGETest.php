@@ -21,6 +21,7 @@ class ExtractorOldRGETest extends ExtractorTestCase
 
         if ($moneyToFloat) {
             $bill['Cost'] = (int) $bill['Cost']->getAmount();
+            $bill['RealCost'] = (int) $bill['RealCost']->getAmount();
             $bill['Taxes']['TUSD']['TotalPrice'] = (int) $bill['Taxes']['TUSD']['TotalPrice']->getAmount();
             $bill['Taxes']['TE']['TotalPrice'] = (int) $bill['Taxes']['TE']['TotalPrice']->getAmount();
             $bill['Taxes']['IP']['TotalPrice'] = (int) $bill['Taxes']['IP']['TotalPrice']->getAmount();
@@ -56,6 +57,7 @@ class ExtractorOldRGETest extends ExtractorTestCase
         $this->assertArraysValuesSame('PowerMeterId', $expected, $actual);
         $this->assertArraysValuesSame('InstallationCode', $expected, $actual);
         $this->assertArraysValuesSame('Cost', $expected, $actual);
+        $this->assertArraysValuesSame('RealCost', $expected, $actual);
         $this->assertArraysValuesSame('PN', $expected, $actual);
     }
 

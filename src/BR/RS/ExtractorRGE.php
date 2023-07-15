@@ -25,6 +25,7 @@ class ExtractorRGE extends Extractor
             $this->extractTaxTUSD($value);
             $this->extractTaxTE($value);
             $this->extractTaxIP($value);
+            $this->extractRealCost($value, $key);
             // $this->extractTaxDiscounts($value, $key);
             $this->extractEnergyData($value, $key);
         }
@@ -229,6 +230,22 @@ class ExtractorRGE extends Extractor
             $this->bill["Taxes"]["IP"]["TotalPrice"] = Money::BRL((int) str_replace('.', '', $this->translateFloatFromBR($lineExplode[1])));
 
             return true;
+        }
+
+        return false;
+    }
+
+    private function extractRealCost(string $value, int $key)
+    {
+        if (str_starts_with($value, "DÉBITOS DE OUTROS SERVIÇOS")) {
+            for ($i = $key; true; $i++) {
+                $actualValue = $this->contentExploded[$i];
+                if (preg_match('/^[0-9]{1}/', trim($actualValue))) {
+                    $arr = explode(' ', trim($actualValue));
+                    $this->bill['RealCost'] = Money::BRL((int) str_replace(',', '', $arr[array_key_first($arr)]));
+                    return true;
+                }
+            }
         }
 
         return false;
