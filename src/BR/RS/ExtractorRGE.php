@@ -242,8 +242,9 @@ class ExtractorRGE extends Extractor
             $lastMonthCost = Money::BRL(0);
             for ($i = $key; true; $i++) {
                 $actualMonth = (int) $this->bill["Date"]->format('n');
-                $lastMonth = DateHelper::getPortugueseMonths(true)[$actualMonth - 1];
-                $lastMonth = $lastMonth < 1 ? 12 : $lastMonth;
+                $lastMonthInt = $actualMonth - 1;
+                $lastMonthInt = $lastMonth < 1 ? 12 : $lastMonth;
+                $lastMonth = DateHelper::getPortugueseMonths(true)[$lastMonthInt];
                 $actualValue = $this->contentExploded[$i];
 
                 if (preg_match('/^[0-9]{1}/', trim($actualValue))) {
