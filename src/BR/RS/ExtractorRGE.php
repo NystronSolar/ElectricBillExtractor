@@ -243,6 +243,7 @@ class ExtractorRGE extends Extractor
             for ($i = $key; true; $i++) {
                 $actualMonth = (int) $this->bill["Date"]->format('n');
                 $lastMonth = DateHelper::getPortugueseMonths(true)[$actualMonth - 1];
+                $lastMonth = $lastMonth < 1 ? 12 : $lastMonth;
                 $actualValue = $this->contentExploded[$i];
 
                 if (preg_match('/^[0-9]{1}/', trim($actualValue))) {
