@@ -25,6 +25,7 @@ class ExtractorRGE extends Extractor
             $this->extractTaxTUSD($value);
             $this->extractTaxTE($value);
             $this->extractTaxIP($value);
+            $this->extractLastMonthCosts($value, $key);
             $this->extractRealCost($value, $key);
             // $this->extractTaxDiscounts($value, $key);
             $this->extractEnergyData($value, $key);
@@ -235,6 +236,31 @@ class ExtractorRGE extends Extractor
         return false;
     }
 
+    private function extractLastMonthCosts(string $value, int $key)
+    {
+        if (str_starts_with($value, "Consumo Uso Sistema")) {
+            $lastMonthCost = Money::BRL(0);
+            for ($i = $key; true; $i++) {
+                $actualMonth = (int) $this->bill["Date"]->format('n');
+                $lastMonth = DateHelper::getPortugueseMonths(true)[$actualMonth - 1];
+                $actualValue = $this->contentExploded[$i];
+
+                if (preg_match('/^[0-9]{1}/', trim($actualValue))) {
+                    break;
+                }
+
+                if (str_contains($actualValue, $lastMonth)) {
+                    $arr = explode(' ', trim($actualValue));
+                    $lastMonthCost = $lastMonthCost->add(Money::BRL((int) str_replace(',', '', end($arr))));
+                }
+            }
+            $this->bill['LastMonthCost'] = $lastMonthCost;
+            return true;
+        }
+
+        return false;
+    }
+
     private function extractRealCost(string $value, int $key)
     {
         if (str_starts_with($value, "DÉBITOS DE OUTROS SERVIÇOS")) {
@@ -242,7 +268,8 @@ class ExtractorRGE extends Extractor
                 $actualValue = $this->contentExploded[$i];
                 if (preg_match('/^[0-9]{1}/', trim($actualValue))) {
                     $arr = explode(' ', trim($actualValue));
-                    $this->bill['RealCost'] = Money::BRL((int) str_replace(',', '', $arr[array_key_first($arr)]));
+                    $actualCost = Money::BRL((int) str_replace(',', '', $arr[array_key_first($arr)]));
+                    $this->bill['RealCost'] = $actualCost->subtract($this->bill['LastMonthCost'] ?? Money::BRL(0));
                     return true;
                 }
             }
