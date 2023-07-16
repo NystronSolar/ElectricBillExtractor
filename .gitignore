@@ -1,5 +1,6 @@
 composer.phar
 /vendor/
+/cov/
 /.php-cs-fixer-dist.php
 /.php-cs-fixer.cache
 /.phpunit.cache/
