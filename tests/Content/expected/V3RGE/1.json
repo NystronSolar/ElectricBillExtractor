@@ -1,0 +1,12 @@
+{
+    "client": {
+        "name": "TIMOTHY DA SILVA",
+        "address": {
+            "street": "R FICTICIA 123",
+            "district": "CENTRO",
+            "postcode": "12345-678",
+            "city": "CIDADE",
+            "state": "RS"
+        }
+    }
+}
