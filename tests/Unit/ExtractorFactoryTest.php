@@ -1,5 +1,7 @@
 <?php
 
+namespace NystronSolar\ElectricBillExtractorTests\Unit;
+
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV1RGE;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV2RGE;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV3RGE;
@@ -75,7 +77,6 @@ class ExtractorFactoryTest extends TestCase
         $this->assertInstanceOf(ExtractorV3RGE::class, ExtractorFactory::instantiateExtractorFromFile('file.pdf', $this->createParserMock($this->v3RGEContent)));
         $this->assertFalse(ExtractorFactory::instantiateExtractorFromFile('file.pdf', $this->createParserMock($this->invalidContent)));
     }
-
 
     public function testExtractFromContent(): void
     {

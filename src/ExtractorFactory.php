@@ -26,7 +26,7 @@ class ExtractorFactory
         }
 
         // The V1 RGE Bill have the exact text 4th line "Conta de Energia Elétrica\n"
-        if (array_key_exists(4, $contentArr) && $contentArr[4] === "Conta de Energia Elétrica") {
+        if (array_key_exists(4, $contentArr) && 'Conta de Energia Elétrica' === $contentArr[4]) {
             return ExtractorV1RGE::class;
         }
 
@@ -47,7 +47,7 @@ class ExtractorFactory
     {
         $extractorClass = static::identifyExtractorClassFromContent($content);
 
-        if(!$extractorClass) {
+        if (!$extractorClass) {
             return false;
         }
 
@@ -64,7 +64,7 @@ class ExtractorFactory
 
         $extractorClass = static::identifyExtractorClassFromContent($content);
 
-        if(!$extractorClass) {
+        if (!$extractorClass) {
             return false;
         }
 
@@ -75,7 +75,7 @@ class ExtractorFactory
     {
         $extractorObject = static::instantiateExtractorFromContent($content);
 
-        if(!$extractorObject) {
+        if (!$extractorObject) {
             return false;
         }
 
@@ -86,7 +86,7 @@ class ExtractorFactory
     {
         $extractorObject = static::instantiateExtractorFromFile($filename, $parser);
 
-        if(!$extractorObject) {
+        if (!$extractorObject) {
             return false;
         }
 

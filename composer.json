@@ -9,6 +9,11 @@
             "NystronSolar\\ElectricBillExtractor\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "NystronSolar\\ElectricBillExtractorTests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "TheDevick",
