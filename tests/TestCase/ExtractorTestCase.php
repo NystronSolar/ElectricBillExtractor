@@ -2,12 +2,39 @@
 
 namespace NystronSolar\ElectricBillExtractorTests\TestCase;
 
+use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
+use NystronSolar\ElectricBillExtractor\Entity\Client;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use PHPUnit\Framework\TestCase;
 
 class ExtractorTestCase extends TestCase
 {
+    final public function assertEqualsBills(Bill|false $expectedBill, Bill|false $actualBill, int $fileCounter, string $message = ''): void
+    {
+        $expectedFile = "Expected json '$fileCounter.json'";
+        $actualFile = "Actual bill '$fileCounter.txt'";
+        // > Assert Bill Not False
+        $this->assertNotFalse($expectedBill, "$expectedFile is false");
+        $this->assertNotFalse($actualBill, "$actualFile is false");
+        // < Assert Bill Not False
+
+        // > Assert Bill Primitive Types
+        // < Assert Bill Primitive Types
+
+        // > Assert Bill -> Client Primitive Types
+        $this->assertEquals($expectedBill->client->name, $actualBill->client->name, "$actualFile - 'client' - 'name' does not matches the $expectedFile");
+        // < Assert Bill -> Client Primitive Types
+
+        // > Assert Bill -> Client -> Address Primitive Types
+        $this->assertEquals($expectedBill->client->address->street, $actualBill->client->address->street, "$actualFile - 'client' - 'address' - 'street' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->client->address->district, $actualBill->client->address->district, "$actualFile - 'client' - 'address' - 'district' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->client->address->postcode, $actualBill->client->address->postcode, "$actualFile - 'client' - 'address' - 'postcode' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->client->address->city, $actualBill->client->address->city, "$actualFile - 'client' - 'address' - 'city' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->client->address->state, $actualBill->client->address->state, "$actualFile - 'client' - 'address' - 'state' does not matches the $expectedFile");
+        // < Assert Bill -> Client -> Address Primitive Types
+    }
+
     /**
      * @param string                  $contentFolder  example: `V1RGE` - The name of the folder under tests/Content/bills and tests/Content/expected
      * @param class-string<Extractor> $extractorClass
@@ -31,15 +58,32 @@ class ExtractorTestCase extends TestCase
 
             $extractor = new $extractorClass($billFileContents);
 
-            $this->assertEquals($this->jsonToBill((object) json_decode($expectedFileContents, false)), $extractor->extract());
+            $expectedBill = $this->jsonToBill((object) json_decode($expectedFileContents, false));
+            $actualBill = $extractor->extract();
+
+            $this->assertEqualsBills($expectedBill, $actualBill, $i);
         }
     }
 
     /**
-     * @todo Convert the JSON To a Bill Object
+     * @psalm-suppress MixedPropertyFetch
+     * @psalm-suppress MixedArgument
      */
     public function jsonToBill(object $json): Bill|false
     {
-        return false;
+        $bill = new Bill(
+            new Client(
+                $json->client->name,
+                new Address(
+                    $json->client->address->street,
+                    $json->client->address->district,
+                    $json->client->address->postcode,
+                    $json->client->address->city,
+                    $json->client->address->state,
+                )
+            )
+        );
+
+        return $bill;
     }
 }
