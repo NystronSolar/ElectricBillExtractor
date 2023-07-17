@@ -2,10 +2,11 @@
 
 namespace NystronSolar\ElectricBillExtractor\Entity;
 
-class Bill
+class Client
 {
     public function __construct(
-        public readonly Client $client
+        public readonly string $name,
+        public readonly Address $address
     ) {
     }
 }
