@@ -2,6 +2,8 @@
 
 namespace NystronSolar\ElectricBillExtractor;
 
+use NystronSolar\ElectricBillExtractor\Entity\Bill;
+
 /**
  * @psalm-consistent-constructor
  */

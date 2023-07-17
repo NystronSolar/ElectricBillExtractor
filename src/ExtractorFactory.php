@@ -2,6 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor;
 
+use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV1RGE;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV2RGE;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV3RGE;
