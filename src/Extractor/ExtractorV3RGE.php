@@ -5,6 +5,7 @@ namespace NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
+use NystronSolar\ElectricBillExtractor\Entity\Establishment;
 use NystronSolar\ElectricBillExtractor\Extractor;
 
 final class ExtractorV3RGE extends Extractor
@@ -22,6 +23,9 @@ final class ExtractorV3RGE extends Extractor
                  *  R FICTICIA 123
                  *  CENTRO
                  *  12345-678 CIDADE RS.
+                 *  09 ABCDE012-00000123 12345678 1/ 1 19/05/2023 14/06/2023 01/06/2023
+                 *   Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+                 *   Bifásico.
                  */
                 $address = new Address(
                     trim($contentArray[$key + 2]),
@@ -31,7 +35,12 @@ final class ExtractorV3RGE extends Extractor
                     substr($contentArray[$key + 4], -2),
                 );
 
-                $bill->client = new Client($contentArray[$key + 1], $address);
+                $establishment = new Establishment(
+                    substr(trim(substr(trim($contentArray[$key + 6]), 16)), 0, -22),
+                    trim($contentArray[$key + 7])
+                );
+
+                $bill->client = new Client($contentArray[$key + 1], $address, $establishment);
             }
         }
 

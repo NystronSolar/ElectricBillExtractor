@@ -7,6 +7,10 @@
             "postcode": "12345-678",
             "city": "CIDADE",
             "state": "RS"
+        },
+        "establishment": {
+            "classification": "Convencional B1 Residencial",
+            "supplyType": "Bifásico"
         }
     }
 }

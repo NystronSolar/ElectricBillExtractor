@@ -5,6 +5,7 @@ namespace NystronSolar\ElectricBillExtractorTests\TestCase;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
+use NystronSolar\ElectricBillExtractor\Entity\Establishment;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use PHPUnit\Framework\TestCase;
 
@@ -35,6 +36,11 @@ class ExtractorTestCase extends TestCase
         $this->assertEquals($expectedBill->client->address->city, $actualBill->client->address->city, "$actualFile - 'client' - 'address' - 'city' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->client->address->state, $actualBill->client->address->state, "$actualFile - 'client' - 'address' - 'state' does not matches the $expectedFile");
         // < Assert Bill -> Client -> Address Primitive Types
+
+        // > Assert Bill -> Client -> Establishment Primitive Types
+        $this->assertEquals($expectedBill->client->establishment->classification, $actualBill->client->establishment->classification, "$actualFile - 'client' - 'establishment' - 'classification' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->client->establishment->supplyType, $actualBill->client->establishment->supplyType, "$actualFile - 'client' - 'establishment' - 'supplyType' does not matches the $expectedFile");
+        // < Assert Bill -> Client -> Establishment Primitive Types
     }
 
     /**
@@ -82,6 +88,10 @@ class ExtractorTestCase extends TestCase
                     $json->client->address->postcode,
                     $json->client->address->city,
                     $json->client->address->state,
+                ),
+                new Establishment(
+                    $json->client->establishment->classification,
+                    $json->client->establishment->supplyType
                 )
             )
         );
