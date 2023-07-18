@@ -23,6 +23,8 @@ class ExtractorTestCase extends TestCase
         // < Assert Bill Primitive Types
 
         // > Assert Bill -> Client Primitive Types
+        $this->assertNotNull($expectedBill->client, "$expectedFile - 'client' is null");
+        $this->assertNotNull($actualBill->client, "$actualFile - 'client' is null");
         $this->assertEquals($expectedBill->client->name, $actualBill->client->name, "$actualFile - 'client' - 'name' does not matches the $expectedFile");
         // < Assert Bill -> Client Primitive Types
 
