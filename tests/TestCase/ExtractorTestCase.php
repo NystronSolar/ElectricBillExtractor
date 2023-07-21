@@ -27,6 +27,8 @@ class ExtractorTestCase extends TestCase
         // < Assert Bill Not False
 
         // > Assert Bill Primitive Types
+        $this->assertNotNull($expectedBill->installationCode, "$expectedFile - 'installationCode' is null");
+        $this->assertNotNull($actualBill->installationCode, "$actualFile - 'installationCode' is null");
         // < Assert Bill Primitive Types
 
         // > Assert Bill -> Client Primitive Types
@@ -116,7 +118,8 @@ class ExtractorTestCase extends TestCase
                 \DateTime::createFromFormat($dateFormatReset, $json->dates->previousReadingDate),
                 \DateTime::createFromFormat($dateFormatReset, $json->dates->nextReadingDate),
                 \DateTime::createFromFormat($monthFormatReset, $json->dates->date)
-            )
+            ),
+            $json->installationCode
         );
 
         return $bill;

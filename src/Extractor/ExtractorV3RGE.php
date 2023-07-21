@@ -11,6 +11,7 @@ use NystronSolar\ElectricBillExtractor\Extractor;
 
 final class ExtractorV3RGE extends Extractor
 {
+    /** @psalm-suppress InvalidArrayOffset */
     public function extract(): Bill|false
     {
         $bill = new Bill();
@@ -46,6 +47,7 @@ final class ExtractorV3RGE extends Extractor
 
             if (str_starts_with($value, 'TENSÃO NOMINAL EM VOLTS')) {
                 /**
+                 * Example:
                  * TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
                  * 16/05/2023 14/04/2023 32
                  * Próxima leitura    14/06/2023TIMOTHY DA SILVA.
@@ -60,6 +62,10 @@ final class ExtractorV3RGE extends Extractor
                     \DateTime::createFromFormat($dateFormatReset, substr(trim(substr($contentArray[$key + 2], 16)), 0, 10)),
                     \DateTime::createFromFormat($monthFormatReset, $actualReadingDate->format('m/y'))
                 );
+            }
+
+            if (str_starts_with($value, 'NOTA FISCAL Nº')) {
+                $bill->installationCode = substr((string) $contentArray[$key - 1], -10);
             }
         }
 
