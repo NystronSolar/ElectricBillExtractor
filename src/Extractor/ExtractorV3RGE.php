@@ -5,6 +5,7 @@ namespace NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
+use NystronSolar\ElectricBillExtractor\Entity\Dates;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
 use NystronSolar\ElectricBillExtractor\Extractor;
 
@@ -41,6 +42,24 @@ final class ExtractorV3RGE extends Extractor
                 );
 
                 $bill->client = new Client($contentArray[$key + 1], $address, $establishment);
+            }
+
+            if (str_starts_with($value, 'TENSÃO NOMINAL EM VOLTS')) {
+                /**
+                 * TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+                 * 16/05/2023 14/04/2023 32
+                 * Próxima leitura    14/06/2023TIMOTHY DA SILVA.
+                 */
+                $dateFormatReset = '!d/m/Y';
+                $monthFormatReset = '!m/y';
+                $actualReadingDate = \DateTime::createFromFormat($dateFormatReset, substr($contentArray[$key + 1], 0, 10));
+
+                $bill->dates = new Dates(
+                    $actualReadingDate,
+                    \DateTime::createFromFormat($dateFormatReset, substr($contentArray[$key + 1], 11, 10)),
+                    \DateTime::createFromFormat($dateFormatReset, substr(trim(substr($contentArray[$key + 2], 16)), 0, 10)),
+                    \DateTime::createFromFormat($monthFormatReset, $actualReadingDate->format('m/y'))
+                );
             }
         }
 

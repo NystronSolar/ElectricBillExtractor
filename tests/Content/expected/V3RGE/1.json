@@ -12,5 +12,11 @@
             "classification": "Convencional B1 Residencial",
             "supplyType": "Bifásico"
         }
+    },
+    "dates": {
+        "actualReadingDate": "16/05/2023",
+        "previousReadingDate": "14/04/2023",
+        "nextReadingDate": "14/06/2023",
+        "date": "05/23"
     }
 }

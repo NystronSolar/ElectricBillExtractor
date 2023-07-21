@@ -5,7 +5,8 @@ namespace NystronSolar\ElectricBillExtractor\Entity;
 class Bill
 {
     public function __construct(
-        public ?Client $client = null
+        public ?Client $client = null,
+        public ?Dates $dates = null
     ) {
     }
 
@@ -16,6 +17,7 @@ class Bill
     {
         return
             !is_null($this->client)
+            && !is_null($this->dates)
         ;
     }
 }
