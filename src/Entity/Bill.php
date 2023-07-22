@@ -7,7 +7,8 @@ class Bill
     public function __construct(
         public ?Client $client = null,
         public ?Dates $dates = null,
-        public ?string $installationCode = null
+        public ?SolarGeneration $solarGeneration = null,
+        public ?string $installationCode = null,
     ) {
     }
 

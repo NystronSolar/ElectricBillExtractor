@@ -19,5 +19,9 @@
         "nextReadingDate": "14/06/2023",
         "date": "05/23"
     },
+    "solarGeneration": {
+        "balance": "1343.0",
+        "toExpireNextMonth": "0.0"
+    },
     "installationCode": "0123456789"
 }

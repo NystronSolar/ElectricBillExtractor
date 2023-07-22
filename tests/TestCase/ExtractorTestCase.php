@@ -7,6 +7,7 @@ use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
 use NystronSolar\ElectricBillExtractor\Entity\Dates;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
+use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use PHPUnit\Framework\TestCase;
 
@@ -58,6 +59,13 @@ class ExtractorTestCase extends TestCase
         $this->assertEqualsDate($expectedBill->dates->previousReadingDate, $actualBill->dates->previousReadingDate, "$actualFile - 'dates' - 'previousReadingDate' does not matches the $expectedFile");
         $this->assertEqualsDate($expectedBill->dates->date, $actualBill->dates->date, "$actualFile - 'dates' - 'date' does not matches the $expectedFile");
         // < Assert Bill -> Dates Primitive Types
+
+        // > Assert Bill -> SolarGeneration Primitive Types
+        $this->assertNotNull($expectedBill->solarGeneration, "$expectedFile - 'solarGeneration' is null");
+        $this->assertNotNull($actualBill->solarGeneration, "$actualFile - 'solarGeneration' is null");
+        $this->assertEquals($expectedBill->solarGeneration->balance, $actualBill->solarGeneration->balance, "$actualFile - 'solarGeneration' - 'balance' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->solarGeneration->toExpireNextMonth, $actualBill->solarGeneration->toExpireNextMonth, "$actualFile - 'solarGeneration' - 'toExpireNextMonth' does not matches the $expectedFile");
+        // < Assert Bill -> SolarGeneration Primitive Types
     }
 
     /**
@@ -118,6 +126,10 @@ class ExtractorTestCase extends TestCase
                 \DateTime::createFromFormat($dateFormatReset, $json->dates->previousReadingDate),
                 \DateTime::createFromFormat($dateFormatReset, $json->dates->nextReadingDate),
                 \DateTime::createFromFormat($monthFormatReset, $json->dates->date)
+            ),
+            new SolarGeneration(
+                $json->solarGeneration->balance,
+                $json->solarGeneration->toExpireNextMonth,
             ),
             $json->installationCode
         );

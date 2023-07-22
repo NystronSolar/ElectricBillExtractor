@@ -7,11 +7,16 @@ use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
 use NystronSolar\ElectricBillExtractor\Entity\Dates;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
+use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
+use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 
 final class ExtractorV3RGE extends Extractor
 {
-    /** @psalm-suppress InvalidArrayOffset */
+    /**
+     * @psalm-suppress InvalidArrayOffset
+     * @psalm-suppress ArgumentTypeCoercion
+     */
     public function extract(): Bill|false
     {
         $bill = new Bill();
@@ -65,7 +70,33 @@ final class ExtractorV3RGE extends Extractor
             }
 
             if (str_starts_with($value, 'NOTA FISCAL Nº')) {
+                /*
+                 * Example:
+                 * CPF: ******.123-** 0123456789
+                 * NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+                 */
                 $bill->installationCode = substr((string) $contentArray[$key - 1], -10);
+            }
+            if (str_starts_with($value, 'Saldo em Energia da Instalação')) {
+                /*
+                 * Example:
+                 * Saldo em Energia da Instalação:  Convencional 1.343,0000000000  kWh
+                 * Saldo a expirar próximo mês:  0,0000000000 kWh
+                 */
+
+                $balance = substr($value, 0, -5);
+                $balance = explode(' ', $balance);
+                $balance = $balance[array_key_last($balance)];
+                $balance = NumericHelper::brazilianNumberToNumericString($balance);
+                $toExpire = NumericHelper::brazilianNumberToNumericString(substr($contentArray[$key + 1], 32, -4));
+                if (!$toExpire || !$balance) {
+                    return false;
+                }
+
+                $bill->solarGeneration = new SolarGeneration(
+                    $balance,
+                    $toExpire
+                );
             }
         }
 
