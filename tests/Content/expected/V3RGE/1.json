@@ -23,5 +23,6 @@
         "balance": "1343.0",
         "toExpireNextMonth": "0.0"
     },
-    "installationCode": "0123456789"
+    "installationCode": "0123456789",
+    "price": "88.78"
 }

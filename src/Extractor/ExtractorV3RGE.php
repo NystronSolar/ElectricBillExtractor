@@ -16,6 +16,16 @@ final class ExtractorV3RGE extends Extractor
     /**
      * @psalm-suppress InvalidArrayOffset
      * @psalm-suppress ArgumentTypeCoercion
+     *
+     * @todo Extract RealPrice
+     * @todo Extract EnergyConsumed
+     * @todo Extract EnergyExcess
+     * @todo Extract ConsumeTUSD
+     * @todo Extract PriceTUSD
+     * @todo Extract PriceTE
+     * @todo Extract PriceIP
+     * @todo Extract Discounts
+     * @todo Extract Flags
      */
     public function extract(): Bill|false
     {
@@ -77,13 +87,13 @@ final class ExtractorV3RGE extends Extractor
                  */
                 $bill->installationCode = substr((string) $contentArray[$key - 1], -10);
             }
+
             if (str_starts_with($value, 'Saldo em Energia da Instalação')) {
                 /*
                  * Example:
                  * Saldo em Energia da Instalação:  Convencional 1.343,0000000000  kWh
                  * Saldo a expirar próximo mês:  0,0000000000 kWh
                  */
-
                 $balance = substr($value, 0, -5);
                 $balance = explode(' ', $balance);
                 $balance = $balance[array_key_last($balance)];
@@ -97,6 +107,22 @@ final class ExtractorV3RGE extends Extractor
                     $balance,
                     $toExpire
                 );
+            }
+            if (str_starts_with($value, 'Protocolo de autorização')) {
+                /*
+                 * Example:
+                 * Protocolo de autorização:  0123456789012345 -16.05.2023 às  22:16:12
+                 * MAI/2023 01/06/2023 R$ 88,78
+                 */
+                if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString(substr($contentArray[$key + 1], 23))) {
+                    return false;
+                }
+
+                if (!$price = NumericHelper::numericStringToMoney($numericStringPrice)) {
+                    return false;
+                }
+
+                $bill->price = $price;
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractorTests\TestCase;
 
+use Money\Money;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
@@ -9,6 +10,7 @@ use NystronSolar\ElectricBillExtractor\Entity\Dates;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
+use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use PHPUnit\Framework\TestCase;
 
 class ExtractorTestCase extends TestCase
@@ -30,6 +32,7 @@ class ExtractorTestCase extends TestCase
         // > Assert Bill Primitive Types
         $this->assertNotNull($expectedBill->installationCode, "$expectedFile - 'installationCode' is null");
         $this->assertNotNull($actualBill->installationCode, "$actualFile - 'installationCode' is null");
+        $this->assertEquals($expectedBill->installationCode, $actualBill->installationCode, "$actualFile - 'installationCode' does not matches the $expectedFile");
         // < Assert Bill Primitive Types
 
         // > Assert Bill -> Client Primitive Types
@@ -66,6 +69,13 @@ class ExtractorTestCase extends TestCase
         $this->assertEquals($expectedBill->solarGeneration->balance, $actualBill->solarGeneration->balance, "$actualFile - 'solarGeneration' - 'balance' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->solarGeneration->toExpireNextMonth, $actualBill->solarGeneration->toExpireNextMonth, "$actualFile - 'solarGeneration' - 'toExpireNextMonth' does not matches the $expectedFile");
         // < Assert Bill -> SolarGeneration Primitive Types
+
+        // > Assert Bill -> Price (Money Object)
+        $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
+        $this->assertNotNull($actualBill->price, "$actualFile - 'price' is null");
+        $this->assertEquals($expectedBill->price->getAmount(), $actualBill->price->getAmount(), "$actualFile - 'price' - 'amount' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->price->getCurrency(), $actualBill->price->getCurrency(), "$actualFile - 'price' - 'currency' does not matches the $expectedFile");
+        // < Assert Bill -> Price (Money Object)
     }
 
     /**
@@ -101,6 +111,7 @@ class ExtractorTestCase extends TestCase
     /**
      * @psalm-suppress MixedPropertyFetch
      * @psalm-suppress MixedArgument
+     * @psalm-suppress PossiblyFalseArgument
      */
     public function jsonToBill(object $json): Bill|false
     {
@@ -131,7 +142,8 @@ class ExtractorTestCase extends TestCase
                 $json->solarGeneration->balance,
                 $json->solarGeneration->toExpireNextMonth,
             ),
-            $json->installationCode
+            $json->installationCode,
+            NumericHelper::numericStringToMoney($json->price)
         );
 
         return $bill;
