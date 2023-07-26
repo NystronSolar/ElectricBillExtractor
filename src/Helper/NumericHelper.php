@@ -2,6 +2,9 @@
 
 namespace NystronSolar\ElectricBillExtractor\Helper;
 
+use Money\Currency;
+use Money\Money;
+
 class NumericHelper
 {
     /**
@@ -31,5 +34,19 @@ class NumericHelper
         }
 
         return $result;
+    }
+
+    /**
+     * @param numeric-string $amount
+     */
+    public static function numericStringToMoney(string $amount, Currency $currency = new Currency('BRL')): Money|false
+    {
+        $amount = str_replace('.', '', $amount);
+
+        if (!is_numeric($amount)) {
+            return false;
+        }
+
+        return new Money($amount, $currency);
     }
 }
