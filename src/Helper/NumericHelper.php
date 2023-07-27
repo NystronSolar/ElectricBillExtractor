@@ -41,12 +41,22 @@ class NumericHelper
      */
     public static function numericStringToMoney(string $amount, Currency $currency = new Currency('BRL')): Money|false
     {
+        $amount = sprintf('%0.2f', $amount);
+
         $amount = str_replace('.', '', $amount);
 
         if (!is_numeric($amount)) {
             return false;
         }
 
-        return new Money($amount, $currency);
+        try {
+            return new Money($amount, $currency);
+        } catch (\InvalidArgumentException $e) {
+            if ('Leading zeros are not allowed' === $e->getMessage()) {
+                return new Money('0', $currency);
+            }
+
+            return false;
+        }
     }
 }
