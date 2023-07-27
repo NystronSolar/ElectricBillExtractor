@@ -12,6 +12,7 @@ class Bill
         public ?SolarGeneration $solarGeneration = null,
         public ?string $installationCode = null,
         public ?Money $price = null,
+        public ?Debits $debits = null,
     ) {
     }
 
@@ -24,6 +25,8 @@ class Bill
             !is_null($this->client)
             && !is_null($this->dates)
             && !is_null($this->installationCode)
-            && !is_null($this->price);
+            && !is_null($this->price)
+            && !is_null($this->debits)
+        ;
     }
 }

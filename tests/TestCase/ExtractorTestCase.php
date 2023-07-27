@@ -2,11 +2,12 @@
 
 namespace NystronSolar\ElectricBillExtractorTests\TestCase;
 
-use Money\Money;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
 use NystronSolar\ElectricBillExtractor\Entity\Dates;
+use NystronSolar\ElectricBillExtractor\Entity\Debit;
+use NystronSolar\ElectricBillExtractor\Entity\Debits;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
@@ -70,6 +71,14 @@ class ExtractorTestCase extends TestCase
         $this->assertEquals($expectedBill->solarGeneration->toExpireNextMonth, $actualBill->solarGeneration->toExpireNextMonth, "$actualFile - 'solarGeneration' - 'toExpireNextMonth' does not matches the $expectedFile");
         // < Assert Bill -> SolarGeneration Primitive Types
 
+        // > Assert Bill -> Debits
+        $this->assertNotNull($expectedBill->debits, "$expectedFile - 'debits' is null");
+        $this->assertNotNull($actualBill->debits, "$actualFile - 'debits' is null");
+        $this->assertEquals($expectedBill->debits->tusd, $actualBill->debits->tusd, "$actualFile - 'debits' - 'tusd' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->debits->te, $actualBill->debits->te, "$actualFile - 'debits' - 'te' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->debits->cip, $actualBill->debits->cip, "$actualFile - 'debits' - 'cip' does not matches the $expectedFile");
+        // < Assert Bill -> Debits
+
         // > Assert Bill -> Price (Money Object)
         $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
         $this->assertNotNull($actualBill->price, "$actualFile - 'price' is null");
@@ -112,6 +121,7 @@ class ExtractorTestCase extends TestCase
      * @psalm-suppress MixedPropertyFetch
      * @psalm-suppress MixedArgument
      * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress PossiblyNullArgument
      */
     public function jsonToBill(object $json): Bill|false
     {
@@ -143,9 +153,32 @@ class ExtractorTestCase extends TestCase
                 $json->solarGeneration->toExpireNextMonth,
             ),
             $json->installationCode,
-            NumericHelper::numericStringToMoney($json->price)
+            NumericHelper::numericStringToMoney($json->price),
+            new Debits(
+                $this->jsonToDebit($json->debits->tusd),
+                $this->jsonToDebit($json->debits->te),
+                $this->jsonToDebit($json->debits->cip),
+            )
         );
 
         return $bill;
+    }
+
+    /**
+     * @psalm-suppress MixedArgument
+     * @psalm-suppress PossiblyFalseArgument
+     */
+    private function jsonToDebit(?object $json): ?Debit
+    {
+        if (!$json) {
+            return null;
+        }
+
+        return new Debit(
+            NumericHelper::numericStringToMoney($json->price),
+            $json->name,
+            $json->abbreviation,
+            $json->kWhAmount ?? null
+        );
     }
 }

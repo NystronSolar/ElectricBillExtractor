@@ -23,6 +23,25 @@
         "balance": "1343.0",
         "toExpireNextMonth": "0.0"
     },
+    "debits": {
+        "tusd": {
+            "price": "236.54",
+            "name": "Tarifa de Uso do Sistema de Distribuição",
+            "abbreviation": "TUSD",
+            "kWhAmount": "426.0"
+        },
+        "te": {
+            "price": "141.43",
+            "name": "Tarifa de Energia",
+            "abbreviation": "TE",
+            "kWhAmount": "426.0"
+        },
+        "cip": {
+            "price": "8.94",
+            "name": "Contribuição de Iluminação Pública",
+            "abbreviation": "CIP"
+        }
+    },
     "installationCode": "0123456789",
     "price": "88.78"
 }

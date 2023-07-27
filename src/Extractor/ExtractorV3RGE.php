@@ -6,6 +6,8 @@ use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
 use NystronSolar\ElectricBillExtractor\Entity\Dates;
+use NystronSolar\ElectricBillExtractor\Entity\Debit;
+use NystronSolar\ElectricBillExtractor\Entity\Debits;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
@@ -16,6 +18,7 @@ final class ExtractorV3RGE extends Extractor
     /**
      * @psalm-suppress InvalidArrayOffset
      * @psalm-suppress ArgumentTypeCoercion
+     * @psalm-suppress PossiblyFalseArgument
      *
      * @todo Extract RealPrice
      * @todo Extract EnergyConsumed
@@ -108,6 +111,7 @@ final class ExtractorV3RGE extends Extractor
                     $toExpire
                 );
             }
+
             if (str_starts_with($value, 'Protocolo de autorização')) {
                 /*
                  * Example:
@@ -124,6 +128,51 @@ final class ExtractorV3RGE extends Extractor
 
                 $bill->price = $price;
             }
+
+            if (str_starts_with($value, '    Consumo Uso Sistema [KWh]-TUSD')) {
+                /*
+                 * Example:
+                 *     Consumo Uso Sistema [KWh]-TUSD  MAI/23 kWh 426,0000   0,43754000  0,55525822  236,54  236,54  17,00   40,21  1,79  8,15
+                 * Consumo - TE MAI/23 kWh 426,0000   0,26162000  0,33199531  141,43  141,43  17,00   24,04  1,07  4,87
+                 * Energia Ativa Injetada TUSD  MAI/23 kWh 278,0000   0,43754000  0,46089929  128,13- 0.00   1,17- 5,32-
+                 * Energia Ativa Injetada TE  MAI/23 kWh 278,0000   0,26162000  0,33201439  92,30- 92,30- 17,00   15,69- 0,70- 3,18-
+                 * Energ Atv Inj. mUC mPT - TUSD  DEZ/21 kWh 98,0000   0,43754000  0,46081633  45,16- 0.00   0,41- 1,87-
+                 * Energ Atv Inj. mUC mPT - TE  DEZ/21 kWh 98,0000   0,26162000  0,33204082  32,54- 32,54- 17,00   5,53- 0,25- 1,12-
+                 * Total Distribuidora       79,84
+                 * DÉBITOS DE OUTROS SERVIÇOS
+                 * Contribuição Custeio IP-CIP  MAI/23       8,94
+                 */
+                $cipKey = $this->findCipKey($contentArray, $key);
+                if (!$cipKey) {
+                    return false;
+                }
+
+                try {
+                    $tusd = new Debit(
+                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3])),
+                        'Tarifa de Uso do Sistema de Distribuição',
+                        'TUSD',
+                        NumericHelper::brazilianNumberToNumericString(explode(' ', substr($value, 47))[0] ?? '0.0')
+                    );
+
+                    $te = new Debit(
+                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 1], 24)), fn (string $v) => !empty($v)))[3])),
+                        'Tarifa de Energia',
+                        'TE',
+                        NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 1], 24)), fn (string $v) => !empty($v)))[0])
+                    );
+
+                    $cip = new Debit(
+                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(trim(substr($contentArray[$cipKey], 37)))),
+                        'Contribuição de Iluminação Pública',
+                        'CIP'
+                    );
+                } catch (\TypeError $e) {
+                    return false;
+                }
+
+                $bill->debits = new Debits($tusd, $te, $cip);
+            }
         }
 
         if (!$bill->isValid()) {
@@ -131,5 +180,21 @@ final class ExtractorV3RGE extends Extractor
         }
 
         return $bill;
+    }
+
+    /**
+     * @param array<int, mixed> $contentArr
+     */
+    private function findCipKey(array $contentArr, int $currentKey = 0): int|false
+    {
+        while (array_key_exists($currentKey, $contentArr)) {
+            if (str_starts_with((string) $contentArr[$currentKey], 'Contribuição Custeio IP-CIP')) {
+                return $currentKey;
+            }
+
+            ++$currentKey;
+        }
+
+        return false;
     }
 }
