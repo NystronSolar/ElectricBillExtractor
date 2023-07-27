@@ -148,11 +148,18 @@ final class ExtractorV3RGE extends Extractor
                 }
 
                 try {
-                    $tusd = new Debit(
+                    $tusdAct = new Debit(
                         NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3])),
-                        'Tarifa de Uso do Sistema de Distribuição',
-                        'TUSD',
+                        'Tarifa de Uso do Sistema de Distribuição Ativa',
+                        'TUSD Ati',
                         NumericHelper::brazilianNumberToNumericString(explode(' ', substr($value, 47))[0] ?? '0.0')
+                    );
+
+                    $tusdInj = new Debit(
+                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 2], 40)), fn (string $v) => !empty($v)))[3], negativeOnEnd: true), negativeOnEnd: true),
+                        'Tarifa de Uso do Sistema de Distribuição Injetada',
+                        'TUSD Inj',
+                        NumericHelper::brazilianNumberToNumericString(explode(' ', substr($contentArray[$key + 2], 40))[0] ?? '0.0')
                     );
 
                     $te = new Debit(
@@ -171,7 +178,7 @@ final class ExtractorV3RGE extends Extractor
                     return false;
                 }
 
-                $bill->debits = new Debits($tusd, $te, $cip);
+                $bill->debits = new Debits($tusdAct, $tusdInj, $te, $cip);
             }
         }
 

@@ -10,10 +10,15 @@ class NumericHelper
     /**
      * @return numeric-string|false
      */
-    public static function brazilianNumberToNumericString(string $rawNumber): string|false
+    public static function brazilianNumberToNumericString(string $rawNumber, bool $negativeOnEnd = false): string|false
     {
         $result = str_replace('.', '', $rawNumber);
         $result = str_replace(',', '.', $result);
+
+        if ($negativeOnEnd && str_ends_with($result, '-')) {
+            $result = str_replace('-', '', $result);
+            $result = '-'.$result;
+        }
 
         if (!str_contains($result, '.')) {
             $result .= '.0';
@@ -25,6 +30,10 @@ class NumericHelper
 
         if (str_starts_with($result, '.')) {
             $result = '0'.$result;
+        }
+
+        if (str_starts_with($result, '-.')) {
+            $result = str_replace('-.', '-0.', $result);
         }
 
         $result = preg_replace('/0{2,}$/', '0', $result);
@@ -39,11 +48,16 @@ class NumericHelper
     /**
      * @param numeric-string $amount
      */
-    public static function numericStringToMoney(string $amount, Currency $currency = new Currency('BRL')): Money|false
+    public static function numericStringToMoney(string $amount, Currency $currency = new Currency('BRL'), bool $negativeOnEnd = false): Money|false
     {
         $amount = sprintf('%0.2f', $amount);
 
         $amount = str_replace('.', '', $amount);
+
+        if ($negativeOnEnd && str_ends_with($amount, '-')) {
+            $amount = str_replace('-', '', $amount);
+            $amount = '-'.$amount;
+        }
 
         if (!is_numeric($amount)) {
             return false;

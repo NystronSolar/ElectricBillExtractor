@@ -24,11 +24,17 @@
         "toExpireNextMonth": "0.0"
     },
     "debits": {
-        "tusd": {
+        "tusdAct": {
             "price": "236.54",
-            "name": "Tarifa de Uso do Sistema de Distribuição",
-            "abbreviation": "TUSD",
+            "name": "Tarifa de Uso do Sistema de Distribuição Ativa",
+            "abbreviation": "TUSD Ati",
             "kWhAmount": "426.0"
+        },
+        "tusdInj": {
+            "price": "-128.13",
+            "name": "Tarifa de Uso do Sistema de Distribuição Injetada",
+            "abbreviation": "TUSD Inj",
+            "kWhAmount": "278.0"
         },
         "te": {
             "price": "141.43",

@@ -74,7 +74,8 @@ class ExtractorTestCase extends TestCase
         // > Assert Bill -> Debits
         $this->assertNotNull($expectedBill->debits, "$expectedFile - 'debits' is null");
         $this->assertNotNull($actualBill->debits, "$actualFile - 'debits' is null");
-        $this->assertEquals($expectedBill->debits->tusd, $actualBill->debits->tusd, "$actualFile - 'debits' - 'tusd' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->debits->tusdAct, $actualBill->debits->tusdAct, "$actualFile - 'debits' - 'tusdAct' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->debits->tusdInj, $actualBill->debits->tusdInj, "$actualFile - 'debits' - 'tusdInj' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->debits->te, $actualBill->debits->te, "$actualFile - 'debits' - 'te' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->debits->cip, $actualBill->debits->cip, "$actualFile - 'debits' - 'cip' does not matches the $expectedFile");
         // < Assert Bill -> Debits
@@ -155,7 +156,8 @@ class ExtractorTestCase extends TestCase
             $json->installationCode,
             NumericHelper::numericStringToMoney($json->price),
             new Debits(
-                $this->jsonToDebit($json->debits->tusd),
+                $this->jsonToDebit($json->debits->tusdAct),
+                $this->jsonToDebit($json->debits->tusdInj),
                 $this->jsonToDebit($json->debits->te),
                 $this->jsonToDebit($json->debits->cip),
             )
@@ -175,7 +177,7 @@ class ExtractorTestCase extends TestCase
         }
 
         return new Debit(
-            NumericHelper::numericStringToMoney($json->price),
+            NumericHelper::numericStringToMoney($json->price, negativeOnEnd: true),
             $json->name,
             $json->abbreviation,
             $json->kWhAmount ?? null
