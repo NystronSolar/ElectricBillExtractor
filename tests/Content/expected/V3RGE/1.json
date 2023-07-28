@@ -24,17 +24,11 @@
         "toExpireNextMonth": "0.0"
     },
     "debits": {
-        "tusdAct": {
+        "tusd": {
             "price": "236.54",
-            "name": "Tarifa de Uso do Sistema de Distribuição Ativa",
-            "abbreviation": "TUSD Ati",
+            "name": "Tarifa de Uso do Sistema de Distribuição",
+            "abbreviation": "TUSD",
             "kWhAmount": "426.0"
-        },
-        "tusdInj": {
-            "price": "-128.13",
-            "name": "Tarifa de Uso do Sistema de Distribuição Injetada",
-            "abbreviation": "TUSD Inj",
-            "kWhAmount": "278.0"
         },
         "te": {
             "price": "141.43",
@@ -46,6 +40,18 @@
             "price": "8.94",
             "name": "Contribuição de Iluminação Pública",
             "abbreviation": "CIP"
+        }
+    },
+    "powers": {
+        "active": {
+            "previousReading": "6306",
+            "actualReading": "6732",
+            "kWhAmount": "426"
+        },
+        "injected": {
+            "previousReading": "7481",
+            "actualReading": "7759",
+            "kWhAmount": "278"
         }
     },
     "installationCode": "0123456789",

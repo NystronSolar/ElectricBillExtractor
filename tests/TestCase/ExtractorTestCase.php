@@ -9,6 +9,8 @@ use NystronSolar\ElectricBillExtractor\Entity\Dates;
 use NystronSolar\ElectricBillExtractor\Entity\Debit;
 use NystronSolar\ElectricBillExtractor\Entity\Debits;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
+use NystronSolar\ElectricBillExtractor\Entity\Power;
+use NystronSolar\ElectricBillExtractor\Entity\Powers;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
@@ -74,11 +76,17 @@ class ExtractorTestCase extends TestCase
         // > Assert Bill -> Debits
         $this->assertNotNull($expectedBill->debits, "$expectedFile - 'debits' is null");
         $this->assertNotNull($actualBill->debits, "$actualFile - 'debits' is null");
-        $this->assertEquals($expectedBill->debits->tusdAct, $actualBill->debits->tusdAct, "$actualFile - 'debits' - 'tusdAct' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->debits->tusdInj, $actualBill->debits->tusdInj, "$actualFile - 'debits' - 'tusdInj' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->debits->tusd, $actualBill->debits->tusd, "$actualFile - 'debits' - 'tusd' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->debits->te, $actualBill->debits->te, "$actualFile - 'debits' - 'te' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->debits->cip, $actualBill->debits->cip, "$actualFile - 'debits' - 'cip' does not matches the $expectedFile");
         // < Assert Bill -> Debits
+
+        // > Assert Bill -> Powers
+        $this->assertNotNull($expectedBill->powers, "$expectedFile - 'powers' is null");
+        $this->assertNotNull($actualBill->powers, "$actualFile - 'powers' is null");
+        $this->assertEquals($expectedBill->powers->active, $actualBill->powers->active, "$actualFile - 'powers' - 'active' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->powers->injected, $actualBill->powers->injected, "$actualFile - 'powers' - 'injected' does not matches the $expectedFile");
+        // < Assert Bill -> Powers
 
         // > Assert Bill -> Price (Money Object)
         $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
@@ -156,10 +164,13 @@ class ExtractorTestCase extends TestCase
             $json->installationCode,
             NumericHelper::numericStringToMoney($json->price),
             new Debits(
-                $this->jsonToDebit($json->debits->tusdAct),
-                $this->jsonToDebit($json->debits->tusdInj),
+                $this->jsonToDebit($json->debits->tusd),
                 $this->jsonToDebit($json->debits->te),
                 $this->jsonToDebit($json->debits->cip),
+            ),
+            new Powers(
+                $this->jsonToPower($json->powers->active),
+                $this->jsonToPower($json->powers->injected)
             )
         );
 
@@ -181,6 +192,22 @@ class ExtractorTestCase extends TestCase
             $json->name,
             $json->abbreviation,
             $json->kWhAmount ?? null
+        );
+    }
+
+    /**
+     * @psalm-suppress MixedArgument
+     */
+    private function jsonToPower(?object $json): ?Power
+    {
+        if (!$json) {
+            return null;
+        }
+
+        return new Power(
+            $json->actualReading,
+            $json->previousReading,
+            $json->kWhAmount,
         );
     }
 }

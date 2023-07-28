@@ -13,6 +13,7 @@ class Bill
         public ?string $installationCode = null,
         public ?Money $price = null,
         public ?Debits $debits = null,
+        public ?Powers $powers = null,
     ) {
     }
 
@@ -27,6 +28,7 @@ class Bill
             && !is_null($this->installationCode)
             && !is_null($this->price)
             && !is_null($this->debits)
+            && !is_null($this->powers)
         ;
     }
 }

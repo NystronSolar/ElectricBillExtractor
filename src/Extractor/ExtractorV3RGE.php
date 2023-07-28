@@ -2,6 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor\Extractor;
 
+use Money\Money;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
@@ -9,6 +10,8 @@ use NystronSolar\ElectricBillExtractor\Entity\Dates;
 use NystronSolar\ElectricBillExtractor\Entity\Debit;
 use NystronSolar\ElectricBillExtractor\Entity\Debits;
 use NystronSolar\ElectricBillExtractor\Entity\Establishment;
+use NystronSolar\ElectricBillExtractor\Entity\Power;
+use NystronSolar\ElectricBillExtractor\Entity\Powers;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
@@ -111,16 +114,28 @@ final class ExtractorV3RGE extends Extractor
                  * Example:
                  * Protocolo de autorização:  0123456789012345 -16.05.2023 às  22:16:12
                  * MAI/2023 01/06/2023 R$ 88,78
+                 *
+                 * Protocolo de autorização:  0123456789012345 -15.07.2022 às  02:47:19
+                 * JUL/2022 01/08/2022 R$ **********
+                 *
                  */
-                if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString(substr($contentArray[$key + 1], 23))) {
-                    return false;
-                }
 
-                if (!$price = NumericHelper::numericStringToMoney($numericStringPrice)) {
-                    return false;
-                }
+                $rawPrice = substr($contentArray[$key + 1], 23);
 
-                $bill->price = $price;
+                // Bill has no price to pay
+                if (str_contains($rawPrice, '*')) {
+                    $bill->price = Money::BRL('0');
+                } else {
+                    if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString($rawPrice)) {
+                        return false;
+                    }
+
+                    if (!$price = NumericHelper::numericStringToMoney($numericStringPrice)) {
+                        return false;
+                    }
+
+                    $bill->price = $price;
+                }
             }
 
             if (str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
@@ -142,22 +157,11 @@ final class ExtractorV3RGE extends Extractor
                 }
 
                 try {
-                    $tusdAct = new Debit(
+                    $tusd = new Debit(
                         NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3])),
-                        'Tarifa de Uso do Sistema de Distribuição Ativa',
-                        'TUSD Ati',
+                        'Tarifa de Uso do Sistema de Distribuição',
+                        'TUSD',
                         NumericHelper::brazilianNumberToNumericString(explode(' ', substr(trim($value), 43))[0] ?? '0.0')
-                    );
-
-                    $tusdInj = new Debit(
-                        NumericHelper::numericStringToMoney(
-                            NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 2], 40)), fn (string $v) => !empty($v)))[3],
-                                negativeOnEnd: true),
-                            negativeOnEnd: true
-                        ),
-                        'Tarifa de Uso do Sistema de Distribuição Injetada',
-                        'TUSD Inj',
-                        NumericHelper::brazilianNumberToNumericString(explode(' ', substr($contentArray[$key + 2], 40))[0] ?? '0.0')
                     );
 
                     $te = new Debit(
@@ -176,7 +180,30 @@ final class ExtractorV3RGE extends Extractor
                     return false;
                 }
 
-                $bill->debits = new Debits($tusdAct, $tusdInj, $te, $cip);
+                $bill->debits = new Debits($tusd, $te, $cip);
+            }
+
+            if (str_contains($value, 'Energia Ativa-kWh')) {
+                /*
+                 * Example:
+                 * 12345678 Energia Ativa-kWh único 6306 6732 1,00 426
+                 * 12345678 Energia Injetada único 7481 7759 1,00 278 Verde        16 Dias
+                 */
+                $powerActiveExploded = explode(' ', $value);
+                $powerActive = new Power(
+                    $powerActiveExploded[5],
+                    $powerActiveExploded[4],
+                    $powerActiveExploded[7],
+                );
+
+                $powerInjectedExploded = explode(' ', $contentArray[$key + 1]);
+                $powerInjected = new Power(
+                    $powerInjectedExploded[5],
+                    $powerInjectedExploded[4],
+                    $powerInjectedExploded[7],
+                );
+
+                $bill->powers = new Powers($powerActive, $powerInjected);
             }
         }
 
