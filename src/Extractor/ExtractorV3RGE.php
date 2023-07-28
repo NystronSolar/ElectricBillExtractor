@@ -21,12 +21,6 @@ final class ExtractorV3RGE extends Extractor
      * @psalm-suppress PossiblyFalseArgument
      *
      * @todo Extract RealPrice
-     * @todo Extract EnergyConsumed
-     * @todo Extract EnergyExcess
-     * @todo Extract ConsumeTUSD
-     * @todo Extract PriceTUSD
-     * @todo Extract PriceTE
-     * @todo Extract PriceIP
      * @todo Extract Discounts
      * @todo Extract Flags
      */
@@ -38,14 +32,14 @@ final class ExtractorV3RGE extends Extractor
             if (str_starts_with($value, 'Inscrição Estadual')) {
                 /**
                  * Example:
-                 *  Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
-                 *  TIMOTHY DA SILVA
-                 *  R FICTICIA 123
-                 *  CENTRO
-                 *  12345-678 CIDADE RS.
-                 *  09 ABCDE012-00000123 12345678 1/ 1 19/05/2023 14/06/2023 01/06/2023
-                 *   Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
-                 *   Bifásico.
+                 * Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+                 * TIMOTHY DA SILVA
+                 * R FICTICIA 123
+                 * CENTRO
+                 * 12345-678 CIDADE RS.
+                 * 09 ABCDE012-00000123 12345678 1/ 1 19/05/2023 14/06/2023 01/06/2023
+                 *  Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+                 * Bifásico.
                  */
                 $address = new Address(
                     trim($contentArray[$key + 2]),
@@ -129,7 +123,7 @@ final class ExtractorV3RGE extends Extractor
                 $bill->price = $price;
             }
 
-            if (str_starts_with($value, '    Consumo Uso Sistema [KWh]-TUSD')) {
+            if (str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
                 /*
                  * Example:
                  *     Consumo Uso Sistema [KWh]-TUSD  MAI/23 kWh 426,0000   0,43754000  0,55525822  236,54  236,54  17,00   40,21  1,79  8,15
@@ -142,7 +136,7 @@ final class ExtractorV3RGE extends Extractor
                  * DÉBITOS DE OUTROS SERVIÇOS
                  * Contribuição Custeio IP-CIP  MAI/23       8,94
                  */
-                $cipKey = $this->findCipKey($contentArray, $key);
+                $cipKey = $this->findCipKey($contentArray, $bill, $key);
                 if (!$cipKey) {
                     return false;
                 }
@@ -152,11 +146,15 @@ final class ExtractorV3RGE extends Extractor
                         NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3])),
                         'Tarifa de Uso do Sistema de Distribuição Ativa',
                         'TUSD Ati',
-                        NumericHelper::brazilianNumberToNumericString(explode(' ', substr($value, 47))[0] ?? '0.0')
+                        NumericHelper::brazilianNumberToNumericString(explode(' ', substr(trim($value), 43))[0] ?? '0.0')
                     );
 
                     $tusdInj = new Debit(
-                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 2], 40)), fn (string $v) => !empty($v)))[3], negativeOnEnd: true), negativeOnEnd: true),
+                        NumericHelper::numericStringToMoney(
+                            NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 2], 40)), fn (string $v) => !empty($v)))[3],
+                                negativeOnEnd: true),
+                            negativeOnEnd: true
+                        ),
                         'Tarifa de Uso do Sistema de Distribuição Injetada',
                         'TUSD Inj',
                         NumericHelper::brazilianNumberToNumericString(explode(' ', substr($contentArray[$key + 2], 40))[0] ?? '0.0')
@@ -192,10 +190,17 @@ final class ExtractorV3RGE extends Extractor
     /**
      * @param array<int, mixed> $contentArr
      */
-    private function findCipKey(array $contentArr, int $currentKey = 0): int|false
+    private function findCipKey(array $contentArr, Bill $bill, int $currentKey = 0): int|false
     {
+        $date = $bill->dates?->date;
+        if (is_null($date)) {
+            return false;
+        }
+
+        $dateFormatter = new \IntlDateFormatter('pt_br', \IntlDateFormatter::NONE, \IntlDateFormatter::NONE, null, null, 'MMM');
+        $dateStyled = strtoupper(str_replace('.', '', $dateFormatter->format($date)));
         while (array_key_exists($currentKey, $contentArr)) {
-            if (str_starts_with((string) $contentArr[$currentKey], 'Contribuição Custeio IP-CIP')) {
+            if (str_starts_with((string) $contentArr[$currentKey], 'Contribuição Custeio IP-CIP') && str_contains((string) $contentArr[$currentKey], $dateStyled)) {
                 return $currentKey;
             }
 

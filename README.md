@@ -97,3 +97,30 @@ But in tests, we can skip all the parsing. And that's because we use `.txt` inst
 ### The Test Case
 
 Since the extractor have this "strange" way to assert the classes, we built the [Extractor Test Case](tests/TestCase/ExtractorTestCase.php), which is a Custom PHPUnit Test Case. This test case have an `assertByContentFolder` method, which you need to provide the folder name and the extractor class.
+
+### Uploading a new Test Bill
+
+The bills under `tests/Content/bills` are usually real bills, but with some values changed. If you found an error with your bill and wan't to upload it to the repository, it's extremely important to change some values, such as real name, CPF, installation code, etc, since this project is Open Source, so **anyone** can see the bills.
+
+Here you can see all the values that must have to be changed in all bills.
+
+#### RGE V3
+
+> Values are named in Portuguese, in order.
+
+- Nome
+- Rua e Número
+- Bairro
+- Cep, Cidade e Estado
+- Lote
+- Endereço de Leitura
+- N° do Medidor
+- CPF
+- Código de Instalação
+- Nota Fiscal
+- Chave de Acesso Nota Fiscal QRCode
+- Protocolo de Autorização Nota Fiscal
+- Valores secretos dentro da caixa "Aviso Importante"
+- Medidor
+- Conta de Energia Elétrica (Número ID)
+- Código de Débito Automático do Banco
