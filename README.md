@@ -102,6 +102,8 @@ Since the extractor have this "strange" way to assert the classes, we built the 
 
 The bills under `tests/Content/bills` are usually real bills, but with some values changed. If you found an error with your bill and wan't to upload it to the repository, it's extremely important to change some values, such as real name, CPF, installation code, etc, since this project is Open Source, so **anyone** can see the bills.
 
+You can use the command `composer upload-bill` to help you adding a new bill, but you still have to remove all the secrets and fill the JSON expected file.
+
 Here you can see all the values that must have to be changed in all bills.
 
 #### RGE V3

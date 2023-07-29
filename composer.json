@@ -4,6 +4,9 @@
     "license": "MIT",
     "homepage": "https://github.com/NystronSolar/ElectricBillExtractor",
     "prefer-stable": true,
+    "scripts": {
+        "upload-bill": "NystronSolar\\ElectricBillExtractorTests\\Scripts\\UploadBillCommand"
+    },
     "autoload": {
         "psr-4": {
             "NystronSolar\\ElectricBillExtractor\\": "src/"
