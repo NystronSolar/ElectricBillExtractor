@@ -32,79 +32,52 @@ class ExtractorTestCase extends TestCase
         $this->assertNotFalse($actualBill, "$actualFile is false");
         // < Assert Bill Not False
 
-        // > Assert Bill Primitive Types
+        // > Assert Bill Values Not Null
         $this->assertNotNull($expectedBill->installationCode, "$expectedFile - 'installationCode' is null");
         $this->assertNotNull($actualBill->installationCode, "$actualFile - 'installationCode' is null");
-        $this->assertEquals($expectedBill->installationCode, $actualBill->installationCode, "$actualFile - 'installationCode' does not matches the $expectedFile");
-        // < Assert Bill Primitive Types
 
-        // > Assert Bill -> Client Primitive Types
         $this->assertNotNull($expectedBill->client, "$expectedFile - 'client' is null");
         $this->assertNotNull($actualBill->client, "$actualFile - 'client' is null");
-        $this->assertEquals($expectedBill->client->name, $actualBill->client->name, "$actualFile - 'client' - 'name' does not matches the $expectedFile");
-        // < Assert Bill -> Client Primitive Types
 
-        // > Assert Bill -> Client -> Address Primitive Types
-        $this->assertEquals($expectedBill->client->address->street, $actualBill->client->address->street, "$actualFile - 'client' - 'address' - 'street' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->client->address->district, $actualBill->client->address->district, "$actualFile - 'client' - 'address' - 'district' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->client->address->postcode, $actualBill->client->address->postcode, "$actualFile - 'client' - 'address' - 'postcode' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->client->address->city, $actualBill->client->address->city, "$actualFile - 'client' - 'address' - 'city' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->client->address->state, $actualBill->client->address->state, "$actualFile - 'client' - 'address' - 'state' does not matches the $expectedFile");
-        // < Assert Bill -> Client -> Address Primitive Types
-
-        // > Assert Bill -> Client -> Establishment Primitive Types
-        $this->assertEquals($expectedBill->client->establishment->classification, $actualBill->client->establishment->classification, "$actualFile - 'client' - 'establishment' - 'classification' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->client->establishment->supplyType, $actualBill->client->establishment->supplyType, "$actualFile - 'client' - 'establishment' - 'supplyType' does not matches the $expectedFile");
-        // < Assert Bill -> Client -> Establishment Primitive Types
-
-        // > Assert Bill -> Dates Primitive Types
         $this->assertNotNull($expectedBill->dates, "$expectedFile - 'dates' is null");
         $this->assertNotNull($actualBill->dates, "$actualFile - 'dates' is null");
+
+        $this->assertNotNull($expectedBill->solarGeneration, "$expectedFile - 'solarGeneration' is null");
+        $this->assertNotNull($actualBill->solarGeneration, "$actualFile - 'solarGeneration' is null");
+
+        $this->assertNotNull($expectedBill->debits, "$expectedFile - 'debits' is null");
+        $this->assertNotNull($actualBill->debits, "$actualFile - 'debits' is null");
+
+        $this->assertNotNull($expectedBill->powers, "$expectedFile - 'powers' is null");
+        $this->assertNotNull($actualBill->powers, "$actualFile - 'powers' is null");
+
+        $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
+        $this->assertNotNull($actualBill->price, "$actualFile - 'price' is null");
+
+        $this->assertNotNull($expectedBill->realPrice, "$expectedFile - 'realPrice' is null");
+        $this->assertNotNull($actualBill->realPrice, "$actualFile - 'realPrice' is null");
+
+        $this->assertNotNull($expectedBill->lastMonthPrice, "$expectedFile - 'lastMonthPrice' is null");
+        $this->assertNotNull($actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' is null");
+        // < Assert Bill Values Not Null
+
+        // > Assert Bill
+        $this->assertEquals($expectedBill->installationCode, $actualBill->installationCode, "$actualFile - 'installationCode' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->price, $actualBill->price, "$actualFile - 'price' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->realPrice, $actualBill->realPrice, "$actualFile - 'realPrice' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->lastMonthPrice, $actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->client, $actualBill->client, "$actualFile - 'client' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->solarGeneration, $actualBill->solarGeneration, "$actualFile - 'solarGeneration' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->debits, $actualBill->debits, "$actualFile - 'debits' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->powers, $actualBill->powers, "$actualFile - 'powers' does not matches the $expectedFile");
+        // < Assert Bill
+
+        // > Assert Bill -> Dates
         $this->assertEqualsDate($expectedBill->dates->actualReadingDate, $actualBill->dates->actualReadingDate, "$actualFile - 'dates' - 'actualReadingDate' does not matches the $expectedFile");
         $this->assertEqualsDate($expectedBill->dates->nextReadingDate, $actualBill->dates->nextReadingDate, "$actualFile - 'dates' - 'nextReadingDate' does not matches the $expectedFile");
         $this->assertEqualsDate($expectedBill->dates->previousReadingDate, $actualBill->dates->previousReadingDate, "$actualFile - 'dates' - 'previousReadingDate' does not matches the $expectedFile");
         $this->assertEqualsDate($expectedBill->dates->date, $actualBill->dates->date, "$actualFile - 'dates' - 'date' does not matches the $expectedFile");
-        // < Assert Bill -> Dates Primitive Types
-
-        // > Assert Bill -> SolarGeneration Primitive Types
-        $this->assertNotNull($expectedBill->solarGeneration, "$expectedFile - 'solarGeneration' is null");
-        $this->assertNotNull($actualBill->solarGeneration, "$actualFile - 'solarGeneration' is null");
-        $this->assertEquals($expectedBill->solarGeneration->balance, $actualBill->solarGeneration->balance, "$actualFile - 'solarGeneration' - 'balance' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->solarGeneration->toExpireNextMonth, $actualBill->solarGeneration->toExpireNextMonth, "$actualFile - 'solarGeneration' - 'toExpireNextMonth' does not matches the $expectedFile");
-        // < Assert Bill -> SolarGeneration Primitive Types
-
-        // > Assert Bill -> Debits
-        $this->assertNotNull($expectedBill->debits, "$expectedFile - 'debits' is null");
-        $this->assertNotNull($actualBill->debits, "$actualFile - 'debits' is null");
-        $this->assertEquals($expectedBill->debits->tusd, $actualBill->debits->tusd, "$actualFile - 'debits' - 'tusd' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->debits->te, $actualBill->debits->te, "$actualFile - 'debits' - 'te' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->debits->cip, $actualBill->debits->cip, "$actualFile - 'debits' - 'cip' does not matches the $expectedFile");
-        // < Assert Bill -> Debits
-
-        // > Assert Bill -> Powers
-        $this->assertNotNull($expectedBill->powers, "$expectedFile - 'powers' is null");
-        $this->assertNotNull($actualBill->powers, "$actualFile - 'powers' is null");
-        $this->assertEquals($expectedBill->powers->active, $actualBill->powers->active, "$actualFile - 'powers' - 'active' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->powers->injected, $actualBill->powers->injected, "$actualFile - 'powers' - 'injected' does not matches the $expectedFile");
-        // < Assert Bill -> Powers
-
-        // > Assert Bill -> Price (Money Object)
-        $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
-        $this->assertNotNull($actualBill->price, "$actualFile - 'price' is null");
-        $this->assertEquals($expectedBill->price, $actualBill->price, "$actualFile - 'price' does not matches the $expectedFile");
-        // < Assert Bill -> Price (Money Object)
-
-        // > Assert Bill -> Real Price (Money Object)
-        $this->assertNotNull($expectedBill->realPrice, "$expectedFile - 'realPrice' is null");
-        $this->assertNotNull($actualBill->realPrice, "$actualFile - 'realPrice' is null");
-        $this->assertEquals($expectedBill->realPrice, $actualBill->realPrice, "$actualFile - 'realPrice' does not matches the $expectedFile");
-        // < Assert Bill -> Real Price (Money Object)
-
-        // > Assert Bill -> Last Month Price (Money Object)
-        $this->assertNotNull($expectedBill->lastMonthPrice, "$expectedFile - 'lastMonthPrice' is null");
-        $this->assertNotNull($actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' is null");
-        $this->assertEquals($expectedBill->lastMonthPrice, $actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' does not matches the $expectedFile");
-        // < Assert Bill -> Last Month Price (Money Object)
+        // < Assert Bill -> Dates
     }
 
     /**
@@ -174,13 +147,42 @@ class ExtractorTestCase extends TestCase
             ),
             $json->installationCode,
             new Debits(
-                $this->jsonToDebit($json->debits->tusd),
-                $this->jsonToDebit($json->debits->te),
-                $this->jsonToDebit($json->debits->cip),
+                new Debit(
+                    NumericHelper::numericStringToMoney(
+                        $json->debits->tusd->price,
+                    ),
+                    $json->debits->tusd->name,
+                    $json->debits->tusd->abbreviation,
+                    $json->debits->tusd->kWhAmount ?? null
+                ),
+                new Debit(
+                    NumericHelper::numericStringToMoney(
+                        $json->debits->te->price,
+                    ),
+                    $json->debits->te->name,
+                    $json->debits->te->abbreviation,
+                    $json->debits->te->kWhAmount ?? null
+                ),
+                new Debit(
+                    NumericHelper::numericStringToMoney(
+                        $json->debits->cip->price,
+                    ),
+                    $json->debits->cip->name,
+                    $json->debits->cip->abbreviation,
+                    $json->debits->cip->kWhAmount ?? null
+                ),
             ),
             new Powers(
-                $this->jsonToPower($json->powers->active),
-                $this->jsonToPower($json->powers->injected)
+                new Power(
+                    $json->powers->active->actualReading,
+                    $json->powers->active->previousReading,
+                    $json->powers->active->kWhAmount,
+                ),
+                new Power(
+                    $json->powers->injected->actualReading,
+                    $json->powers->injected->previousReading,
+                    $json->powers->injected->kWhAmount,
+                ),
             ),
             NumericHelper::numericStringToMoney($json->price),
             NumericHelper::numericStringToMoney($json->realPrice),
@@ -188,39 +190,5 @@ class ExtractorTestCase extends TestCase
         );
 
         return $bill;
-    }
-
-    /**
-     * @psalm-suppress MixedArgument
-     * @psalm-suppress PossiblyFalseArgument
-     */
-    private function jsonToDebit(?object $json): ?Debit
-    {
-        if (!$json) {
-            return null;
-        }
-
-        return new Debit(
-            NumericHelper::numericStringToMoney($json->price, negativeOnEnd: true),
-            $json->name,
-            $json->abbreviation,
-            $json->kWhAmount ?? null
-        );
-    }
-
-    /**
-     * @psalm-suppress MixedArgument
-     */
-    private function jsonToPower(?object $json): ?Power
-    {
-        if (!$json) {
-            return null;
-        }
-
-        return new Power(
-            $json->actualReading,
-            $json->previousReading,
-            $json->kWhAmount,
-        );
     }
 }
