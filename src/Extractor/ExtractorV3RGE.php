@@ -138,6 +138,8 @@ final class ExtractorV3RGE extends Extractor
                 }
             }
 
+            $cipKey = 0;
+
             if (str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
                 /*
                  * Example:
@@ -151,7 +153,9 @@ final class ExtractorV3RGE extends Extractor
                  * DÉBITOS DE OUTROS SERVIÇOS
                  * Contribuição Custeio IP-CIP  MAI/23       8,94
                  */
+
                 $cipKey = $this->findCipKey($contentArray, $bill, $key);
+
                 if (!$cipKey) {
                     return false;
                 }
@@ -180,7 +184,38 @@ final class ExtractorV3RGE extends Extractor
                     return false;
                 }
 
+                $actualKey = $cipKey;
+                while (is_null($bill->realPrice)) {
+                    $actualKey = $actualKey + 1;
+                    $actualValue = $contentArray[$actualKey];
+                    if (empty(trim($actualValue))) {
+                        continue;
+                    }
+
+                    $realPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(explode(' ', trim($actualValue))[0]));
+                    if (!$realPrice) {
+                        return false;
+                    }
+
+                    $bill->realPrice = $realPrice;
+                }
+
                 $bill->debits = new Debits($tusd, $te, $cip);
+            }
+
+            if (str_starts_with($value, 'Conta Mês Anterior')) {
+                /**
+                 * Example:
+                 * Conta Mês Anterior JAN/23       39,29.
+                 */
+                $raw = trim(substr($value, 26));
+                $lastMonthPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($raw));
+                if (!$lastMonthPrice) {
+                    return false;
+                }
+
+                $bill->lastMonthPrice = $lastMonthPrice;
+                $bill->realPrice = $bill->realPrice?->subtract($bill->lastMonthPrice);
             }
 
             if (str_contains($value, 'Energia Ativa-kWh')) {

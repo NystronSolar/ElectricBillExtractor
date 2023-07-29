@@ -91,9 +91,20 @@ class ExtractorTestCase extends TestCase
         // > Assert Bill -> Price (Money Object)
         $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
         $this->assertNotNull($actualBill->price, "$actualFile - 'price' is null");
-        $this->assertEquals($expectedBill->price->getAmount(), $actualBill->price->getAmount(), "$actualFile - 'price' - 'amount' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->price->getCurrency(), $actualBill->price->getCurrency(), "$actualFile - 'price' - 'currency' does not matches the $expectedFile");
+        $this->assertEquals($expectedBill->price, $actualBill->price, "$actualFile - 'price' does not matches the $expectedFile");
         // < Assert Bill -> Price (Money Object)
+
+        // > Assert Bill -> Real Price (Money Object)
+        $this->assertNotNull($expectedBill->realPrice, "$expectedFile - 'realPrice' is null");
+        $this->assertNotNull($actualBill->realPrice, "$actualFile - 'realPrice' is null");
+        $this->assertEquals($expectedBill->realPrice, $actualBill->realPrice, "$actualFile - 'realPrice' does not matches the $expectedFile");
+        // < Assert Bill -> Real Price (Money Object)
+
+        // > Assert Bill -> Last Month Price (Money Object)
+        $this->assertNotNull($expectedBill->lastMonthPrice, "$expectedFile - 'lastMonthPrice' is null");
+        $this->assertNotNull($actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' is null");
+        $this->assertEquals($expectedBill->lastMonthPrice, $actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' does not matches the $expectedFile");
+        // < Assert Bill -> Last Month Price (Money Object)
     }
 
     /**
@@ -162,7 +173,6 @@ class ExtractorTestCase extends TestCase
                 $json->solarGeneration->toExpireNextMonth,
             ),
             $json->installationCode,
-            NumericHelper::numericStringToMoney($json->price),
             new Debits(
                 $this->jsonToDebit($json->debits->tusd),
                 $this->jsonToDebit($json->debits->te),
@@ -171,7 +181,10 @@ class ExtractorTestCase extends TestCase
             new Powers(
                 $this->jsonToPower($json->powers->active),
                 $this->jsonToPower($json->powers->injected)
-            )
+            ),
+            NumericHelper::numericStringToMoney($json->price),
+            NumericHelper::numericStringToMoney($json->realPrice),
+            NumericHelper::numericStringToMoney($json->lastMonthPrice),
         );
 
         return $bill;
