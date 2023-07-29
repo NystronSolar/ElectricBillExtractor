@@ -14,48 +14,48 @@
         }
     },
     "dates": {
-        "actualReadingDate": "16/05/2023",
-        "previousReadingDate": "14/04/2023",
-        "nextReadingDate": "14/06/2023",
-        "date": "05/23"
+        "actualReadingDate": "14/07/2022",
+        "previousReadingDate": "13/06/2022",
+        "nextReadingDate": "15/08/2022",
+        "date": "07/22"
     },
     "solarGeneration": {
-        "balance": "1343.0",
+        "balance": "1064.0",
         "toExpireNextMonth": "0.0"
     },
     "debits": {
         "tusd": {
-            "price": "236.54",
+            "price": "173.86",
             "name": "Tarifa de Uso do Sistema de Distribuição",
             "abbreviation": "TUSD",
-            "kWhAmount": "426.0"
+            "kWhAmount": "331.0"
         },
         "te": {
-            "price": "141.43",
+            "price": "111.51",
             "name": "Tarifa de Energia",
             "abbreviation": "TE",
-            "kWhAmount": "426.0"
+            "kWhAmount": "331.0"
         },
         "cip": {
-            "price": "8.94",
+            "price": "6.79",
             "name": "Contribuição de Iluminação Pública",
             "abbreviation": "CIP"
         }
     },
     "powers": {
         "active": {
-            "previousReading": "6306",
-            "actualReading": "6732",
-            "kWhAmount": "426"
+            "previousReading": "2582",
+            "actualReading": "2913",
+            "kWhAmount": "331"
         },
         "injected": {
-            "previousReading": "7481",
-            "actualReading": "7759",
-            "kWhAmount": "278"
+            "previousReading": "3703",
+            "actualReading": "3876",
+            "kWhAmount": "173"
         }
     },
     "installationCode": "0123456789",
-    "price": "88.78",
-    "realPrice": "88.78",
+    "price": "0",
+    "realPrice": "68.35",
     "lastMonthPrice": "0"
 }

@@ -1,0 +1,97 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 21/12/2022 16/01/2023 02/01/2023
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Bifásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+16/12/2022 16/11/2022 30
+Próxima leitura    16/01/2023TIMOTHY DA SILVA                                    
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+16/12/2022
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -17.12.2022 às  01:25:19
+DEZ/2022 02/01/2023 R$ 97,66
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com
+rapideze segurança e reserve  mais tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 1.129,0000000000  kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+Considerar quitada se efetuado  débito em conta corrente.
+Caso não ocorra o débito  utilize esta conta para  pagamento.
+ 
+       
+     012345678901
+    0,82% 3,72%
+Consumo Uso Sistema [KWh]-TUSD  DEZ/22 kWh 435,0000   0,43754000  0,45832184  199,37    1,63  7,42 
+Consumo - TE DEZ/22 kWh 435,0000   0,26162000  0,33018391  143,63  143,63  17,00   24,42  0,98  4,43 
+Energia Ativa Injetada TUSD  DEZ/22 kWh 412,0000   0,43754000  0,45832525  188,83- 0.00   1,55- 7,02-
+Energia Ativa Injetada TE  DEZ/22 kWh 412,0000   0,26162000  0,33019418  136,04- 136,04- 17,00   23,13- 0,93- 4,20-
+Custo de Disp. Energia TUSD  DEZ/22 kWh 27,0000   0,43754000  0,45814815  12,37    0,10  0,46 
+Custo de Disp. Energia - TE  DEZ/22 kWh 27,0000   0,26162000  0,33000000  8,91  8,91  17,00   1,51  0,06  0,28 
+Contribuição Custeio IP-CIP  NOV/22       9,12   
+Conta Mês Anterior NOV/22       39,45   
+Total Distribuidora       87,98   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  DEZ/22       9,68   
+               
+               
+               
+            97,66  16,50  2,80  0,29  1,37  ICMS 16,50       17,00 2,80 
+PIS/PASEP 36,61        0,82 0,29 
+COFINS 36,61        3,72 1,37 
+DEZ 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llllllllll
+435 30
+NOV 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll l
+385 33
+OUT 22 lllllllllllllllllllllllllllllll llllllllllllllllllllllllllll
+  361 30
+SET 22 lllllllllllllllllllllllllllllll llllllllllllllllllllllllll
+349 30
+AGO 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+456 32
+JUL 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllll
+331 31
+JUN 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllll
+343 31
+MAI 22 lllllllllllllllllllllllllllllll llllllllllllllll
+286 30
+ABR 22 lllllllllllllllllllllllllllllll llllllllllllllll
+283 29
+MAR 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lll
+393 32
+FEV 22 lllllllllllllllllllllllllllllll lllllllllllllllllllll
+316 28
+JAN 22 lllllllllllllllllllllllllllllll ll
+198 29
+DEZ 21 lllllllllllllllllllllllllllllll llllllllllllllll
+285 30
+12345678 Energia Ativa-kWh único 4464 4899 1,00 435
+12345678 Energia Injetada único 5442 5854 1,00000 412 Verde        14 Dias
+Verde        16 Dias
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0 DÉBITO AUTOMÁTICO
+Banco 001  Agência 0001  
+012345678901    
+              97,66  
+02/01/2023
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO

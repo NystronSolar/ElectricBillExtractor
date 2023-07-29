@@ -1,0 +1,96 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 18/08/2022 14/09/2022 01/09/2022
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Bifásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+15/08/2022 14/07/2022 32
+Próxima leitura    14/09/2022TIMOTHY DA SILVA                                    
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+15/08/2022
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -16.08.2022 às  02:04:47
+AGO/2022 01/09/2022 R$ 118,08
+Prezado Cliente, a partir de 1º  de agosto começam as visitas  dos recenseadores que farão a  coleta de dados para o Censo  Demográfico 2022.
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 895,0000000000  kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+Considerar quitada se efetuado  débito em conta corrente.
+Caso não ocorra o débito  utilize esta conta para  pagamento.
+ 
+       
+     012345678901
+    1,10% 5,14%
+Consumo Uso Sistema [KWh]-TUSD  AGO/22 kWh 456,0000   0,43754000  0,46664474  212,79    2,34  10,94 
+Consumo - TE AGO/22 kWh 456,0000   0,26162000  0,33616229  153,29  153,29  17,00   26,06  1,40  6,54 
+Energia Ativa Injetada TUSD  AGO/22 kWh 237,0000   0,43754000  0,46662448  110,59- 0.00   1,22- 5,68-
+Energia Ativa Injetada TE  AGO/22 kWh 237,0000   0,26162000  0,33616034  79,67- 79,67- 17,00   13,54- 0,73- 3,40-
+Energ Atv Inj. mUC mPT - TUSD  DEZ/21 kWh 37,0000   0,43754000  0,46648649  17,26- 0.00   0,19- 0,89-
+Energ Atv Inj. mUC mPT - TUSD  NOV/21 kWh 132,0000   0,43754000  0,46666667  61,60- 0.00   0,68- 3,17-
+Energ Atv Inj. mUC mPT - TE  DEZ/21 kWh 37,0000   0,26162000  0,33567568  12,42- 12,42- 17,00   2,11- 0,11- 0,53-
+Energ Atv Inj. mUC mPT - TE  NOV/21 kWh 132,0000   0,26162000  0,33613637  44,37- 44,37- 17,00   7,54- 0,41- 1,89-
+Conta Mês Anterior JUL/22       61,56   
+Contribuição Custeio IP-CIP  JUL/22       6,79   
+Total Distribuidora       108,52   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  AGO/22       9,56   
+               
+           118,08  16,83  2,87  0,40  1,92  ICMS 16,83       17,00 2,87 
+PIS/PASEP 37,30        1,10 0,40 
+COFINS 37,30        5,14 1,92 
+AGO 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llllllllll
+456 32
+JUL 22 lllllllllllllllllllllllllllllll lllllllllllllllllllll
+331 31
+JUN 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllll
+  343 31
+MAI 22 lllllllllllllllllllllllllllllll llllllllllllll
+286 30
+ABR 22 lllllllllllllllllllllllllllllll llllllllllllll
+283 29
+MAR 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll
+393 32
+FEV 22 lllllllllllllllllllllllllllllll lllllllllllllllllll
+316 28
+JAN 22 lllllllllllllllllllllllllllllll
+198 29
+DEZ 21 lllllllllllllllllllllllllllllll llllllllllllll
+285 30
+NOV 21 lllllllllllllllllllllllllllllll llllllllllllll
+283 32
+OUT 21 lllllllllllllllllllllllllllllll llllllllllllllllll
+314 31
+SET 21 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llllllllll
+459 32
+AGO 21 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+476 30
+12345678 Energia Ativa-kWh único 2913 3369 1,00 456
+12345678 Energia Injetada único 3876 4113 1,00000 237 Verde        17 Dias
+Verde        15 Dias
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0 DÉBITO AUTOMÁTICO
+Banco 001  Agência 0001  
+012345678901    
+             118,08  
+01/09/2022
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO

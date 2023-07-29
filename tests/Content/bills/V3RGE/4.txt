@@ -1,0 +1,97 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 16/02/2023 15/03/2023 01/03/2023
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Bifásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+13/02/2023 16/01/2023 28
+Próxima leitura    15/03/2023TIMOTHY DA SILVA                                    
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+13/02/2023
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -14.02.2023 às  02:09:35
+FEV/2023 01/03/2023 R$ 93,38
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com
+rapideze segurança e reserve  mais tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 1.460,0000000000  kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+Considerar quitada se efetuado  débito em conta corrente.
+Caso não ocorra o débito  utilize esta conta para  pagamento.
+ 
+       
+     012345678901
+    0,75% 3,45%
+Consumo Uso Sistema [KWh]-TUSD  FEV/23 kWh 158,0000   0,43754000  0,45670887  72,16    0,54  2,49 
+Consumo - TE FEV/23 kWh 158,0000   0,26162000  0,32905064  51,99  51,99  17,00   8,84  0,32  1,49 
+Energia Ativa Injetada TUSD  FEV/23 kWh 158,0000   0,43754000  0,45670887  72,16- 0.00   0,54- 2,49-
+Energia Ativa Injetada TE  FEV/23 kWh 158,0000   0,26162000  0,32905064  51,99- 51,99- 17,00   8,84- 0,32- 1,49-
+Custo de Disp. Energia TUSD  FEV/23 kWh 50,0000   0,43754000  0,45680000  22,84    0,17  0,79 
+Custo de Disp. Energia - TE  FEV/23 kWh 50,0000   0,26162000  0,32900000  16,45  16,45  17,00   2,80  0,10  0,47 
+Contribuição Custeio IP-CIP  JAN/23       10,44   
+Conta Mês Anterior JAN/23       39,29   
+Total Distribuidora       89,02   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  FEV/23       4,36   
+               
+               
+               
+            93,38  16,45  2,80  0,27  1,26  ICMS 16,45       17,00 2,80 
+PIS/PASEP 36,49        0,75 0,27 
+COFINS 36,49        3,45 1,26 
+FEV 23 llllllllllllllllllllllll
+158 28
+JAN 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+498 31
+DEZ 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llll
+  435 30
+NOV 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllll
+385 33
+OUT 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllll
+361 30
+SET 22 lllllllllllllllllllllllllllllll llllllllllllllllllllll
+349 30
+AGO 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllll
+456 32
+JUL 22 lllllllllllllllllllllllllllllll lllllllllllllllllll
+331 31
+JUN 22 lllllllllllllllllllllllllllllll lllllllllllllllllllll
+343 31
+MAI 22 lllllllllllllllllllllllllllllll llllllllllll
+286 30
+ABR 22 lllllllllllllllllllllllllllllll llllllllllll
+283 29
+MAR 22 lllllllllllllllllllllllllllllll llllllllllllllllllllllllllll
+393 32
+FEV 22 lllllllllllllllllllllllllllllll lllllllllllllllll
+316 28
+12345678 Energia Ativa-kWh único 5397 5555 1,00 158
+12345678 Energia Injetada único 6259 6791 1,00000 532 Verde        15 Dias
+Verde        13 Dias
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0 DÉBITO AUTOMÁTICO
+Banco 001  Agência 0001  
+012345678901    
+              93,38  
+01/03/2023
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO

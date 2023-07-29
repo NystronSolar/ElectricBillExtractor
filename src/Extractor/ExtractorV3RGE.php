@@ -138,8 +138,6 @@ final class ExtractorV3RGE extends Extractor
                 }
             }
 
-            $cipKey = 0;
-
             if (str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
                 /*
                  * Example:
