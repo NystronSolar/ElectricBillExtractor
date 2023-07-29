@@ -22,6 +22,10 @@ final class ExtractorV3RGE extends Extractor
      * @psalm-suppress InvalidArrayOffset
      * @psalm-suppress ArgumentTypeCoercion
      * @psalm-suppress PossiblyFalseArgument
+     * @psalm-suppress PossiblyUndefinedVariable
+     * @psalm-suppress UnusedVariable
+     * @psalm-suppress RedundantCondition
+     * @psalm-suppress UndefinedVariable
      *
      * @todo Extract RealPrice
      * @todo Extract Discounts
@@ -159,18 +163,27 @@ final class ExtractorV3RGE extends Extractor
                 }
 
                 try {
+                    $tusdPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3]));
+                    if (!$tusdPrice) {
+                        return false;
+                    }
+
+                    $tusdKWhAmount = NumericHelper::brazilianNumberToNumericString(explode(' ', substr(trim($value), 43))[0] ?? '0.0');
+                    if (!$tusdKWhAmount) {
+                        return false;
+                    }
+
+                    if (isset($tusd) && !is_null($tusd)) {
+                        /** @var Debit $tusd */
+                        $tusdPrice = $tusdPrice->add($tusd->price);
+                        $tusdKWhAmount = bcadd($tusd->kWhAmount ?? '0.0', $tusdKWhAmount, 1);
+                    }
+
                     $tusd = new Debit(
-                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3])),
+                        $tusdPrice,
                         'Tarifa de Uso do Sistema de Distribuição',
                         'TUSD',
-                        NumericHelper::brazilianNumberToNumericString(explode(' ', substr(trim($value), 43))[0] ?? '0.0')
-                    );
-
-                    $te = new Debit(
-                        NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 1], 24)), fn (string $v) => !empty($v)))[3])),
-                        'Tarifa de Energia',
-                        'TE',
-                        NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($contentArray[$key + 1], 24)), fn (string $v) => !empty($v)))[0])
+                        $tusdKWhAmount
                     );
 
                     $cip = new Debit(
@@ -197,7 +210,36 @@ final class ExtractorV3RGE extends Extractor
 
                     $bill->realPrice = $realPrice;
                 }
+            }
 
+            if (str_contains($value, 'Consumo - TE')) {
+                $tePrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 24)), fn (string $v) => !empty($v)))[3]));
+                if (!$tePrice) {
+                    return false;
+                }
+
+                $teKWhAmount = NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 24)), fn (string $v) => !empty($v)))[0]);
+                if (!$teKWhAmount) {
+                    return false;
+                }
+
+                if (isset($te) && !is_null($te)) {
+                    /** @var Debit $te */
+                    $tePrice = $tePrice->add($te->price);
+                    $teKWhAmount = bcadd($te->kWhAmount ?? '0.0', $teKWhAmount, 1);
+                }
+
+                $te = new Debit(
+                    $tePrice,
+                    'Tarifa de Energia',
+                    'TE',
+                    $teKWhAmount
+                );
+
+                /**
+                 * @var Debit $tusd
+                 * @var Debit $cip
+                 */
                 $bill->debits = new Debits($tusd, $te, $cip);
             }
 
@@ -226,14 +268,14 @@ final class ExtractorV3RGE extends Extractor
                 $powerActive = new Power(
                     $powerActiveExploded[5],
                     $powerActiveExploded[4],
-                    $powerActiveExploded[7],
+                    preg_replace('/\D/', '', $powerActiveExploded[7] ?? $powerActiveExploded[6]),
                 );
 
                 $powerInjectedExploded = explode(' ', $contentArray[$key + 1]);
                 $powerInjected = new Power(
                     $powerInjectedExploded[5],
                     $powerInjectedExploded[4],
-                    $powerInjectedExploded[7],
+                    preg_replace('/\D/', '', $powerInjectedExploded[7] ?? $powerInjectedExploded[6]),
                 );
 
                 $bill->powers = new Powers($powerActive, $powerInjected);

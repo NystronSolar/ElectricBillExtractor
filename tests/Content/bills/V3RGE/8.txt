@@ -1,0 +1,74 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 15/12/2022 03/01/2023 13/01/2023
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Monofásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+06/12/2022 03/11/2022 33
+Próxima leitura    03/01/2023TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+12/12/2022
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -13.12.2022 às  01:37:56
+DEZ/2022 13/01/2023 R$ 157,58
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com
+rapideze segurança e reserve  mais tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 0,0000000000 kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+ 
+       
+     012345678901
+    0,82% 3,72%
+Consumo Uso Sistema [KWh]-TUSD  DEZ/22 kWh 29,0000   0,43754000  0,45862069  13,30    0,11  0,50 
+Consumo Uso Sistema [KWh]-TUSD  DEZ/22 kWh 12,0000   0,43754000  0,45833334  5,50    0,05  0,20 
+Consumo Uso Sistema [KWh]-TUSD  DEZ/22 kWh 152,0000   0,43754000  0,45828948  69,66    0,57  2,59 
+Consumo - TE DEZ/22 kWh 29,0000   0,26162000  0,33034483  9,58  9,58  17,00   1,63  0,06  0,30 
+Consumo - TE DEZ/22 kWh 12,0000   0,26162000  0,33000000  3,96  3,96  17,00   0,67  0,03  0,12 
+Consumo - TE DEZ/22 kWh 152,0000   0,26162000  0,33013158  50,18  50,18  17,00   8,53  0,34  1,55 
+Energia Ativa Injetada TUSD  DEZ/22 kWh 50,0000   0,43754000  0,45820000  22,91- 0.00   0,19- 0,85-
+Energia Ativa Injetada TE  DEZ/22 kWh 50,0000   0,26162000  0,33020000  16,51- 16,51- 17,00   2,81- 0,11- 0,51-
+Religação Normal       40,78   
+Total Distribuidora       153,54   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  DEZ/22       4,04   
+               
+               
+           157,58  47,21  8,02  0,86  3,90  ICMS 47,21       17,00 8,02 
+PIS/PASEP 104,74        0,82 0,86 
+COFINS 104,74        3,72 3,90 
+DEZ 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+193 33
+NOV 22 lllllllllllllllllllllllllllllll lllllll
+97 31
+OUT 22 lllllllllllllllllllll
+  54 32
+12345678 Energia Ativa-kWh único 0 152 152
+12345678 Energia Injetada único 0 50 1,00000 50 Verde        27 Dias
+Verde        06 Dias
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0  
+012345678901    
+             157,58  
+13/01/2023
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO
