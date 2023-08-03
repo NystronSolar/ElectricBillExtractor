@@ -126,3 +126,33 @@ Here you can see all the values that must have to be changed in all bills.
 - Medidor
 - Conta de Energia Elétrica (Número ID)
 - Código de Débito Automático do Banco
+
+#### RGE V2
+
+> Values are named in Portuguese, in order.
+
+- Nome
+- Rua e Número
+- Bairro
+- Cep, Cidade e Estado
+- Nota Fiscal - Ato Declaratório
+- Conta de Energia Elétrica (Número ID) e Série
+- Conta Contrato
+- Lote
+- Roteiro de Leitura
+- N° do Medidor
+- PN
+- Valores secretos dentro da caixa "PREZADO(A) CLIENTE"
+- RG
+- Código de Instalação
+- Código
+- Descrição da Operação
+
+- CPF
+- Código de Instalação
+- Nota Fiscal
+- Chave de Acesso Nota Fiscal QRCode
+- Protocolo de Autorização Nota Fiscal
+- Valores secretos dentro da caixa "Aviso Importante"
+- Medidor
+- Código de Débito Automático do Banco
