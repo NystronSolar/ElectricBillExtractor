@@ -3,20 +3,22 @@
 namespace NystronSolar\ElectricBillExtractorTests\Scripts;
 
 use Smalot\PdfParser\Parser;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 class UploadBillCommand extends Command
 {
     public array $availableExtractors = ['V1RGE', 'V2RGE', 'V3RGE'];
 
     public string $contentFolder = '/tests/Content';
 
-    private readonly SymfonyStyle $io;
+    private SymfonyStyle $io;
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -42,7 +44,7 @@ class UploadBillCommand extends Command
         $this->io->note('What\'s Next?');
         $this->io->listing([
             'Remove all secrets from Bill Text File',
-            'Update the new JSON file with the correct data'
+            'Update the new JSON file with the correct data',
         ]);
 
         return Command::SUCCESS;
@@ -52,17 +54,18 @@ class UploadBillCommand extends Command
     {
         $io = $this->io;
 
-        return $io->choice('Extractor', $this->availableExtractors);
+        return (string) $io->choice('Extractor', $this->availableExtractors);
     }
 
     private function getBillFilename(): false|string
     {
         $io = $this->io;
 
-        $billFilenameRaw = $io->askQuestion(new Question('The Bill Filename (Under the current working directory - "./")'));
-        $billFilename = sprintf("%s/%s", getcwd(), $billFilenameRaw);
+        $billFilenameRaw = (string) $io->askQuestion(new Question('The Bill Filename (Under the current working directory - "./")'));
+        $billFilename = sprintf('%s/%s', getcwd(), $billFilenameRaw);
         if (!file_exists($billFilename)) {
             $io->error(sprintf('No such file in %s', $billFilename));
+
             return false;
         }
 
@@ -77,6 +80,7 @@ class UploadBillCommand extends Command
             $text = $parser->parseFile($filename)->getText();
         } catch (\Exception $e) {
             $io->error(sprintf('Parser error: %s', $e->getMessage()));
+
             return false;
         }
 
@@ -96,6 +100,7 @@ class UploadBillCommand extends Command
         );
         $files = !empty($files) ? $files : ['0.txt'];
         $lastId = (int) basename($files[array_key_last($files)], '.txt');
+
         return $lastId + 1;
     }
 
@@ -109,6 +114,7 @@ class UploadBillCommand extends Command
 
         if (!$billResult) {
             $io->error(sprintf('Bill file %s already exists!', $billFile));
+
             return false;
         }
 
@@ -121,6 +127,7 @@ class UploadBillCommand extends Command
 
         if (!$jsonResult) {
             $io->error(sprintf('json file %s already exists or skeleton in %s don\' exists!!', $jsonFile, $jsonSkeletonFile));
+
             return false;
         }
 
