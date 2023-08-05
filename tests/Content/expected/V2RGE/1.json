@@ -10,52 +10,52 @@
         },
         "establishment": {
             "classification": "Convencional B1 Residencial",
-            "supplyType": "Monofásico"
+            "supplyType": "Bifásico"
         }
     },
     "dates": {
-        "actualReadingDate": "20/06/2023",
-        "previousReadingDate": "20/05/2023",
-        "nextReadingDate": "20/07/2023",
-        "date": "06/23"
+        "actualReadingDate": "13/04/2022",
+        "previousReadingDate": "15/03/2022",
+        "nextReadingDate": "13/05/2022",
+        "date": "04/22"
     },
     "solarGeneration": {
-        "balance": "1550.0",
-        "toExpireNextMonth": "150.0"
+        "balance": "1178.0",
+        "toExpireNextMonth": "0.0"
     },
     "debits": {
         "tusd": {
-            "price": "20.50",
+            "price": "143.39",
             "name": "Tarifa de Uso do Sistema de Distribuição",
             "abbreviation": "TUSD",
-            "kWhAmount": "45.5"
+            "kWhAmount": "283.0"
         },
         "te": {
-            "price": "15.00",
+            "price": "113.82",
             "name": "Tarifa de Energia",
             "abbreviation": "TE",
-            "kWhAmount": "46.0"
+            "kWhAmount": "283.0"
         },
         "cip": {
-            "price": "0.95",
+            "price": "7.84",
             "name": "Contribuição de Iluminação Pública",
             "abbreviation": "CIP"
         }
     },
     "powers": {
         "active": {
-            "previousReading": "3000",
-            "actualReading": "3150",
-            "kWhAmount": "150"
+            "previousReading": "1670",
+            "actualReading": "1953",
+            "kWhAmount": "283"
         },
         "injected": {
-            "previousReading": "2000",
-            "actualReading": "2050",
-            "kWhAmount": "50"
+            "previousReading": "2779",
+            "actualReading": "3130",
+            "kWhAmount": "351"
         }
     },
     "installationCode": "0123456789",
-    "price": "74.25",
-    "realPrice": "37.55",
-    "lastMonthPrice": "36.70"
+    "price": "99.16",
+    "realPrice": "99.16",
+    "lastMonthPrice": "0.0"
 }

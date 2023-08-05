@@ -1,0 +1,116 @@
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS Nota Fiscal  / RE - Ato Declaratório nº  2019/01
+Conta de Energia Elétrica
+Nº 0123456 Série A
+Data de Emissão: 13/04/2022
+Data de Apresentação:  19/04/2022
+Pág: 01 de 0 1
+Conta Contrato N° 012345678901
+Leitura Próximo Mês:  13/05/2022
+Lote Roteiro de leitura N°. Medidor PN
+09 ABCDE012-00000123 01234567 012345678 Reservado ao Fisco
+0000.0000.0000.0000.0000.0000.0 000.0000
+Declaração de Quitação Anual de  Débitos: As faturas emitidas  dessa unidade consumidora, sob  sua responsabilidade referente  ao ano de 2021 e dos anos  anteriores, foram quitadas para
+comprovar o cumprimento de suas  obrigações, esta declaração  substitui respectivos  comprovantes de pagamento.
+TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE - RS RG: 0123456789
+CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V
+0800 970 0900
+www.rge-rs.com.br 012345678 INSTALAÇÃO
+0123456789 ABR/2022 02/05/2022               99,16
+Cod.
+012 Descrição da Operação
+N° 012345678901 Mês
+Ref. Quant.
+Faturada Unid.
+Med. Tarifa com
+Tributos R$ Valor Total
+da Operação
+R$ Base Cálculo
+ICMS R$ Aliq.
+ICMS ICMS Base Cálculo
+PIS/COFINS PIS
+1,00% COFINS
+4,66%
+0605 Energia Ativa Fornecida - TUSD ABR/22 283,000 kWh 0,50667845  143,39  143,39  25,00 35,85  107,54  1,08  5,01 
+0601 Energia Ativa Fornecida - TE ABR/22 283,000 kWh 0,40219082  113,82  113,82  25,00 28,46  85,36  0,85  3,98 
+0601 Adicional de Bandeira Vermelha ABR/22 66,83  66,83  25,00 16,71  50,12  0,50  2,34 
+0605 Energia Ativa Injetada TUSD ABR/22 283,000 kWh 0,38000000  107,54- 107,54- 1,08- 5,01-
+0601 Energia Ativa Injetada TE ABR/22 283,000 kWh 0,40219082  113,82- 113,82- 25,00 28,46- 85,36- 0,85- 3,98-
+0601 Cred Adc Band Vermelha ABR/22 56,79- 56,79- 25,00 14,20- 42,59- 0,43- 1,98-
+0605 Custo de Disp. Energia TUSD ABR/22 50,000 kWh 0,50660000  25,33  25,33  25,00 6,33  19,00  0,19  0,89 
+0601 Custo de Disp. Energia - TE ABR/22 50,000 kWh 0,40200000  20,10  20,10  25,00 5,03  15,07  0,15  0,70 
+Total Distribuidora 91,32 
+DÉBITOS DE OUTROS SERVIÇOS
+0807 Contrib. Custeio IP-CIP  Municipal ABR/22 7,84 
+       
+       
+       
+Total Consolidado             99,16  198,86  49,72  41,60  0,41  1,95  Bandeiras
+Tarifárias
+(Dias)
+Esc Hídrica
+16 Dias
+Esc Hídrica
+13 Dias
+             
+2022 ABR lllllllllllllllllllllllllllllll lllllll
+283 29
+     MAR lllllllllllllllllllllllllllllll llllllllllllllllllllll
+393 32
+     FEV lllllllllllllllllllllllllllllll lllllllllll
+316 28
+     JAN lllllllllllllllllllllllllll
+198 29
+2021 DEZ lllllllllllllllllllllllllllllll lllllll
+285 30
+     NOV lllllllllllllllllllllllllllllll lllllll
+283 32
+     OUT lllllllllllllllllllllllllllllll lllllllllll
+314 31
+     SET lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll
+459 32
+     AGO lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll ll
+476 30
+     JUL lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llllllll
+520 30
+     JUN lllllllllllllllllllllllllllllll llllllllllllllllllllllllllllll
+451 28
+     MAI lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+558 33
+     ABR lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllll
+529 29 Consumo TUSD           TE
+Consumo kWh 0,35850000     0,28459000
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                               Nº Energia Leitura Leitura Fator Consumo Taxa de Perda Leitura
+ 13/04/2022 15/03/2022 Multipl. [kWh] [%] Próximo Mês
+01234567 Ativa  1953  1670   1,00      283 13/05/2022
+01234567 Injetada  3130  2779   1,00      351
+Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 1.178,0000000000  kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+DÉBITO AUTOMÁTICO
+BANCO 001    AGÊNCIA 0001 CódDébAut-Banco
+012345678901Nota Fiscal
+Conta de Energia Elétrica
+N° 0123456 Série U Total a Pagar (R$)
+              99,16 Data de Vencimento
+02/05/2022
+Essa conta poderá ser paga no  credenciado mais perto de você.  Confira a lista completa no  site 
+NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO
+012345678901 012345678901  012345678901 012345678901 Autenticação Mecânica          
+  Pague aqui - PIX
