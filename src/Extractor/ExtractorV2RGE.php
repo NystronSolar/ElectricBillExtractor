@@ -31,7 +31,7 @@ final class ExtractorV2RGE extends Extractor
      * @todo Extract Discounts
      * @todo Extract Flags
      */
-    protected function extract(): Bill|false
+    protected function extractLoop(): Bill|false
     {
         $bill = new Bill();
         $contentArray = explode(PHP_EOL, $this->content);

@@ -13,5 +13,14 @@ abstract class Extractor
     {
     }
 
-    abstract public function extract(): Bill|false;
+    public function extract(): Bill|false
+    {
+        try {
+            return $this->extractLoop();
+        } catch(\Exception) {
+            return false;
+        }
+    }
+
+    abstract protected function extractLoop(): Bill|false;
 }

@@ -27,11 +27,10 @@ final class ExtractorV3RGE extends Extractor
      * @psalm-suppress RedundantCondition
      * @psalm-suppress UndefinedVariable
      *
-     * @todo Extract RealPrice
      * @todo Extract Discounts
      * @todo Extract Flags
      */
-    public function extract(): Bill|false
+    protected function extractLoop(): Bill|false
     {
         $bill = new Bill();
         $contentArray = explode(PHP_EOL, $this->content);
@@ -121,7 +120,6 @@ final class ExtractorV3RGE extends Extractor
                  *
                  * Protocolo de autorização:  0123456789012345 -15.07.2022 às  02:47:19
                  * JUL/2022 01/08/2022 R$ **********
-                 *
                  */
 
                 $rawPrice = substr($contentArray[$key + 1], 23);
