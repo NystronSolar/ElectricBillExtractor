@@ -45,12 +45,12 @@ final class ExtractorV2RGE extends Extractor
                  * 12345-678 CIDADE - RS RG: 0123456789
                  * CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V.
                  */
-                $addressRaw = $contentArray[$key - 1];
+                $addressRaw = (string) $contentArray[$key - 1];
                 $addressRaw = substr($addressRaw, 0, -15);
                 $addressRawExploded = explode(' ', $addressRaw);
                 $address = new Address(
-                    trim($contentArray[$key - 3]),
-                    $contentArray[$key - 2],
+                    trim((string) $contentArray[$key - 3]),
+                    (string) $contentArray[$key - 2],
                     $addressRawExploded[0],
                     substr($addressRaw, 10, 6),
                     $addressRawExploded[array_key_last($addressRawExploded)],
@@ -64,15 +64,15 @@ final class ExtractorV2RGE extends Extractor
                     explode(' ', trim($establishmentRawExploded[1]))[0]
                 );
 
-                $bill->client = new Client(trim($contentArray[$key - 4]), $address, $establishment);
+                $bill->client = new Client(trim((string) $contentArray[$key - 4]), $address, $establishment);
             }
 
             if (str_starts_with($value, 'www.rge-rs.com.br')) {
                 /**
                  * Example:
                  * www.rge-rs.com.br 012345678 INSTALAÇÃO
-                 * 0123456789 ABR/2022 02/05/2022               99,16
-                 * 
+                 * 0123456789 ABR/2022 02/05/2022               99,16.
+                 *
                  * www.rge-rs.com.br 012345678 INSTALAÇÃO
                  * 0123456789 JUL/2021 23/07/2021 **********
                  */
@@ -101,15 +101,15 @@ final class ExtractorV2RGE extends Extractor
             if (str_contains($value, 'Energia Ativa Fornecida - TUSD')) {
                 /**
                  * Example:
-                 * 0605 Energia Ativa Fornecida - TUSD ABR/22 283,000 kWh 0,50667845  143,39  143,39  25,00 35,85  107,54  1,08  5,01 
-                 * 0601 Energia Ativa Fornecida - TE ABR/22 283,000 kWh 0,40219082  113,82  113,82  25,00 28,46  85,36  0,85  3,98 
+                 * 0605 Energia Ativa Fornecida - TUSD ABR/22 283,000 kWh 0,50667845  143,39  143,39  25,00 35,85  107,54  1,08  5,01
+                 * 0601 Energia Ativa Fornecida - TE ABR/22 283,000 kWh 0,40219082  113,82  113,82  25,00 28,46  85,36  0,85  3,98
                  * 0605 Energia Ativa Injetada TUSD ABR/22 283,000 kWh 0,38000000  107,54- 107,54- 1,08- 5,01-
                  * 0601 Energia Ativa Injetada TE ABR/22 283,000 kWh 0,40219082  113,82- 113,82- 25,00 28,46- 85,36- 0,85- 3,98-
-                 * 0605 Custo de Disp. Energia TUSD ABR/22 50,000 kWh 0,50660000  25,33  25,33  25,00 6,33  19,00  0,19  0,89 
-                 * 0601 Custo de Disp. Energia - TE ABR/22 50,000 kWh 0,40200000  20,10  20,10  25,00 5,03  15,07  0,15  0,70 
-                 * Total Distribuidora 91,32 
+                 * 0605 Custo de Disp. Energia TUSD ABR/22 50,000 kWh 0,50660000  25,33  25,33  25,00 6,33  19,00  0,19  0,89
+                 * 0601 Custo de Disp. Energia - TE ABR/22 50,000 kWh 0,40200000  20,10  20,10  25,00 5,03  15,07  0,15  0,70
+                 * Total Distribuidora 91,32
                  * DÉBITOS DE OUTROS SERVIÇOS
-                 * 0807 Contrib. Custeio IP-CIP  Municipal ABR/22 7,84 
+                 * 0807 Contrib. Custeio IP-CIP  Municipal ABR/22 7,84.
                  */
                 $tusdRaw = substr($value, 43);
                 $tusdRaw = explode(' ', StringHelper::removeRepeatedWhitespace($tusdRaw));
@@ -148,9 +148,8 @@ final class ExtractorV2RGE extends Extractor
                  *                                                Nº Energia Leitura Leitura Fator Consumo Taxa de Perda Leitura
                  *  13/04/2022 15/03/2022 Multipl. [kWh] [%] Próximo Mês
                  * 01234567 Ativa  1953  1670   1,00      283 13/05/2022
-                 * 01234567 Injetada  3130  2779   1,00      351
+                 * 01234567 Injetada  3130  2779   1,00      351.
                  */
-
                 $rawActiveLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 2])));
                 $rawInjectedLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 3])));
 
@@ -179,7 +178,7 @@ final class ExtractorV2RGE extends Extractor
             if (str_contains($value, 'Saldo em Energia da Instalação')) {
                 /**
                  * Saldo em Energia da Instalação: Convencional 1.178,0000000000 kWh
-                 * Saldo a expirar próximo mês: 0,0000000000 kWh
+                 * Saldo a expirar próximo mês: 0,0000000000 kWh.
                  */
 
                 /*
@@ -215,9 +214,9 @@ final class ExtractorV2RGE extends Extractor
      */
     private function findCipKey(array $contentArr, int $currentKey = 0): int|false
     {
-        /**
+        /*
          * Example:
-         * 0807 Contrib. Custeio IP-CIP  Municipal ABR/22 7,84 
+         * 0807 Contrib. Custeio IP-CIP  Municipal ABR/22 7,84
          */
 
         while (array_key_exists($currentKey, $contentArr)) {

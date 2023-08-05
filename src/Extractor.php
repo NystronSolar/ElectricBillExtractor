@@ -17,7 +17,7 @@ abstract class Extractor
     {
         try {
             return $this->extractLoop();
-        } catch(\Exception) {
+        } catch (\Exception) {
             return false;
         }
     }
