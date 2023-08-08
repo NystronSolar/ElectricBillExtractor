@@ -9,7 +9,7 @@ class Powers
 
     public function __construct(
         public readonly Power $active,
-        public readonly Power $injected,
+        public readonly ?Power $injected = null,
     ) {
         $this->powers = [$active, $injected];
     }

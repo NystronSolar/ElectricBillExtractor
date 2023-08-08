@@ -153,9 +153,11 @@ final class ExtractorV2RGE extends Extractor
                 $rawActiveLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 2])));
                 $rawInjectedLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 3])));
 
+                $injectedExists = $rawInjectedLine[1] === 'Injetada';
+
                 $bill->powers = new Powers(
                     new Power($rawActiveLine[2], $rawActiveLine[3], $rawActiveLine[5]),
-                    new Power($rawInjectedLine[2], $rawInjectedLine[3], $rawInjectedLine[5]),
+                    $injectedExists ? new Power($rawInjectedLine[2], $rawInjectedLine[3], $rawInjectedLine[5]) : null,
                 );
 
                 $dateFormatReset = '!d/m/Y';
@@ -203,6 +205,7 @@ final class ExtractorV2RGE extends Extractor
         }
 
         if (!$bill->isValid()) {
+            dump('abc', $bill);
             return false;
         }
 
