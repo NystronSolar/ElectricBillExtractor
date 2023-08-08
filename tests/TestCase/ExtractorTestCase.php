@@ -42,9 +42,6 @@ class ExtractorTestCase extends TestCase
         $this->assertNotNull($expectedBill->dates, "$expectedFile - 'dates' is null");
         $this->assertNotNull($actualBill->dates, "$actualFile - 'dates' is null");
 
-        $this->assertNotNull($expectedBill->solarGeneration, "$expectedFile - 'solarGeneration' is null");
-        $this->assertNotNull($actualBill->solarGeneration, "$actualFile - 'solarGeneration' is null");
-
         $this->assertNotNull($expectedBill->debits, "$expectedFile - 'debits' is null");
         $this->assertNotNull($actualBill->debits, "$actualFile - 'debits' is null");
 
@@ -103,7 +100,7 @@ class ExtractorTestCase extends TestCase
 
             $extractor = new $extractorClass($billFileContents);
 
-            $expectedBill = $this->jsonToBill((object) json_decode($expectedFileContents, false));
+            $expectedBill = $this->jsonToBill((object) json_decode($expectedFileContents, false), $extractorClass, $i);
             $actualBill = $extractor->extract();
 
             $this->assertEqualsBills($expectedBill, $actualBill, $i);
@@ -115,79 +112,88 @@ class ExtractorTestCase extends TestCase
      * @psalm-suppress MixedArgument
      * @psalm-suppress PossiblyFalseArgument
      * @psalm-suppress PossiblyNullArgument
+     *
+     * @param class-string<Extractor> $extractorClass
      */
-    public function jsonToBill(object $json): Bill|false
+    public function jsonToBill(object $json, string $extractorClass, int $actualFile): Bill|false
     {
         $dateFormatReset = '!d/m/Y';
         $monthFormatReset = '!m/y';
-        $bill = new Bill(
-            new Client(
-                $json->client->name,
-                new Address(
-                    $json->client->address->street,
-                    $json->client->address->district,
-                    $json->client->address->postcode,
-                    $json->client->address->city,
-                    $json->client->address->state,
-                ),
-                new Establishment(
-                    $json->client->establishment->classification,
-                    $json->client->establishment->supplyType
-                )
-            ),
-            new Dates(
-                \DateTime::createFromFormat($dateFormatReset, $json->dates->actualReadingDate),
-                \DateTime::createFromFormat($dateFormatReset, $json->dates->previousReadingDate),
-                \DateTime::createFromFormat($dateFormatReset, $json->dates->nextReadingDate),
-                \DateTime::createFromFormat($monthFormatReset, $json->dates->date)
-            ),
-            new SolarGeneration(
+        try {
+            $solarGeneration = !isset($json->solarGeneration) ? null :new SolarGeneration(
                 $json->solarGeneration->balance,
                 $json->solarGeneration->toExpireNextMonth,
-            ),
-            $json->installationCode,
-            new Debits(
-                new Debit(
-                    NumericHelper::numericStringToMoney(
-                        $json->debits->tusd->price,
+            );
+
+            $powerInjectedExists = isset($json->powers->injected);
+            $bill = new Bill(
+                new Client(
+                    $json->client->name,
+                    new Address(
+                        $json->client->address->street,
+                        $json->client->address->district,
+                        $json->client->address->postcode,
+                        $json->client->address->city,
+                        $json->client->address->state,
                     ),
-                    $json->debits->tusd->name,
-                    $json->debits->tusd->abbreviation,
-                    $json->debits->tusd->kWhAmount ?? null
+                    new Establishment(
+                        $json->client->establishment->classification,
+                        $json->client->establishment->supplyType
+                    )
                 ),
-                new Debit(
-                    NumericHelper::numericStringToMoney(
-                        $json->debits->te->price,
+                new Dates(
+                    \DateTime::createFromFormat($dateFormatReset, $json->dates->actualReadingDate),
+                    \DateTime::createFromFormat($dateFormatReset, $json->dates->previousReadingDate),
+                    \DateTime::createFromFormat($dateFormatReset, $json->dates->nextReadingDate),
+                    \DateTime::createFromFormat($monthFormatReset, $json->dates->date)
+                ),
+                $solarGeneration,
+                $json->installationCode,
+                new Debits(
+                    new Debit(
+                        NumericHelper::numericStringToMoney(
+                            $json->debits->tusd->price,
+                        ),
+                        $json->debits->tusd->name,
+                        $json->debits->tusd->abbreviation,
+                        $json->debits->tusd->kWhAmount ?? null
                     ),
-                    $json->debits->te->name,
-                    $json->debits->te->abbreviation,
-                    $json->debits->te->kWhAmount ?? null
-                ),
-                new Debit(
-                    NumericHelper::numericStringToMoney(
-                        $json->debits->cip->price,
+                    new Debit(
+                        NumericHelper::numericStringToMoney(
+                            $json->debits->te->price,
+                        ),
+                        $json->debits->te->name,
+                        $json->debits->te->abbreviation,
+                        $json->debits->te->kWhAmount ?? null
                     ),
-                    $json->debits->cip->name,
-                    $json->debits->cip->abbreviation,
-                    $json->debits->cip->kWhAmount ?? null
+                    new Debit(
+                        NumericHelper::numericStringToMoney(
+                            $json->debits->cip->price,
+                        ),
+                        $json->debits->cip->name,
+                        $json->debits->cip->abbreviation,
+                        $json->debits->cip->kWhAmount ?? null
+                    ),
                 ),
-            ),
-            new Powers(
-                new Power(
-                    $json->powers->active->actualReading,
-                    $json->powers->active->previousReading,
-                    $json->powers->active->kWhAmount,
+                new Powers(
+                    new Power(
+                        $json->powers->active->actualReading,
+                        $json->powers->active->previousReading,
+                        $json->powers->active->kWhAmount,
+                    ),
+                    !$powerInjectedExists ? null : new Power(
+                        $json->powers->injected->actualReading,
+                        $json->powers->injected->previousReading,
+                        $json->powers->injected->kWhAmount,
+                    ),
                 ),
-                new Power(
-                    $json->powers->injected->actualReading,
-                    $json->powers->injected->previousReading,
-                    $json->powers->injected->kWhAmount,
-                ),
-            ),
-            NumericHelper::numericStringToMoney($json->price),
-            NumericHelper::numericStringToMoney($json->realPrice),
-            NumericHelper::numericStringToMoney($json->lastMonthPrice),
-        );
+                NumericHelper::numericStringToMoney($json->price),
+                NumericHelper::numericStringToMoney($json->realPrice),
+                NumericHelper::numericStringToMoney($json->lastMonthPrice),
+            );
+        } catch (\Exception $e) {
+            throw new \Exception(sprintf('Error ocurred when converting JSON to Bill in %s - %s', $extractorClass, $actualFile));
+        }
 
         return $bill;
     }

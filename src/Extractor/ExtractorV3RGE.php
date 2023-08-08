@@ -15,6 +15,7 @@ use NystronSolar\ElectricBillExtractor\Entity\Powers;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
+use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
 
 final class ExtractorV3RGE extends Extractor
 {
@@ -46,6 +47,10 @@ final class ExtractorV3RGE extends Extractor
                  * 09 ABCDE012-00000123 12345678 1/ 1 19/05/2023 14/06/2023 01/06/2023
                  *  Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
                  * Bifásico.
+                 * 
+                 *  Classificação:   Convencional B3 Comercial  Outros Serviços
+                 * Atividades Tipo de Fornecimento:
+                 * Monofásico
                  */
                 $address = new Address(
                     trim($contentArray[$key + 2]),
@@ -55,10 +60,15 @@ final class ExtractorV3RGE extends Extractor
                     substr($contentArray[$key + 4], -2),
                 );
 
-                $establishment = new Establishment(
-                    substr(trim(substr(trim($contentArray[$key + 6]), 16)), 0, -22),
-                    trim($contentArray[$key + 7])
-                );
+                $classification = trim(substr(trim($contentArray[$key + 6]), 16));
+                $supplyType = trim($contentArray[$key + 7]);
+                if (!str_contains($contentArray[$key + 6], 'Tipo de Fornecimento:')) {
+                    $classification .= ' ' . $contentArray[$key + 7];
+                    $supplyType = trim($contentArray[$key + 8]);
+                }
+                $classification = StringHelper::removeRepeatedWhitespace(substr($classification, 0, -22));
+
+                $establishment = new Establishment($classification, $supplyType);
 
                 $bill->client = new Client($contentArray[$key + 1], $address, $establishment);
             }
@@ -161,7 +171,7 @@ final class ExtractorV3RGE extends Extractor
                 }
 
                 try {
-                    $tusdPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn (string $v) => !empty($v)))[3]));
+                    $tusdPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 47)), fn(string $v) => !empty($v)))[3]));
                     if (!$tusdPrice) {
                         return false;
                     }
@@ -211,12 +221,12 @@ final class ExtractorV3RGE extends Extractor
             }
 
             if (str_contains($value, 'Consumo - TE')) {
-                $tePrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 24)), fn (string $v) => !empty($v)))[3]));
+                $tePrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 24)), fn(string $v) => !empty($v)))[3]));
                 if (!$tePrice) {
                     return false;
                 }
 
-                $teKWhAmount = NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 24)), fn (string $v) => !empty($v)))[0]);
+                $teKWhAmount = NumericHelper::brazilianNumberToNumericString(array_values(array_filter(explode(' ', substr($value, 24)), fn(string $v) => !empty($v)))[0]);
                 if (!$teKWhAmount) {
                     return false;
                 }
@@ -270,7 +280,7 @@ final class ExtractorV3RGE extends Extractor
                 );
 
                 $powerInjectedExploded = explode(' ', $contentArray[$key + 1]);
-                $powerInjected = new Power(
+                $powerInjected = $powerInjectedExploded[2] !== 'Injetada' ? null : new Power(
                     $powerInjectedExploded[5],
                     $powerInjectedExploded[4],
                     preg_replace('/\D/', '', $powerInjectedExploded[7] ?? $powerInjectedExploded[6]),

@@ -1,0 +1,94 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 09/05/2023 05/06/2023 16/05/2023
+ Classificação:   Convencional B3 Comercial  Outros Serviços
+Atividades Tipo de Fornecimento:
+Monofásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+04/05/2023 05/04/2023 29
+Próxima leitura    05/06/2023TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+04/05/2023
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -13.12.2022 às  01:37:56
+MAI/2023 16/05/2023 R$ 353,29
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com
+rapideze segurança e reserve  mais tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+Excepcionalmente este mês  estamos postergando sua data de  vcto.,
+de modo a atender os prazos da  Resolução 1000/2021 da ANEEL.
+ 
+       
+     907103758562
+    0,91% 4,15%
+Consumo Uso Sistema [KWh]-TUSD  MAI/23 kWh 386,0000   0,43754000  0,55525907  214,33  214,33  17,00   36,44  1,62  7,38 
+Consumo - TE MAI/23 kWh 386,0000   0,26162000  0,33202073  128,16  128,16  17,00   21,79  0,97  4,41 
+Total Distribuidora       342,49   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  MAI/23       10,80   
+               
+               
+               
+               
+               
+               
+               
+               
+               
+           353,29  342,49  58,23  2,59  11,79  ICMS 342,49       17,00 58,23 
+PIS/PASEP 284,26        0,91 2,59 
+COFINS 284,26        4,15 11,79 
+MAI 23 lllllllllllllllllllllllllllllll lllllllll
+386 29
+ABR 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllll
+581 29
+MAR 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+  731 32
+FEV 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llllllllllll
+723 29
+JAN 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lll
+638 28
+DEZ 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllll
+588 31
+NOV 22 lllllllllllllllllllllllllllllll lllllllllll
+408 33
+OUT 22 lllllllllllllllllllllllllllllll ll
+324 30
+SET 22 lllllllllllllllllllllllllllllll
+299 31
+AGO 22 llllllllllllllllllllllllllllll
+294 30
+JUL 22 llllllllllllllllllllllllllllll
+288 33
+JUN 22 lllllllllllllllllllllllllllll
+280 29
+MAI 22 lllllllllllllllllllllllllllllll llllllll
+377 30
+12345678 Energia Ativa-kWh único 195 581 1,00 386
+Verde        25 Dias
+Verde        04 Dias
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0  
+012345678901    
+             353,29  
+16/05/2023
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO
