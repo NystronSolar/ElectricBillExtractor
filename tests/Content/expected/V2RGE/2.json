@@ -9,53 +9,44 @@
             "state": "RS"
         },
         "establishment": {
-            "classification": "Convencional B1 Residencial",
-            "supplyType": "Bifásico"
+            "classification": "Convencional B3 Comercial Atacadista / Varejista",
+            "supplyType": "Trifásico"
         }
     },
     "dates": {
-        "actualReadingDate": "13/04/2022",
-        "previousReadingDate": "15/03/2022",
-        "nextReadingDate": "13/05/2022",
-        "date": "04/22"
-    },
-    "solarGeneration": {
-        "balance": "1178.0",
-        "toExpireNextMonth": "0.0"
+        "actualReadingDate": "28/01/2019",
+        "previousReadingDate": "27/12/2018",
+        "nextReadingDate": "25/02/2019",
+        "date": "01/19"
     },
     "debits": {
         "tusd": {
-            "price": "143.39",
+            "price": "637.81",
             "name": "Tarifa de Uso do Sistema de Distribuição",
             "abbreviation": "TUSD",
-            "kWhAmount": "283.0"
+            "kWhAmount": "1654.0"
         },
         "te": {
-            "price": "113.82",
+            "price": "755.76",
             "name": "Tarifa de Energia",
             "abbreviation": "TE",
-            "kWhAmount": "283.0"
+            "kWhAmount": "1654.0"
         },
         "cip": {
-            "price": "7.84",
+            "price": "36.21",
             "name": "Contribuição de Iluminação Pública",
             "abbreviation": "CIP"
         }
     },
     "powers": {
         "active": {
-            "previousReading": "1670.0",
-            "actualReading": "1953.0",
-            "kWhAmount": "283.0"
-        },
-        "injected": {
-            "previousReading": "2779.0",
-            "actualReading": "3130.0",
-            "kWhAmount": "351.0"
+            "previousReading": "107903.0",
+            "actualReading": "109557.0",
+            "kWhAmount": "1654.0"
         }
     },
     "installationCode": "0123456789",
-    "price": "99.16",
-    "realPrice": "99.16",
+    "price": "1429.78",
+    "realPrice": "1429.78",
     "lastMonthPrice": "0.0"
 }

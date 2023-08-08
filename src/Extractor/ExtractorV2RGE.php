@@ -45,12 +45,14 @@ final class ExtractorV2RGE extends Extractor
                  * 12345-678 CIDADE - RS RG: 0123456789
                  * CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V.
                  */
-                $addressRaw = (string) $contentArray[$key - 1];
+                $actualKey = str_contains((string) $contentArray[$key - 1], 'INSC.EST') ? $key - 1 : $key;
+
+                $addressRaw = (string) $contentArray[$actualKey - 1];
                 $addressRaw = substr($addressRaw, 0, -15);
                 $addressRawExploded = explode(' ', $addressRaw);
                 $address = new Address(
-                    trim((string) $contentArray[$key - 3]),
-                    (string) $contentArray[$key - 2],
+                    trim((string) $contentArray[$actualKey - 3]),
+                    (string) $contentArray[$actualKey - 2],
                     $addressRawExploded[0],
                     substr($addressRaw, 10, 6),
                     $addressRawExploded[array_key_last($addressRawExploded)],
@@ -64,7 +66,7 @@ final class ExtractorV2RGE extends Extractor
                     explode(' ', trim($establishmentRawExploded[1]))[0]
                 );
 
-                $bill->client = new Client(trim((string) $contentArray[$key - 4]), $address, $establishment);
+                $bill->client = new Client(trim((string) $contentArray[$actualKey - 4]), $address, $establishment);
             }
 
             if (str_starts_with($value, 'www.rge-rs.com.br')) {
@@ -98,7 +100,7 @@ final class ExtractorV2RGE extends Extractor
                 $bill->lastMonthPrice = Money::BRL(0);
             }
 
-            if (str_contains($value, 'Energia Ativa Fornecida - TUSD')) {
+            if (str_contains($value, 'Energia Ativa Fornecida - TUSD') || str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
                 /**
                  * Example:
                  * 0605 Energia Ativa Fornecida - TUSD ABR/22 283,000 kWh 0,50667845  143,39  143,39  25,00 35,85  107,54  1,08  5,01
@@ -110,7 +112,15 @@ final class ExtractorV2RGE extends Extractor
                  * Total Distribuidora 91,32
                  * DÉBITOS DE OUTROS SERVIÇOS
                  * 0807 Contrib. Custeio IP-CIP  Municipal ABR/22 7,84.
+                 *
+                 * 0605 Consumo Uso Sistema [KWh]-TUSD JAN/19 1.654,000 kWh 0,38561669  637,81  637,81  30,00 191,34  637,81  5,68  26,47
+                 * 0601 Consumo - TE JAN/19 1.654,000 kWh 0,45692866  755,76  755,76  30,00 226,73  755,76  6,73  31,36
+                 * Total Distribuidora 1.393,57
+                 * DÉBITOS DE OUTROS SERVIÇOS
+                 * 0807 Contrib. Custeio IP-CIP  Municipal JAN/19 36,21
                  */
+                $hasGeneration = str_contains($value, 'Energia Ativa');
+
                 $tusdRaw = substr($value, 43);
                 $tusdRaw = explode(' ', StringHelper::removeRepeatedWhitespace($tusdRaw));
                 $tusd = new Debit(
@@ -120,7 +130,7 @@ final class ExtractorV2RGE extends Extractor
                     NumericHelper::brazilianNumberToNumericString($tusdRaw[0])
                 );
 
-                $teRaw = substr($contentArray[$key + 1], 41);
+                $teRaw = substr($contentArray[$key + 1], $hasGeneration ? 41 : 25);
                 $teRaw = explode(' ', StringHelper::removeRepeatedWhitespace($teRaw));
                 $te = new Debit(
                     NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($teRaw[3])),
@@ -153,11 +163,19 @@ final class ExtractorV2RGE extends Extractor
                 $rawActiveLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 2])));
                 $rawInjectedLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 3])));
 
-                $injectedExists = $rawInjectedLine[1] === 'Injetada';
+                $injectedExists = 'Injetada' === $rawInjectedLine[1];
 
                 $bill->powers = new Powers(
-                    new Power($rawActiveLine[2], $rawActiveLine[3], $rawActiveLine[5]),
-                    $injectedExists ? new Power($rawInjectedLine[2], $rawInjectedLine[3], $rawInjectedLine[5]) : null,
+                    new Power(
+                        NumericHelper::brazilianNumberToNumericString($rawActiveLine[2]),
+                        NumericHelper::brazilianNumberToNumericString($rawActiveLine[3]),
+                        NumericHelper::brazilianNumberToNumericString($rawActiveLine[5])
+                    ),
+                    $injectedExists ? new Power(
+                        NumericHelper::brazilianNumberToNumericString($rawInjectedLine[2]),
+                        NumericHelper::brazilianNumberToNumericString($rawInjectedLine[3]),
+                        NumericHelper::brazilianNumberToNumericString($rawInjectedLine[5])
+                    ) : null
                 );
 
                 $dateFormatReset = '!d/m/Y';
@@ -206,6 +224,7 @@ final class ExtractorV2RGE extends Extractor
 
         if (!$bill->isValid()) {
             dump('abc', $bill);
+
             return false;
         }
 

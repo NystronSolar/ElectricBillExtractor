@@ -1,0 +1,111 @@
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS Nota Fiscal 
+Conta de Energia Elétrica
+Nº 012345678 Série U
+Data de Emissão: 28/01/2019
+Data de Apresentação:  31/01/2019
+Pág: 01 de 0 1
+Conta Contrato N° 012345678901
+Leitura Próximo Mês:  25/02/2019
+Lote Roteiro de leitura N°. Medidor PN
+17 ABCDE012-00000123 0123456 012345678 Reservado ao Fisco
+0000.0000.0000.0000.0000.0000.0 000.0000
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com rapidez
+e segurança e reserve mais  tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE - RS RG: 0123456789
+INSC.EST: 0123456789
+CLASSIFICAÇÃO: Convencional B3  Comercial Atacadista /  Varejista - Trifásico 220 / 127  V
+0800 970 0900
+www.rge-rs.com.br 801817375 INSTALAÇÃO
+0123456789 JAN/2019 15/02/2019            1.429,78
+Cod.
+012 Descrição da Operação
+N° 012345678901 Mês
+Ref. Quant.
+Faturada Unid.
+Med. Tarifa com
+Tributos R$ Valor Total
+da Operação
+R$ Base Cálculo
+ICMS R$ Aliq.
+ICMS ICMS Base Cálculo
+PIS/COFINS PIS
+0,89% COFINS
+4,15%
+0605 Consumo Uso Sistema [KWh]-TUSD JAN/19 1.654,000 kWh 0,38561669  637,81  637,81  30,00 191,34  637,81  5,68  26,47 
+0601 Consumo - TE JAN/19 1.654,000 kWh 0,45692866  755,76  755,76  30,00 226,73  755,76  6,73  31,36 
+Total Distribuidora 1.393,57 
+DÉBITOS DE OUTROS SERVIÇOS
+0807 Contrib. Custeio IP-CIP  Municipal JAN/19 36,21 
+       
+       
+       
+       
+       
+       
+       
+       
+       
+Total Consolidado          1.429,78  1.393,57  418,07  1.393,57  12,41  57,83  Bandeiras
+Tarifárias
+(Dias)
+Verde
+04 Dias
+Verde
+28 Dias
+             
+2019 JAN lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll
+1654 32
+2018 DEZ lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llll
+1757 30
+     NOV lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+2007 32
+     OUT lllllllllllllllllllllllllllllll llllllllllllllllllllll
+1419 30
+     SET lllllllllllllllllllllllllllllll
+823 33
+     AGO lllllllllllllllllllllllllll
+732 30
+     JUL llllllllllllllllllllllllll
+702 29
+     JUN lllllllllllllllllllllllllllll
+768 32
+     MAI lllllllllllllllllllllllllllll
+787 29
+     ABR lllllllllllllllllllllllllllllll lllllllll
+1077 30
+     MAR lllllllllllllllllllllllllllllll llllllllllllllllllllllllll
+1525 32
+     FEV lllllllllllllllllllllllllllllll lllllllllllllllllllllll
+1433 28
+     JAN lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllll
+1959 30 Consumo TUSD           TE
+Consumo kWh 0,25050000     0,29682000
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                               Nº Energia Leitura Leitura Fator Consumo Taxa de Perda Leitura
+ 28/01/2019 27/12/2018 Multipl. [kWh] [%] Próximo Mês
+01234567 Ativa 109557 107903   1,00    1.654 25/02/2019
+Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+CódDébAut-Banco
+012345678901Nota Fiscal
+Conta de Energia Elétrica
+N° 0123456 Série U Total a Pagar (R$)
+           1.429,78 Data de Vencimento
+15/02/2019
+Essa conta poderá ser paga no  credenciado mais perto de você.  Confira a lista completa no  site 
+NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO
+012345678901 012345678901  012345678901 012345678901 Autenticação Mecânica          

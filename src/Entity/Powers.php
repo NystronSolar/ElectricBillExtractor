@@ -11,6 +11,11 @@ class Powers
         public readonly Power $active,
         public readonly ?Power $injected = null,
     ) {
-        $this->powers = [$active, $injected];
+        $powers = [$active];
+        if (!is_null($injected)) {
+            $powers[] = $injected;
+        }
+
+        $this->powers = $powers;
     }
 }

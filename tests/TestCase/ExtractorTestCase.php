@@ -120,7 +120,7 @@ class ExtractorTestCase extends TestCase
         $dateFormatReset = '!d/m/Y';
         $monthFormatReset = '!m/y';
         try {
-            $solarGeneration = !isset($json->solarGeneration) ? null :new SolarGeneration(
+            $solarGeneration = !isset($json->solarGeneration) ? null : new SolarGeneration(
                 $json->solarGeneration->balance,
                 $json->solarGeneration->toExpireNextMonth,
             );
