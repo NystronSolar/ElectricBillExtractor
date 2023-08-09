@@ -1,0 +1,97 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 19/05/2023 14/06/2023 01/06/2023
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Bifásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+16/05/2023 14/04/2023 32
+Próxima leitura    14/06/2023TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+16/05/2023
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -16.05.2023 às  22:16:12
+MAI/2023 01/06/2023 R$ 88,78
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com
+rapideze segurança e reserve  mais tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 1.343,0000000000  kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+Considerar quitada se efetuado  débito em conta corrente.
+Caso não ocorra o débito  utilize esta conta para  pagamento.
+ 
+        
+            012345678901
+         0,91% 4,15%
+    Consumo Uso Sistema [KWh]-TUSD  MAI/23 kWh 426,0000   0,43754000  0,55525822  236,54  236,54  17,00   40,21  1,79  8,15 
+Consumo - TE MAI/23 kWh 426,0000   0,26162000  0,33199531  141,43  141,43  17,00   24,04  1,07  4,87 
+Energia Ativa Injetada TUSD  MAI/23 kWh 278,0000   0,43754000  0,46089929  128,13- 0.00   1,17- 5,32-
+Energia Ativa Injetada TE  MAI/23 kWh 278,0000   0,26162000  0,33201439  92,30- 92,30- 17,00   15,69- 0,70- 3,18-
+Energ Atv Inj. mUC mPT - TUSD  DEZ/21 kWh 98,0000   0,43754000  0,46081633  45,16- 0.00   0,41- 1,87-
+Energ Atv Inj. mUC mPT - TE  DEZ/21 kWh 98,0000   0,26162000  0,33204082  32,54- 32,54- 17,00   5,53- 0,25- 1,12-
+Total Distribuidora       79,84   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  MAI/23       8,94   
+               
+                              
+                              
+                              
+                              
+                           88,78  253,13  43,03  0,33  1,53  ICMS 253,13       17,00 43,03 
+            PIS/PASEP 36,81        0,91 0,33 
+COFINS 36,81        4,15 1,53 
+MAI 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll ll
+426 32
+ABR 23 lllllllllllllllllllllllllllllll llllllllllllllllllllllllll
+376 30
+MAR 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllll
+  375 30
+  FEV 23 llllllllllllllllllllllll
+158 28
+JAN 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+498 31
+DEZ 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llll
+435 30
+NOV 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllll
+385 33
+OUT 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllll
+361 30
+SET 22 lllllllllllllllllllllllllllllll llllllllllllllllllllll
+349 30
+AGO 22 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllll
+456 32
+JUL 22 lllllllllllllllllllllllllllllll lllllllllllllllllll
+331 31
+JUN 22 lllllllllllllllllllllllllllllll lllllllllllllllllllll
+343 31
+MAI 22 lllllllllllllllllllllllllllllll llllllllllll
+286 30
+12345678 Energia Ativa-kWh único 6306 6732 1,00 426
+12345678 Energia Injetada único 7481 7759 1,00 278 Verde        16 Dias
+Verde        16 Dias
+                
+                Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0 DÉBITO AUTOMÁTICO
+Banco 001  Agência 0001  
+012345678901    
+              88,78  
+              01/06/2023
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO

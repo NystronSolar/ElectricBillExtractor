@@ -1,0 +1,97 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 19/07/2022 15/08/2022 01/08/2022
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Bifásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+14/07/2022 13/06/2022 31
+Próxima leitura    15/08/2022TIMOTHY DA SILVA                                    
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+14/07/2022
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/nf3e/qrcode
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -15.07.2022 às  02:47:19
+JUL/2022 01/08/2022 R$ **********
+O valor da sua conta teve  reajuste tarifário médio de  9,31% a partir de 22/06/22  conforme Resolução 3.045/2022  ANEEL. O ICMS já está ajustado  conforme Lei
+Complementar nº194 e com  aplicação proporcional prevista  no RS. Saiba mais em  www.rge-rs.com.br/reducao-icms
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 1.064,0000000000  kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+Não Pague. Para sua comodidade  o valor devido R$ 68,35 será
+cobrado, sem acréscimo em conta  futura. Caso não queira
+esta opção, é possível  solicitar o código de barras para pagamento e o cancelamento  desse serviço através
+ de nossos canais de  atendimento.
+ 
+       
+     012345678901
+    1,65% 7,60%
+Consumo Uso Sistema [KWh]-TUSD  JUL/22 kWh 331,0000   0,43754000  0,52525680  173,86  173,86  12,49   21,72  2,51  11,56 
+Consumo - TE JUL/22 kWh 331,0000   0,26162000  0,33688822  111,51  111,51  12,49   13,93  1,61  7,42 
+Energia Ativa Injetada TUSD  JUL/22 kWh 173,0000   0,43754000  0,45959538  79,51- 0.00   1,31- 6,04-
+Energia Ativa Injetada TE  JUL/22 kWh 173,0000   0,26162000  0,33687862  58,28- 58,28- 12,49   7,28- 0,84- 3,88-
+Energ Atv Inj. mUC mPT - TUSD  NOV/21 kWh 108,0000   0,43754000  0,45962963  49,64- 0.00   0,82- 3,77-
+Energ Atv Inj. mUC mPT - TE  NOV/21 kWh 108,0000   0,26162000  0,33685186  36,38- 36,38- 12,49   4,54- 0,53- 2,42-
+Total Distribuidora       61,56   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  JUL/22       6,79   
+               
+               
+               
+               
+               
+            68,35  190,71  23,83  0,62  2,87  ICMS 190,71       12,49 23,83 
+PIS/PASEP 37,73        1,65 0,62 
+COFINS 37,73        7,60 2,87 
+JUL 22 lllllllllllllllllllllllllllllll lllllllllllllllll
+331 31
+JUN 22 lllllllllllllllllllllllllllllll llllllllllllllllll
+343 31
+MAI 22 lllllllllllllllllllllllllllllll llllllllll
+  286 30
+ABR 22 lllllllllllllllllllllllllllllll llllllllll
+283 29
+MAR 22 lllllllllllllllllllllllllllllll llllllllllllllllllllllllll
+393 32
+FEV 22 lllllllllllllllllllllllllllllll lllllllllllllll
+316 28
+JAN 22 lllllllllllllllllllllllllllll
+198 29
+DEZ 21 lllllllllllllllllllllllllllllll llllllllll
+285 30
+NOV 21 lllllllllllllllllllllllllllllll llllllllll
+283 32
+OUT 21 lllllllllllllllllllllllllllllll llllllllllllll
+314 31
+SET 21 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll llll
+459 32
+AGO 21 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllll
+476 30
+JUL 21 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+520 30
+12345678 Energia Ativa-kWh único 2582 2913 1,00 331
+12345678 Energia Injetada único 3703 3876 1,00000 173 Verde        17 Dias
+Verde        14 Dias
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0  
+012345678901    
+**********  
+01/08/2022
+NÃO RECEBER. O VALOR DESTA  FATURA SERÁ INSERIDO EM CONTA
+FUTURA ISENTO DE ENCARGOS
+SAIBA MAIS EM:  www.rge-rs.com.br/contaminima

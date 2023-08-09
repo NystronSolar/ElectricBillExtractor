@@ -1,0 +1,82 @@
+DANF3E - DOCUMENTO AUXILIAR DA  NOTA
+FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
+RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
+AVENIDA SÃO BORJA , 2801 - FAZENDA SÃO BORJA -  SAO LEOPOLDO - RS - CEP:  93032-525
+Inscrição Estadual: 124/0305939  - Inscrição no CNPJ:  02.016.440/0001-62
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS
+09 ABCDE012-00000123 12345678 1/ 1 02/02/2023 03/03/2023 13/02/2023
+ Classificação:   Convencional B1 Residencial Tipo de Fornecimento:
+Monofásico
+TENSÃO NOMINAL EM VOLTS Disp.:   220 Lim. mín.:  202 Lim. máx.:  231
+01/02/2023 03/01/2023 29
+Próxima leitura    03/03/2023TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO CIDADE - RS
+12345-678
+CPF: ******.123-** 0123456789
+NOTA FISCAL Nº  123456789  - SÉRIE  0  / DATA DE EMISSÃO:
+02/02/2023
+Consulte pela chave de Acesso  em:
+https://dfe-portal.svrs.rs.gov. br/NF3E/Consulta
+chave de acesso:
+0123456789012345678901234567890 0123456789012
+Protocolo de autorização:  0123456789012345 -02.02.2023 às  06:25:15
+FEV/2023 13/02/2023 R$ 586,39
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com
+rapideze segurança e reserve  mais tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+Informações dos débitos mais  antigos:
+Vencimento    Valor
+13/01/2023    R$      309,74
+Participação na geração 100.00%
+Saldo em Energia da Instalação:  Convencional 0,0000000000 kWh
+Saldo a expirar próximo mês:  0,0000000000 kWh
+ 
+       
+     012345678901
+    0,75% 3,45%
+Consumo Uso Sistema [KWh]-TUSD  FEV/23 kWh 948,0000   0,43754000  0,45671941  432,97    3,25  14,94 
+Consumo - TE FEV/23 kWh 948,0000   0,26162000  0,32900844  311,90  311,90  17,00   53,02  1,94  8,93 
+Energia Ativa Injetada TUSD  FEV/23 kWh 227,0000   0,43754000  0,45674009  103,68- 0.00   0,78- 3,58-
+Energia Ativa Injetada TE  FEV/23 kWh 227,0000   0,26162000  0,32898679  74,68- 74,68- 17,00   12,70- 0,46- 2,14-
+Total Distribuidora       566,51   
+DÉBITOS DE OUTROS SERVIÇOS
+Contribuição Custeio IP-CIP  FEV/23       19,88   
+               
+               
+               
+               
+               
+               
+               
+           586,39  237,22  40,32  3,95  18,15  ICMS 237,22       17,00 40,32 
+PIS/PASEP 526,19        0,75 3,95 
+COFINS 526,19        3,45 18,15 
+FEV 23 lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+948 29
+JAN 23 lllllllllllllllllllllllllllllll llllllllllllllllllllllllll
+723 28
+DEZ 22 lllllllllllllll
+  193 33
+NOV 22 llllllll
+97 31
+OUT 22 llll
+54 32
+12345678 Energia Ativa-kWh único 875 1823 1,00 948
+12345678 Energia Injetada único 398 625 1,00000 227CONSTA DÉBITO: 1 DOCTO(S)
+Verde        28 Dias
+Verde        01 Dia
+                
+Indicadores de continuidade de  fornecimento de energia:    Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+DANF3E/Nota Fiscal
+Conta de Energia Elétrica 
+012345678  Série 0  
+012345678901    
+             586,39  
+13/02/2023
+012345678901 012345678901  012345678901 012345678901NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO

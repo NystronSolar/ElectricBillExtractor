@@ -1,0 +1,52 @@
+{
+    "client": {
+        "name": "TIMOTHY DA SILVA",
+        "address": {
+            "street": "R FICTICIA 123",
+            "district": "CENTRO",
+            "postcode": "12345-678",
+            "city": "CIDADE",
+            "state": "RS"
+        },
+        "establishment": {
+            "classification": "Convencional B3 Comercial Atacadista / Varejista",
+            "supplyType": "Trifásico"
+        }
+    },
+    "dates": {
+        "actualReadingDate": "28/01/2019",
+        "previousReadingDate": "27/12/2018",
+        "nextReadingDate": "25/02/2019",
+        "date": "01/19"
+    },
+    "debits": {
+        "tusd": {
+            "price": "637.81",
+            "name": "Tarifa de Uso do Sistema de Distribuição",
+            "abbreviation": "TUSD",
+            "kWhAmount": "1654.0"
+        },
+        "te": {
+            "price": "755.76",
+            "name": "Tarifa de Energia",
+            "abbreviation": "TE",
+            "kWhAmount": "1654.0"
+        },
+        "cip": {
+            "price": "36.21",
+            "name": "Contribuição de Iluminação Pública",
+            "abbreviation": "CIP"
+        }
+    },
+    "powers": {
+        "active": {
+            "previousReading": "107903.0",
+            "actualReading": "109557.0",
+            "kWhAmount": "1654.0"
+        }
+    },
+    "installationCode": "0123456789",
+    "price": "1429.78",
+    "realPrice": "1429.78",
+    "lastMonthPrice": "0.0"
+}
