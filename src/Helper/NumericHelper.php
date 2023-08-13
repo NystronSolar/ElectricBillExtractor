@@ -2,8 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor\Helper;
 
-use Money\Currency;
-use Money\Money;
+use TheDevick\PreciseMoney\Money;
 
 class NumericHelper
 {
@@ -46,14 +45,36 @@ class NumericHelper
     }
 
     /**
+     * @param numeric-string $numericString
+     *
+     * @return false|numeric-string
+     */
+    public static function cleanNumericString(string $numericString): false|string
+    {
+        if (str_ends_with($numericString, '.')) {
+            $numericString .= '0';
+        }
+
+        if (!str_contains($numericString, '.')) {
+            $numericString .= '.0';
+        } else {
+            $numericString = rtrim($numericString, '0').'0';
+        }
+
+        $numericString = '0'.ltrim($numericString, '0');
+
+        if (!is_numeric($numericString)) {
+            return false;
+        }
+
+        return $numericString;
+    }
+
+    /**
      * @param numeric-string $amount
      */
-    public static function numericStringToMoney(string $amount, Currency $currency = new Currency('BRL'), bool $negativeOnEnd = false): Money|false
+    public static function numericStringToMoney(string $amount, bool $negativeOnEnd = false): Money|false
     {
-        $amount = sprintf('%0.2f', $amount);
-
-        $amount = str_replace('.', '', $amount);
-
         if ($negativeOnEnd && str_ends_with($amount, '-')) {
             $amount = str_replace('-', '', $amount);
             $amount = '-'.$amount;
@@ -63,14 +84,6 @@ class NumericHelper
             return false;
         }
 
-        try {
-            return new Money($amount, $currency);
-        } catch (\InvalidArgumentException $e) {
-            if ('Leading zeros are not allowed' === $e->getMessage()) {
-                return new Money('0', $currency);
-            }
-
-            return false;
-        }
+        return new Money($amount);
     }
 }

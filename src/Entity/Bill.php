@@ -2,8 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor\Entity;
 
-use Money\Currency;
-use Money\Money;
+use TheDevick\PreciseMoney\Money;
 
 class Bill
 {
@@ -16,7 +15,7 @@ class Bill
         public ?Powers $powers = null,
         public ?Money $price = null,
         public ?Money $realPrice = null,
-        public ?Money $lastMonthPrice = new Money(0, new Currency('BRL')),
+        public ?Money $lastMonthPrice = new Money('0'),
     ) {
     }
 
