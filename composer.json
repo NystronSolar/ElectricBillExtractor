@@ -26,7 +26,7 @@
     ],
     "require": {
         "smalot/pdfparser": "^2.3",
-        "moneyphp/money": "^4.1"
+        "thedevick/precise-money": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.2",

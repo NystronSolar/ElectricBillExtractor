@@ -2,7 +2,6 @@
 
 namespace NystronSolar\ElectricBillExtractor\Extractor;
 
-use Money\Money;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
@@ -16,6 +15,7 @@ use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
+use TheDevick\PreciseMoney\Money;
 
 final class ExtractorV2RGE extends Extractor
 {
@@ -82,7 +82,7 @@ final class ExtractorV2RGE extends Extractor
                 $rawPrice = $rawPriceLine[array_key_last($rawPriceLine)];
 
                 if (str_contains($rawPrice, '*')) {
-                    $bill->price = Money::BRL('0');
+                    $bill->price = new Money('0');
                 } else {
                     if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString($rawPrice)) {
                         return false;
@@ -97,7 +97,7 @@ final class ExtractorV2RGE extends Extractor
 
                 $bill->installationCode = $rawPriceLine[0];
                 $bill->realPrice = $bill->price;
-                $bill->lastMonthPrice = Money::BRL(0);
+                $bill->lastMonthPrice = new Money('0');
             }
 
             if (str_contains($value, 'Energia Ativa Fornecida - TUSD') || str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {

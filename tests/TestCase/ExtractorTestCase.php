@@ -15,6 +15,7 @@ use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use PHPUnit\Framework\TestCase;
+use TheDevick\PreciseMoney\Money;
 
 class ExtractorTestCase extends TestCase
 {
@@ -23,10 +24,30 @@ class ExtractorTestCase extends TestCase
         $this->assertEquals($expected->format($format), $actual->format($format), $message);
     }
 
+    final public function assertEqualsMoney(Money $expected, Money $actual, string $message = ''): void
+    {
+        $this->assertSame(NumericHelper::cleanNumericString($expected->getAmount()), NumericHelper::cleanNumericString($actual->getAmount()), $message);
+    }
+
+    final public function assertEqualsDebit(?Debit $expected, ?Debit $actual, string $expectedFile = '', string $actualFile = '', string $debit = ''): void
+    {
+        if (is_null($expected) && is_null($actual)) {
+            return;
+        }
+
+        $this->assertNotNull($expected, "$expectedFile - 'debits' - '$debit' - is null.");
+        $this->assertNotNull($actual, "$actualFile - 'debits' - '$debit' - is null.");
+        $this->assertSame($expected->abbreviation, $actual->abbreviation, "$actualFile - 'debits' - '$debit' - 'abbreviation' does not matches the $expectedFile");
+        $this->assertSame($expected->kWhAmount, $actual->kWhAmount, "$actualFile - 'debits' - '$debit' - 'kWhAmount' does not matches the $expectedFile");
+        $this->assertSame($expected->name, $actual->name, "$actualFile - 'debits' - '$debit' - 'name' does not matches the $expectedFile");
+        $this->assertEqualsMoney($expected->price, $actual->price, "$actualFile - 'debits' - '$debit' - 'price' does not matches the $expectedFile");
+    }
+
     final public function assertEqualsBills(Bill|false $expectedBill, Bill|false $actualBill, int $fileCounter, string $message = ''): void
     {
         $expectedFile = "Expected json '$fileCounter.json'";
         $actualFile = "Actual bill '$fileCounter.txt'";
+
         // > Assert Bill Not False
         $this->assertNotFalse($expectedBill, "$expectedFile is false");
         $this->assertNotFalse($actualBill, "$actualFile is false");
@@ -60,14 +81,21 @@ class ExtractorTestCase extends TestCase
 
         // > Assert Bill
         $this->assertEquals($expectedBill->installationCode, $actualBill->installationCode, "$actualFile - 'installationCode' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->price, $actualBill->price, "$actualFile - 'price' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->realPrice, $actualBill->realPrice, "$actualFile - 'realPrice' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->lastMonthPrice, $actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' does not matches the $expectedFile");
+        $this->assertEqualsMoney($expectedBill->price, $actualBill->price, "$actualFile - 'price' does not matches the $expectedFile");
+        $this->assertEqualsMoney($expectedBill->realPrice, $actualBill->realPrice, "$actualFile - 'realPrice' does not matches the $expectedFile");
+        $this->assertEqualsMoney($expectedBill->lastMonthPrice, $actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->client, $actualBill->client, "$actualFile - 'client' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->solarGeneration, $actualBill->solarGeneration, "$actualFile - 'solarGeneration' does not matches the $expectedFile");
-        $this->assertEquals($expectedBill->debits, $actualBill->debits, "$actualFile - 'debits' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->powers, $actualBill->powers, "$actualFile - 'powers' does not matches the $expectedFile");
         // < Assert Bill
+
+        // > Assert Debits
+        $this->assertEqualsDebit($expectedBill->debits->tusd, $actualBill->debits->tusd, $expectedFile, $actualFile, 'tusd');
+        $this->assertEqualsDebit($expectedBill->debits->te, $actualBill->debits->te, $expectedFile, $actualFile, 'te');
+        $this->assertEqualsDebit($expectedBill->debits->cip, $actualBill->debits->cip, $expectedFile, $actualFile, 'cip');
+        $this->assertEqualsDebit($expectedBill->debits->discounts, $actualBill->debits->discounts, $expectedFile, $actualFile, 'discounts');
+        $this->assertEqualsDebit($expectedBill->debits->increases, $actualBill->debits->increases, $expectedFile, $actualFile, 'increases');
+        // < Assert Debits
 
         // > Assert Bill -> Dates
         $this->assertEqualsDate($expectedBill->dates->actualReadingDate, $actualBill->dates->actualReadingDate, "$actualFile - 'dates' - 'actualReadingDate' does not matches the $expectedFile");

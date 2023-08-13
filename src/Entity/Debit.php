@@ -2,7 +2,7 @@
 
 namespace NystronSolar\ElectricBillExtractor\Entity;
 
-use Money\Money;
+use TheDevick\PreciseMoney\Money;
 
 class Debit
 {

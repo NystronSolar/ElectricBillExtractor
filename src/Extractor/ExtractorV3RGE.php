@@ -2,7 +2,6 @@
 
 namespace NystronSolar\ElectricBillExtractor\Extractor;
 
-use Money\Money;
 use NystronSolar\ElectricBillExtractor\Entity\Address;
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
 use NystronSolar\ElectricBillExtractor\Entity\Client;
@@ -16,6 +15,7 @@ use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
+use TheDevick\PreciseMoney\Money;
 
 final class ExtractorV3RGE extends Extractor
 {
@@ -136,7 +136,7 @@ final class ExtractorV3RGE extends Extractor
 
                 // Bill has no price to pay
                 if (str_contains($rawPrice, '*')) {
-                    $bill->price = Money::BRL('0');
+                    $bill->price = new Money('0');
                 } else {
                     if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString($rawPrice)) {
                         return false;
@@ -183,7 +183,7 @@ final class ExtractorV3RGE extends Extractor
 
                     if (isset($tusd) && !is_null($tusd)) {
                         /** @var Debit $tusd */
-                        $tusdPrice = $tusdPrice->add($tusd->price);
+                        $tusdPrice = $tusdPrice->addMoney($tusd->price);
                         $tusdKWhAmount = bcadd($tusd->kWhAmount ?? '0.0', $tusdKWhAmount, 1);
                     }
 
@@ -233,7 +233,7 @@ final class ExtractorV3RGE extends Extractor
 
                 if (isset($te) && !is_null($te)) {
                     /** @var Debit $te */
-                    $tePrice = $tePrice->add($te->price);
+                    $tePrice = $tePrice->addMoney($te->price);
                     $teKWhAmount = bcadd($te->kWhAmount ?? '0.0', $teKWhAmount, 1);
                 }
 
@@ -263,7 +263,7 @@ final class ExtractorV3RGE extends Extractor
                 }
 
                 $bill->lastMonthPrice = $lastMonthPrice;
-                $bill->realPrice = $bill->realPrice?->subtract($bill->lastMonthPrice);
+                $bill->realPrice = $bill->realPrice?->subMoney($bill->lastMonthPrice);
             }
 
             if (str_contains($value, 'Energia Ativa-kWh')) {
