@@ -19,8 +19,10 @@ use TheDevick\PreciseMoney\Money;
 
 class ExtractorTestCase extends TestCase
 {
-    final public function assertEqualsDate(\DateTimeInterface $expected, \DateTimeInterface $actual, string $message = '', string $format = 'd/m/Y'): void
+    final public function assertEqualsDate(?\DateTimeInterface $expected, ?\DateTimeInterface $actual, string $message = '', string $format = 'd/m/Y'): void
     {
+        $this->assertNotNull($expected);
+        $this->assertNotNull($actual);
         $this->assertEquals($expected->format($format), $actual->format($format), $message);
     }
 
@@ -87,6 +89,7 @@ class ExtractorTestCase extends TestCase
         $this->assertEquals($expectedBill->client, $actualBill->client, "$actualFile - 'client' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->solarGeneration, $actualBill->solarGeneration, "$actualFile - 'solarGeneration' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->powers, $actualBill->powers, "$actualFile - 'powers' does not matches the $expectedFile");
+        $this->assertEqualsDate($expectedBill->date, $actualBill->date, "$actualFile - 'date' does not matches the $expectedFile");
         // < Assert Bill
 
         // > Assert Debits
@@ -101,7 +104,6 @@ class ExtractorTestCase extends TestCase
         $this->assertEqualsDate($expectedBill->dates->actualReadingDate, $actualBill->dates->actualReadingDate, "$actualFile - 'dates' - 'actualReadingDate' does not matches the $expectedFile");
         $this->assertEqualsDate($expectedBill->dates->nextReadingDate, $actualBill->dates->nextReadingDate, "$actualFile - 'dates' - 'nextReadingDate' does not matches the $expectedFile");
         $this->assertEqualsDate($expectedBill->dates->previousReadingDate, $actualBill->dates->previousReadingDate, "$actualFile - 'dates' - 'previousReadingDate' does not matches the $expectedFile");
-        $this->assertEqualsDate($expectedBill->dates->date, $actualBill->dates->date, "$actualFile - 'dates' - 'date' does not matches the $expectedFile");
         // < Assert Bill -> Dates
     }
 
@@ -173,8 +175,8 @@ class ExtractorTestCase extends TestCase
                     \DateTime::createFromFormat($dateFormatReset, $json->dates->actualReadingDate),
                     \DateTime::createFromFormat($dateFormatReset, $json->dates->previousReadingDate),
                     \DateTime::createFromFormat($dateFormatReset, $json->dates->nextReadingDate),
-                    \DateTime::createFromFormat($monthFormatReset, $json->dates->date)
                 ),
+                \DateTime::createFromFormat($monthFormatReset, $json->dates->date),
                 $solarGeneration,
                 $json->installationCode,
                 new Debits(

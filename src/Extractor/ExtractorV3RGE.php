@@ -13,6 +13,7 @@ use NystronSolar\ElectricBillExtractor\Entity\Power;
 use NystronSolar\ElectricBillExtractor\Entity\Powers;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
+use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
 use TheDevick\PreciseMoney\Money;
@@ -81,14 +82,12 @@ final class ExtractorV3RGE extends Extractor
                  * Próxima leitura    14/06/2023TIMOTHY DA SILVA.
                  */
                 $dateFormatReset = '!d/m/Y';
-                $monthFormatReset = '!m/y';
                 $actualReadingDate = \DateTime::createFromFormat($dateFormatReset, substr($contentArray[$key + 1], 0, 10));
 
                 $bill->dates = new Dates(
                     $actualReadingDate,
                     \DateTime::createFromFormat($dateFormatReset, substr($contentArray[$key + 1], 11, 10)),
                     \DateTime::createFromFormat($dateFormatReset, substr(trim(substr($contentArray[$key + 2], 16)), 0, 10)),
-                    \DateTime::createFromFormat($monthFormatReset, $actualReadingDate->format('m/y'))
                 );
             }
 
@@ -148,6 +147,16 @@ final class ExtractorV3RGE extends Extractor
 
                     $bill->price = $price;
                 }
+
+                $rawDate = explode(' ', $contentArray[$key + 1])[0];
+                $billYear = substr($rawDate, 4);
+                $billMonth = DateHelper::getShortMonthNumberPtBr(substr($rawDate, 0, 3));
+                $date = \DateTimeImmutable::createFromFormat('!n/Y', "$billMonth/$billYear");
+                if (!$date) {
+                    return false;
+                }
+
+                $bill->date = $date;
             }
 
             if (str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
@@ -302,7 +311,7 @@ final class ExtractorV3RGE extends Extractor
      */
     private function findCipKey(array $contentArr, Bill $bill, int $currentKey = 0): int|false
     {
-        $date = $bill->dates?->date;
+        $date = $bill->date;
         if (is_null($date)) {
             return false;
         }

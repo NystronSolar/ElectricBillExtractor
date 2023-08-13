@@ -13,6 +13,7 @@ use NystronSolar\ElectricBillExtractor\Entity\Power;
 use NystronSolar\ElectricBillExtractor\Entity\Powers;
 use NystronSolar\ElectricBillExtractor\Entity\SolarGeneration;
 use NystronSolar\ElectricBillExtractor\Extractor;
+use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
 use TheDevick\PreciseMoney\Money;
@@ -95,6 +96,14 @@ final class ExtractorV2RGE extends Extractor
                     $bill->price = $price;
                 }
 
+                $billYear = substr($rawPriceLine[1], 4);
+                $billMonth = DateHelper::getShortMonthNumberPtBr(substr($rawPriceLine[1], 0, 3));
+                $date = \DateTimeImmutable::createFromFormat('!n/Y', "$billMonth/$billYear");
+                if (!$date) {
+                    return false;
+                }
+
+                $bill->date = $date;
                 $bill->installationCode = $rawPriceLine[0];
                 $bill->realPrice = $bill->price;
                 $bill->lastMonthPrice = new Money('0');
@@ -185,13 +194,11 @@ final class ExtractorV2RGE extends Extractor
                 $actualReadingDate = \DateTime::createFromFormat($dateFormatReset, $rawLine[0]);
                 $previousReadingDate = \DateTime::createFromFormat($dateFormatReset, $rawLine[1]);
                 $nextReadingDate = \DateTime::createFromFormat($dateFormatReset, $nextReadingDateStr);
-                $date = \DateTime::createFromFormat('!m/Y', $actualReadingDate->format('m/Y'));
 
                 $bill->dates = new Dates(
                     $actualReadingDate,
                     $previousReadingDate,
                     $nextReadingDate,
-                    $date
                 );
             }
 
@@ -223,8 +230,6 @@ final class ExtractorV2RGE extends Extractor
         }
 
         if (!$bill->isValid()) {
-            dump('abc', $bill);
-
             return false;
         }
 

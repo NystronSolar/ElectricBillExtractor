@@ -8,7 +8,6 @@ class Dates
         public readonly \DateTimeInterface $actualReadingDate,
         public readonly \DateTimeInterface $previousReadingDate,
         public readonly \DateTimeInterface $nextReadingDate,
-        public readonly \DateTimeInterface $date,
     ) {
     }
 }

@@ -9,6 +9,7 @@ class Bill
     public function __construct(
         public ?Client $client = null,
         public ?Dates $dates = null,
+        public ?\DateTimeInterface $date = null,
         public ?SolarGeneration $solarGeneration = null,
         public ?string $installationCode = null,
         public ?Debits $debits = null,
@@ -27,6 +28,7 @@ class Bill
         return
             !is_null($this->client)
             && !is_null($this->dates)
+            && !is_null($this->date)
             && !is_null($this->installationCode)
             && !is_null($this->debits)
             && !is_null($this->powers)
