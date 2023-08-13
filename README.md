@@ -2,8 +2,8 @@
 
 [![NystronSolarBadge](https://img.shields.io/badge/⚡%20Powered%20By-Nystron%20Solar-yellow?style=for-the-badge)](https://github.com/NystronSolar)
 [![PHPUnitBadge](https://img.shields.io/badge/✓%20PHPUnit-Tests-blue?style=for-the-badge)](https://phpunit.de/)
+[![PHPBadge](https://img.shields.io/badge/🐘%20PHP-8.2-steelblue?style=for-the-badge)](https://php.net/)
 [![PsalmBadge](https://img.shields.io/badge/📌%20Psalm-Static%20Analysis-red?style=for-the-badge)](https://psalm.dev/)
-[![PHPBadge](https://img.shields.io/badge/🐘%20PHP-8.2-red?style=for-the-badge)](https://psalm.dev/)
 [![SemanticReleaseBadge](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release&style=for-the-badge)](https://github.com/semantic-release/semantic-release)
 
 ![Electric Bill Extractor](https://github.com/NystronSolar/ElectricBillExtractor/assets/71853418/1b7a1590-c2ec-4e01-9a04-f96171a05350)
@@ -48,7 +48,7 @@ Each type of bill needs to have a custom extractor. Each extractor extends the [
 
 > [`NystronSolar\ElectricBillExtractor\ExtractorFactory`](src/ExtractorFactory.php)
 
-The Extractor Factory is a class that helps
+The Extractor Factory is a class that helps creating extractors
 
 With the Extractor Factory, you can:
 
@@ -88,7 +88,7 @@ And to compare the results by the extractor and the actual bills, you can find `
 
 #### Why not use PDF files?
 
-In most real-cases, projects will extract the data from an PDF file. In that approach, the Electric Bill Extractor will parse the PDF file into text, using the [https://github.com/smalot/pdfparser](smalot/pdfparser).
+In most real-cases, projects will extract the data from an PDF file. In that approach, the Electric Bill Extractor Factory will parse the PDF file into text, using the [https://github.com/smalot/pdfparser](smalot/pdfparser).
 
 After the parsing, the library will use the text returned from the Parser and extract all the data for the bill.
 
