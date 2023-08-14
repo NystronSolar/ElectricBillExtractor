@@ -1,0 +1,102 @@
+TIMOTHY DA SILVA
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE RS Nota Fiscal 
+Conta de Energia Elétrica
+Nº 012345678 Série U
+Data de Emissão: 07/01/2022
+Data de Apresentação:  12/01/2022
+Pág: 01 de 0 1
+Conta Contrato N° 012345678901
+Leitura Próximo Mês:  04/02/2022
+Lote Roteiro de leitura N°. Medidor PN
+17 ABCDE012-00000123 0123456 012345678 Reservado ao Fisco
+0000.0000.0000.0000.0000.0000.0 000.0000
+Mantenha seus dados sempre  atualizados, alguns itens  determinam a tarifa e  tributação de sua fatura de  energia elétrica. Solicite os  serviços disponíveis em nosso  site com rapidez
+e segurança e reserve mais  tempo para você em seu  dia-a-dia. Mais informações  acesse o endereço que consta no  verso de sua conta.
+TIMOTHY DA SILVA                                 
+R FICTICIA 123 
+CENTRO
+12345-678 CIDADE - RS CPF: 123.456.789-01
+CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V
+0800 970 0900
+www.rge-rs.com.br 716097159 INSTALAÇÃO
+0123456789 JAN/2022 19/01/2022              619,95
+Cod.
+012 Descrição da Operação
+N° 012345678901 Mês
+Ref. Quant.
+Faturada Unid.
+Med. Tarifa com
+Tributos R$ Valor Total
+da Operação
+R$ Base Cálculo
+ICMS R$ Aliq.
+ICMS ICMS Base Cálculo
+PIS/COFINS PIS
+0,44% COFINS
+2,07%
+0605 Consumo Uso Sistema [KWh]-TUSD JAN/22 488,000 kWh 0,51686476  252,23  252,23  27,50 72,78  179,45  0,79  3,72 
+0601 Consumo - TE JAN/22 488,000 kWh 0,41030738  200,23  200,23  27,50 57,78  142,45  0,63  2,95 
+0601 Adicional de Bandeira Vermelha JAN/22 99,92  99,92  27,50 28,83  71,09  0,32  1,48 
+0699 Conta do mês DEZ/21 46,87 
+0807 Conta do mês DEZ/21 1,17 
+0804 Conta do mês DEZ/21 0,35 
+0805 Conta do mês DEZ/21 7,69 
+Total Distribuidora 608,46 
+DÉBITOS DE OUTROS SERVIÇOS
+0807 Contrib. Custeio IP-CIP  Municipal JAN/22 11,49 
+       
+       
+       
+       
+Total Consolidado            619,95  552,38  159,39  392,99  1,74  8,15  Bandeiras
+Tarifárias
+(Dias)
+Esc Hídrica
+22 Dias
+Esc Hídrica
+07 Dias
+             
+2022 JAN lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllllllllll
+488 29
+2021 DEZ lll
+20 31
+     NOV lllllllllllllllllllllllllllllll llllllllllllllll
+304 33
+     OUT lllllllllllllllllllllllllllllll llllll
+241 28
+     SET lllllllllllllllllllllllllllllll lllllllllllllllllllllllll
+362 33
+     AGO lllllllllllllllllllllllllllllll lllllllllllllllllllllllllllllll lllllll
+449 31 Consumo TUSD           TE
+Consumo kWh 0,35848361     0,28459000
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                               Nº Energia Leitura Leitura Fator Consumo Taxa de Perda Leitura
+ 07/01/2022 09/12/2021 Multipl. [kWh] [%] Próximo Mês
+01234567 Ativa 32690 32202   1,00      488 04/02/2022
+Para consulta dos indicadores  acesse nosso site  www.rge-rs.com.br
+Excepcionalmente este mês  estamos postergando sua data de  vcto.,
+de modo a atender os prazos da  Resolução 414/ANEEL/2010.
+Como sua última conta não  atingiu o valor mínimo p/  pagamento,
+sua conta atual veio c/ o total  acumulado.
+Saiba mais em:  www.rge-rs.com.br/contaminima.
+CódDébAut-Banco
+012345678901Nota Fiscal
+Conta de Energia Elétrica
+N° 012345678 Série U Total a Pagar (R$)
+             619,95 Data de Vencimento
+19/01/2022
+Essa conta poderá ser paga no  credenciado mais perto de você.  Confira a lista completa no  site 
+NOME DO CREDENCIADO
+OUTRO CREDENCIADO
+ENDERECO DO CREDENCIADO -  CENTRO
+OUTRO ENDERECO DO CREDENCIADO -  CENTRO
+012345678901 012345678901  012345678901 012345678901 Autenticação Mecânica          
+  Pague aqui - PIX

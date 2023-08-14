@@ -45,11 +45,18 @@ final class ExtractorV2RGE extends Extractor
                  * CENTRO
                  * 12345-678 CIDADE - RS RG: 0123456789
                  * CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V.
+                 * 
+                 * TIMOTHY DA SILVA
+                 * R FICTICIA 123
+                 * CENTRO
+                 * 12345-678 CIDADE - RS CPF: 123.456.789-01
+                 * CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V.
                  */
                 $actualKey = str_contains((string) $contentArray[$key - 1], 'INSC.EST') ? $key - 1 : $key;
 
+
                 $addressRaw = (string) $contentArray[$actualKey - 1];
-                $addressRaw = substr($addressRaw, 0, -15);
+                $addressRaw = substr($addressRaw, 0, str_contains($addressRaw, 'CPF') ? -20 : -15);
                 $addressRawExploded = explode(' ', $addressRaw);
                 $address = new Address(
                     trim((string) $contentArray[$actualKey - 3]),
@@ -105,11 +112,13 @@ final class ExtractorV2RGE extends Extractor
 
                 $bill->date = $date;
                 $bill->installationCode = $rawPriceLine[0];
-                $bill->realPrice = $bill->price;
-                $bill->lastMonthPrice = new Money('0');
             }
 
-            if (str_contains($value, 'Energia Ativa Fornecida - TUSD') || str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')) {
+            if (
+                str_contains($value, 'Energia Ativa Fornecida - TUSD') ||
+                str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD') ||
+                $modifier = str_contains($value, 'Custo Disp Uso Sistema TUSD')
+            ) {
                 /**
                  * Example:
                  * 0605 Energia Ativa Fornecida - TUSD ABR/22 283,000 kWh 0,50667845  143,39  143,39  25,00 35,85  107,54  1,08  5,01
@@ -127,10 +136,13 @@ final class ExtractorV2RGE extends Extractor
                  * Total Distribuidora 1.393,57
                  * DÉBITOS DE OUTROS SERVIÇOS
                  * 0807 Contrib. Custeio IP-CIP  Municipal JAN/19 36,21
+                 *
+                 * 0605 Custo Disp Uso Sistema TUSD DEZ/21 50,000 kWh 0,42800000  21,40  21,40  12,00 2,57  18,83  0,16  0,75
+                 * 0601 Disp Sistema-TE DEZ/21 50,000 kWh 0,33980000  16,99  16,99  12,00 2,04  14,95  0,13  0,60
                  */
                 $hasGeneration = str_contains($value, 'Energia Ativa');
 
-                $tusdRaw = substr($value, 43);
+                $tusdRaw = substr($value, $modifier ? 39 : 43);
                 $tusdRaw = explode(' ', StringHelper::removeRepeatedWhitespace($tusdRaw));
                 $tusd = new Debit(
                     NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($tusdRaw[3])),
@@ -139,7 +151,7 @@ final class ExtractorV2RGE extends Extractor
                     NumericHelper::brazilianNumberToNumericString($tusdRaw[0])
                 );
 
-                $teRaw = substr($contentArray[$key + 1], $hasGeneration ? 41 : 25);
+                $teRaw = substr($contentArray[$key + 1], $hasGeneration ? 41 : ($modifier ? 28 : 25));
                 $teRaw = explode(' ', StringHelper::removeRepeatedWhitespace($teRaw));
                 $te = new Debit(
                     NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($teRaw[3])),
@@ -148,7 +160,8 @@ final class ExtractorV2RGE extends Extractor
                     NumericHelper::brazilianNumberToNumericString($teRaw[0])
                 );
 
-                $cipRaw = trim(substr($contentArray[$this->findCipKey($contentArray, $key)], 47));
+                $cipKey = $this->findCipKey($contentArray, $key);
+                $cipRaw = trim(substr($contentArray[$cipKey], 47));
                 $cip = new Debit(
                     NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($cipRaw)),
                     'Contribuição de Iluminação Pública',
@@ -160,6 +173,46 @@ final class ExtractorV2RGE extends Extractor
                     $te,
                     $cip
                 );
+
+                /**
+                 * Example:
+                 * Total Consolidado             99,16  198,86  49,72  41,60  0,41  1,95  Bandeiras
+                 */
+                $actualKey = $cipKey;
+                while (is_null($bill->realPrice)) {
+                    $actualKey = $actualKey + 1;
+                    $actualValue = $contentArray[$actualKey];
+                    if (empty(trim($actualValue))) {
+                        continue;
+                    }
+
+                    $realPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(explode(' ', trim(substr($actualValue, 17)))[0]));
+                    if (!$realPrice) {
+                        return false;
+                    }
+
+                    $bill->realPrice = $realPrice;
+                }
+            }
+
+            if (str_contains($value, 'Conta do mês')) {
+                /**
+                 * Example:
+                 * 0699 Conta do mês DEZ/21 46,87 
+                 * 0807 Conta do mês DEZ/21 1,17 
+                 * 0804 Conta do mês DEZ/21 0,35 
+                 * 0805 Conta do mês DEZ/21 7,69 
+                 */
+                $raw = trim(substr($value, 26));
+                $currentLastMonthPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($raw));
+                if (!$currentLastMonthPrice) {
+                    return false;
+                }
+
+                $lastMonthPrice = $currentLastMonthPrice->addMoney($bill->lastMonthPrice ?? new Money('0'));
+
+                $bill->lastMonthPrice = $lastMonthPrice;
+                $bill->realPrice = $bill->realPrice?->subMoney($currentLastMonthPrice);
             }
 
             if (str_contains($value, 'Taxa de Perda')) {
@@ -230,6 +283,7 @@ final class ExtractorV2RGE extends Extractor
         }
 
         if (!$bill->isValid()) {
+            dd($bill);
             return false;
         }
 

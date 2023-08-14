@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class UploadBillCommand extends Command
 {
-    public array $availableExtractors = ['V2RGE', 'V3RGE'];
+    public array $availableExtractors = [2 => 'V2RGE', 3 => 'V3RGE'];
 
     public string $contentFolder = '/tests/Content';
 

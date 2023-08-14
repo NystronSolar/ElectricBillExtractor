@@ -222,7 +222,9 @@ class ExtractorTestCase extends TestCase
                 NumericHelper::numericStringToMoney($json->lastMonthPrice),
             );
         } catch (\Exception $e) {
-            throw new \Exception(sprintf('Error ocurred when converting JSON to Bill in %s - %s', $extractorClass, $actualFile));
+            throw new \Exception(sprintf('Error ocurred when converting JSON to Bill in %s - %s: %s at', $extractorClass, $actualFile, $e->getMessage()));
+        } catch (\TypeError $e) {
+            throw new \Exception(sprintf('Error ocurred when converting JSON to Bill in %s - %s: %s at', $extractorClass, $actualFile, $e->getMessage()));
         }
 
         return $bill;
