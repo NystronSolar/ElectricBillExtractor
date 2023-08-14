@@ -108,7 +108,7 @@ class ExtractorTestCase extends TestCase
     }
 
     /**
-     * @param string                  $contentFolder  example: `V1RGE` - The name of the folder under tests/Content/bills and tests/Content/expected
+     * @param string                  $contentFolder  example: `V3RGE` - The name of the folder under tests/Content/bills and tests/Content/expected
      * @param class-string<Extractor> $extractorClass
      */
     public function assertByContentFolder(string $contentFolder, string $extractorClass): void

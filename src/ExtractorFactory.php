@@ -3,7 +3,6 @@
 namespace NystronSolar\ElectricBillExtractor;
 
 use NystronSolar\ElectricBillExtractor\Entity\Bill;
-use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV1RGE;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV2RGE;
 use NystronSolar\ElectricBillExtractor\Extractor\ExtractorV3RGE;
 use Smalot\PdfParser\Parser;
@@ -20,13 +19,13 @@ class ExtractorFactory
             return ExtractorV3RGE::class;
         }
 
-        // The V1 RGE Bill contains text 6th line "Pág."
+        // The V2 RGE Bill contains text 5th line "Conta de Energia Elétrica"
         $contentArr = explode(PHP_EOL, $content);
-        if (array_key_exists(5, $contentArr) && str_contains($contentArr[5], 'Pág.')) {
-            return ExtractorV1RGE::class;
+        if (array_key_exists(4, $contentArr) && str_contains($contentArr[4], 'Conta de Energia Elétrica')) {
+            return ExtractorV2RGE::class;
         }
 
-        return ExtractorV2RGE::class;
+        return false;
     }
 
     /**

@@ -40,7 +40,6 @@ Each type of bill needs to have a custom extractor. Each extractor extends the [
 
 | Name             | Class                                                                                             | Example                                                                                               |
 |------------------|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| Extractor V1 RGE | [`NystronSolar\ElectricBillExtractor\Extractor\ExtractorV1RGE`](src/Extractor/ExtractorV1RGE.php) | Example not found from Official RGE Website. Sorry `:[`                                               |
 | Extractor V2 RGE | [`NystronSolar\ElectricBillExtractor\Extractor\ExtractorV2RGE`](src/Extractor/ExtractorV2RGE.php) | [From Official RGE Website](https://www.rge-rs.com.br/sites/rge-rs/files/2022-05/conta-rge.png)       |
 | Extractor V3 RGE | [`NystronSolar\ElectricBillExtractor\Extractor\ExtractorV3RGE`](src/Extractor/ExtractorV3RGE.php) | [From Official RGE Website](https://www.rge-rs.com.br/sites/rge-rs/files/2022-04/novaconta-rge_0.png) |
 
