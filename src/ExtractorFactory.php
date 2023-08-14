@@ -20,18 +20,13 @@ class ExtractorFactory
             return ExtractorV3RGE::class;
         }
 
-        // The V2 RGE Bill contains in the 4th line "Ato Declaratório"
+        // The V1 RGE Bill contains text 6th line "Pág."
         $contentArr = explode(PHP_EOL, $content);
-        if (array_key_exists(3, $contentArr) && str_contains($contentArr[3], 'Ato Declaratório')) {
-            return ExtractorV2RGE::class;
-        }
-
-        // The V1 RGE Bill have the exact text 4th line "Conta de Energia Elétrica\n"
-        if (array_key_exists(4, $contentArr) && 'Conta de Energia Elétrica' === $contentArr[4]) {
+        if (array_key_exists(5, $contentArr) && str_contains($contentArr[5], 'Pág.')) {
             return ExtractorV1RGE::class;
         }
 
-        return false;
+        return ExtractorV2RGE::class;
     }
 
     /**

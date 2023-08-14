@@ -18,13 +18,17 @@ class ExtractorFactoryTest extends TestCase
     BAIRRO
     12345-678 CIDADE RS Nota Fiscal 
     Conta de Energia Elétrica
+    Nº. 043238539 série U Pág. 1 de   1
     EOD;
 
     protected string $v2RGEContent = <<<EOD
     NOME CLIENTE
     R FICTICIA 123 
     BAIRRO
-    12345-678 CIDADE RS Nota Fiscal  / RE - Ato Declaratório nº  2023/001
+    12345-678 CIDADE RS Nota Fiscal
+    Conta de Energia Elétrica
+    Nº 024385390 Série U
+    Data de Emissão: 28/01/2019
     EOD;
 
     protected string $v3RGEContent = <<<EOD
@@ -32,8 +36,6 @@ class ExtractorFactoryTest extends TestCase
     FISCAL DE ENERGIA ELÉTRICA  ELETRÔNICA
     RGE SUL DISTRIBUIDORA DE  ENERGIA S.A.
     EOD;
-
-    protected string $invalidContent = 'A content to be invalid';
 
     protected function createParserMock(string $text): Parser
     {
@@ -51,7 +53,6 @@ class ExtractorFactoryTest extends TestCase
         $this->assertSame(ExtractorV1RGE::class, ExtractorFactory::identifyExtractorClassFromContent($this->v1RGEContent));
         $this->assertSame(ExtractorV2RGE::class, ExtractorFactory::identifyExtractorClassFromContent($this->v2RGEContent));
         $this->assertSame(ExtractorV3RGE::class, ExtractorFactory::identifyExtractorClassFromContent($this->v3RGEContent));
-        $this->assertFalse(ExtractorFactory::identifyExtractorClassFromContent($this->invalidContent));
     }
 
     public function testIdentifyExtractorClassFromFile(): void
@@ -59,7 +60,6 @@ class ExtractorFactoryTest extends TestCase
         $this->assertSame(ExtractorV1RGE::class, ExtractorFactory::identifyExtractorClassFromFile('file.pdf', $this->createParserMock($this->v1RGEContent)));
         $this->assertSame(ExtractorV2RGE::class, ExtractorFactory::identifyExtractorClassFromFile('file.pdf', $this->createParserMock($this->v2RGEContent)));
         $this->assertSame(ExtractorV3RGE::class, ExtractorFactory::identifyExtractorClassFromFile('file.pdf', $this->createParserMock($this->v3RGEContent)));
-        $this->assertFalse(ExtractorFactory::identifyExtractorClassFromFile('file.pdf', $this->createParserMock($this->invalidContent)));
     }
 
     public function testInstantiateExtractorFromContent(): void
@@ -67,7 +67,6 @@ class ExtractorFactoryTest extends TestCase
         $this->assertInstanceOf(ExtractorV1RGE::class, ExtractorFactory::instantiateExtractorFromContent($this->v1RGEContent));
         $this->assertInstanceOf(ExtractorV2RGE::class, ExtractorFactory::instantiateExtractorFromContent($this->v2RGEContent));
         $this->assertInstanceOf(ExtractorV3RGE::class, ExtractorFactory::instantiateExtractorFromContent($this->v3RGEContent));
-        $this->assertFalse(ExtractorFactory::instantiateExtractorFromContent($this->invalidContent));
     }
 
     public function testInstantiateExtractorFromFile(): void
@@ -75,17 +74,6 @@ class ExtractorFactoryTest extends TestCase
         $this->assertInstanceOf(ExtractorV1RGE::class, ExtractorFactory::instantiateExtractorFromFile('file.pdf', $this->createParserMock($this->v1RGEContent)));
         $this->assertInstanceOf(ExtractorV2RGE::class, ExtractorFactory::instantiateExtractorFromFile('file.pdf', $this->createParserMock($this->v2RGEContent)));
         $this->assertInstanceOf(ExtractorV3RGE::class, ExtractorFactory::instantiateExtractorFromFile('file.pdf', $this->createParserMock($this->v3RGEContent)));
-        $this->assertFalse(ExtractorFactory::instantiateExtractorFromFile('file.pdf', $this->createParserMock($this->invalidContent)));
-    }
-
-    public function testExtractFromContent(): void
-    {
-        $this->assertFalse(ExtractorFactory::extractFromContent($this->invalidContent));
-    }
-
-    public function testExtractFromFile(): void
-    {
-        $this->assertFalse(ExtractorFactory::extractFromFile('file.pdf', $this->createParserMock($this->invalidContent)));
     }
 
     public function testGetParsedContentFromFile(): void
