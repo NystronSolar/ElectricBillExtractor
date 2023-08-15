@@ -16,7 +16,6 @@ use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
-use TheDevick\PreciseMoney\Money;
 
 final class ExtractorV3RGE extends Extractor
 {
@@ -131,23 +130,6 @@ final class ExtractorV3RGE extends Extractor
                  * JUL/2022 01/08/2022 R$ **********
                  */
 
-                $rawPrice = substr($contentArray[$key + 1], 23);
-
-                // Bill has no price to pay
-                if (str_contains($rawPrice, '*')) {
-                    $bill->price = new Money('0');
-                } else {
-                    if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString($rawPrice)) {
-                        return false;
-                    }
-
-                    if (!$price = NumericHelper::numericStringToMoney($numericStringPrice)) {
-                        return false;
-                    }
-
-                    $bill->price = $price;
-                }
-
                 $rawDate = explode(' ', $contentArray[$key + 1])[0];
                 $billYear = substr($rawDate, 4);
                 $billMonth = DateHelper::getShortMonthNumberPtBr(substr($rawDate, 0, 3));
@@ -213,19 +195,19 @@ final class ExtractorV3RGE extends Extractor
                 }
 
                 $actualKey = $cipKey;
-                while (is_null($bill->realPrice)) {
+                while (is_null($bill->price)) {
                     $actualKey = $actualKey + 1;
                     $actualValue = $contentArray[$actualKey];
                     if (empty(trim($actualValue))) {
                         continue;
                     }
 
-                    $realPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(explode(' ', trim($actualValue))[0]));
-                    if (!$realPrice) {
+                    $price = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(explode(' ', trim($actualValue))[0]));
+                    if (!$price) {
                         return false;
                     }
 
-                    $bill->realPrice = $realPrice;
+                    $bill->price = $price;
                 }
             }
 
@@ -258,21 +240,6 @@ final class ExtractorV3RGE extends Extractor
                  * @var Debit $cip
                  */
                 $bill->debits = new Debits($tusd, $te, $cip);
-            }
-
-            if (str_starts_with($value, 'Conta Mês Anterior')) {
-                /**
-                 * Example:
-                 * Conta Mês Anterior JAN/23       39,29.
-                 */
-                $raw = trim(substr($value, 26));
-                $lastMonthPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($raw));
-                if (!$lastMonthPrice) {
-                    return false;
-                }
-
-                $bill->lastMonthPrice = $lastMonthPrice;
-                $bill->realPrice = $bill->realPrice?->subMoney($bill->lastMonthPrice);
             }
 
             if (str_contains($value, 'Energia Ativa-kWh')) {

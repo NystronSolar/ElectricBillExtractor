@@ -15,8 +15,6 @@ class Bill
         public ?Debits $debits = null,
         public ?Powers $powers = null,
         public ?Money $price = null,
-        public ?Money $realPrice = null,
-        public ?Money $lastMonthPrice = new Money('0'),
     ) {
     }
 
@@ -33,8 +31,6 @@ class Bill
             && !is_null($this->debits)
             && !is_null($this->powers)
             && !is_null($this->price)
-            && !is_null($this->realPrice)
-            && !is_null($this->lastMonthPrice)
         ;
     }
 }

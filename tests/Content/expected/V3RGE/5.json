@@ -55,7 +55,5 @@
         }
     },
     "installationCode": "0123456789",
-    "price": "0",
-    "realPrice": "68.35",
-    "lastMonthPrice": "0"
+    "price": "68.35"
 }

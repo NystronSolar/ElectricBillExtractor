@@ -73,19 +73,11 @@ class ExtractorTestCase extends TestCase
 
         $this->assertNotNull($expectedBill->price, "$expectedFile - 'price' is null");
         $this->assertNotNull($actualBill->price, "$actualFile - 'price' is null");
-
-        $this->assertNotNull($expectedBill->realPrice, "$expectedFile - 'realPrice' is null");
-        $this->assertNotNull($actualBill->realPrice, "$actualFile - 'realPrice' is null");
-
-        $this->assertNotNull($expectedBill->lastMonthPrice, "$expectedFile - 'lastMonthPrice' is null");
-        $this->assertNotNull($actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' is null");
         // < Assert Bill Values Not Null
 
         // > Assert Bill
         $this->assertEquals($expectedBill->installationCode, $actualBill->installationCode, "$actualFile - 'installationCode' does not matches the $expectedFile");
         $this->assertEqualsMoney($expectedBill->price, $actualBill->price, "$actualFile - 'price' does not matches the $expectedFile");
-        $this->assertEqualsMoney($expectedBill->realPrice, $actualBill->realPrice, "$actualFile - 'realPrice' does not matches the $expectedFile");
-        $this->assertEqualsMoney($expectedBill->lastMonthPrice, $actualBill->lastMonthPrice, "$actualFile - 'lastMonthPrice' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->client, $actualBill->client, "$actualFile - 'client' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->solarGeneration, $actualBill->solarGeneration, "$actualFile - 'solarGeneration' does not matches the $expectedFile");
         $this->assertEquals($expectedBill->powers, $actualBill->powers, "$actualFile - 'powers' does not matches the $expectedFile");
@@ -218,8 +210,6 @@ class ExtractorTestCase extends TestCase
                     ),
                 ),
                 NumericHelper::numericStringToMoney($json->price),
-                NumericHelper::numericStringToMoney($json->realPrice),
-                NumericHelper::numericStringToMoney($json->lastMonthPrice),
             );
         } catch (\Exception $e) {
             throw new \Exception(sprintf('Error ocurred when converting JSON to Bill in %s - %s: %s at', $extractorClass, $actualFile, $e->getMessage()));

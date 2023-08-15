@@ -16,7 +16,6 @@ use NystronSolar\ElectricBillExtractor\Extractor;
 use NystronSolar\ElectricBillExtractor\Helper\DateHelper;
 use NystronSolar\ElectricBillExtractor\Helper\NumericHelper;
 use NystronSolar\ElectricBillExtractor\Helper\StringHelper;
-use TheDevick\PreciseMoney\Money;
 
 final class ExtractorV2RGE extends Extractor
 {
@@ -85,32 +84,17 @@ final class ExtractorV2RGE extends Extractor
                  * www.rge-rs.com.br 012345678 INSTALAÇÃO
                  * 0123456789 JUL/2021 23/07/2021 **********
                  */
-                $rawPriceLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 1])));
-                $rawPrice = $rawPriceLine[array_key_last($rawPriceLine)];
+                $rawLine = explode(' ', preg_replace('/\s+/', ' ', trim($contentArray[$key + 1])));
 
-                if (str_contains($rawPrice, '*')) {
-                    $bill->price = new Money('0');
-                } else {
-                    if (!$numericStringPrice = NumericHelper::brazilianNumberToNumericString($rawPrice)) {
-                        return false;
-                    }
-
-                    if (!$price = NumericHelper::numericStringToMoney($numericStringPrice)) {
-                        return false;
-                    }
-
-                    $bill->price = $price;
-                }
-
-                $billYear = substr($rawPriceLine[1], 4);
-                $billMonth = DateHelper::getShortMonthNumberPtBr(substr($rawPriceLine[1], 0, 3));
+                $billYear = substr($rawLine[1], 4);
+                $billMonth = DateHelper::getShortMonthNumberPtBr(substr($rawLine[1], 0, 3));
                 $date = \DateTimeImmutable::createFromFormat('!n/Y', "$billMonth/$billYear");
                 if (!$date) {
                     return false;
                 }
 
                 $bill->date = $date;
-                $bill->installationCode = $rawPriceLine[0];
+                $bill->installationCode = $rawLine[0];
             }
 
             if (
@@ -182,40 +166,20 @@ final class ExtractorV2RGE extends Extractor
                  * Total Consolidado             99,16  198,86  49,72  41,60  0,41  1,95  Bandeiras.
                  */
                 $actualKey = $cipKey;
-                while (is_null($bill->realPrice)) {
+                while (is_null($bill->price)) {
                     $actualKey = $actualKey + 1;
                     $actualValue = $contentArray[$actualKey];
                     if (empty(trim($actualValue))) {
                         continue;
                     }
 
-                    $realPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(explode(' ', trim(substr($actualValue, 17)))[0]));
-                    if (!$realPrice) {
+                    $price = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString(explode(' ', trim(substr($actualValue, 17)))[0]));
+                    if (!$price) {
                         return false;
                     }
 
-                    $bill->realPrice = $realPrice;
+                    $bill->price = $price;
                 }
-            }
-
-            if (str_contains($value, 'Conta do mês')) {
-                /**
-                 * Example:
-                 * 0699 Conta do mês DEZ/21 46,87
-                 * 0807 Conta do mês DEZ/21 1,17
-                 * 0804 Conta do mês DEZ/21 0,35
-                 * 0805 Conta do mês DEZ/21 7,69.
-                 */
-                $raw = trim(substr($value, 26));
-                $currentLastMonthPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($raw));
-                if (!$currentLastMonthPrice) {
-                    return false;
-                }
-
-                $lastMonthPrice = $currentLastMonthPrice->addMoney($bill->lastMonthPrice ?? new Money('0'));
-
-                $bill->lastMonthPrice = $lastMonthPrice;
-                $bill->realPrice = $bill->realPrice?->subMoney($currentLastMonthPrice);
             }
 
             if (str_contains($value, 'Taxa de Perda')) {
