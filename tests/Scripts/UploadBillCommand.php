@@ -99,7 +99,8 @@ class UploadBillCommand extends Command
             )
         );
         $files = !empty($files) ? $files : ['0.txt'];
-        $lastId = (int) basename($files[array_key_last($files)], '.txt');
+        $filesId = array_map(fn (string $file) => (int) basename($file, '.txt'), $files);
+        $lastId = max($filesId);
 
         return $lastId + 1;
     }

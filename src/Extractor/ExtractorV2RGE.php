@@ -45,7 +45,7 @@ final class ExtractorV2RGE extends Extractor
                  * CENTRO
                  * 12345-678 CIDADE - RS RG: 0123456789
                  * CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V.
-                 * 
+                 *
                  * TIMOTHY DA SILVA
                  * R FICTICIA 123
                  * CENTRO
@@ -53,7 +53,6 @@ final class ExtractorV2RGE extends Extractor
                  * CLASSIFICAÇÃO: Convencional B1  Residencial - Bifásico 220 /  127 V.
                  */
                 $actualKey = str_contains((string) $contentArray[$key - 1], 'INSC.EST') ? $key - 1 : $key;
-
 
                 $addressRaw = (string) $contentArray[$actualKey - 1];
                 $addressRaw = substr($addressRaw, 0, str_contains($addressRaw, 'CPF') ? -20 : -15);
@@ -115,9 +114,9 @@ final class ExtractorV2RGE extends Extractor
             }
 
             if (
-                str_contains($value, 'Energia Ativa Fornecida - TUSD') ||
-                str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD') ||
-                $modifier = str_contains($value, 'Custo Disp Uso Sistema TUSD')
+                str_contains($value, 'Energia Ativa Fornecida - TUSD')
+                || str_contains($value, 'Consumo Uso Sistema [KWh]-TUSD')
+                || $modifier = str_contains($value, 'Custo Disp Uso Sistema TUSD')
             ) {
                 /**
                  * Example:
@@ -161,6 +160,10 @@ final class ExtractorV2RGE extends Extractor
                 );
 
                 $cipKey = $this->findCipKey($contentArray, $key);
+                if (!$cipKey) {
+                    return false;
+                }
+
                 $cipRaw = trim(substr($contentArray[$cipKey], 47));
                 $cip = new Debit(
                     NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($cipRaw)),
@@ -176,7 +179,7 @@ final class ExtractorV2RGE extends Extractor
 
                 /**
                  * Example:
-                 * Total Consolidado             99,16  198,86  49,72  41,60  0,41  1,95  Bandeiras
+                 * Total Consolidado             99,16  198,86  49,72  41,60  0,41  1,95  Bandeiras.
                  */
                 $actualKey = $cipKey;
                 while (is_null($bill->realPrice)) {
@@ -198,10 +201,10 @@ final class ExtractorV2RGE extends Extractor
             if (str_contains($value, 'Conta do mês')) {
                 /**
                  * Example:
-                 * 0699 Conta do mês DEZ/21 46,87 
-                 * 0807 Conta do mês DEZ/21 1,17 
-                 * 0804 Conta do mês DEZ/21 0,35 
-                 * 0805 Conta do mês DEZ/21 7,69 
+                 * 0699 Conta do mês DEZ/21 46,87
+                 * 0807 Conta do mês DEZ/21 1,17
+                 * 0804 Conta do mês DEZ/21 0,35
+                 * 0805 Conta do mês DEZ/21 7,69.
                  */
                 $raw = trim(substr($value, 26));
                 $currentLastMonthPrice = NumericHelper::numericStringToMoney(NumericHelper::brazilianNumberToNumericString($raw));
@@ -283,7 +286,6 @@ final class ExtractorV2RGE extends Extractor
         }
 
         if (!$bill->isValid()) {
-            dd($bill);
             return false;
         }
 
