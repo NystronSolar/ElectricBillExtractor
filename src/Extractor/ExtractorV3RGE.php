@@ -266,10 +266,6 @@ final class ExtractorV3RGE extends Extractor
             }
         }
 
-        if (!$bill->isValid()) {
-            return false;
-        }
-
         return $bill;
     }
 

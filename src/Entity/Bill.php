@@ -20,6 +20,14 @@ class Bill
 
     /**
      * Check if any properties is nullable.
+     * 
+     * @psalm-assert-if-true Client $this->client
+     * @psalm-assert-if-true Dates $this->dates
+     * @psalm-assert-if-true \DateTimeInterface $this->date
+     * @psalm-assert-if-true string $this->installationCode
+     * @psalm-assert-if-true Debits $this->debits
+     * @psalm-assert-if-true Powers $this->powers
+     * @psalm-assert-if-true Price $this->price
      */
     public function isValid(): bool
     {

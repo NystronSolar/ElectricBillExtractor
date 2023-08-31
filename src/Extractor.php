@@ -16,10 +16,16 @@ abstract class Extractor
     public function extract(): Bill|false
     {
         try {
-            return $this->extractLoop();
+            $bill = $this->extractLoop();
         } catch (\Exception) {
             return false;
         }
+
+        if (!$bill) {
+            return false;
+        }
+
+        return $bill->isValid() ? $bill : false;
     }
 
     abstract protected function extractLoop(): Bill|false;
