@@ -27,7 +27,7 @@ class Bill
      * @psalm-assert-if-true string $this->installationCode
      * @psalm-assert-if-true Debits $this->debits
      * @psalm-assert-if-true Powers $this->powers
-     * @psalm-assert-if-true Price $this->price
+     * @psalm-assert-if-true Money $this->price
      */
     public function isValid(): bool
     {
